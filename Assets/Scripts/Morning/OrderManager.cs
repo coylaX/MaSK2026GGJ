@@ -6,7 +6,7 @@ public class OrderManager : MonoBehaviour
 {
     public static OrderManager Instance;
 
-    #region 1. 模板库配置 (在Inspector中赋值)
+    #region 1. 完整的订单列表，包含所有Order，你可以在Inspector中增加order
     // ==========================================
     // 这里的列表相当于“字典”，存放游戏中所有可能出现的订单配置
     // 请在 Unity 编辑器里把做好的 OrderTemplate 文件拖进去
@@ -99,12 +99,14 @@ public class OrderManager : MonoBehaviour
 
         if (isSuccess)
         {
+            activeOrder.daysRemaining = -1; // 完美完成 (好评)
             finalReward = template.baseReward;
             feedbackText = template.successReviewText;
             Debug.Log($"[结算] 好评！获得 {finalReward}");
         }
         else
         {
+            activeOrder.daysRemaining = -3; // 勉强完成 (差评)
             finalReward = template.baseReward / 2; // 失败获得一半低保
             feedbackText = template.failReviewText;
             Debug.Log($"[结算] 差评... 获得 {finalReward}");
@@ -118,7 +120,7 @@ public class OrderManager : MonoBehaviour
 
         // 7. 触发存档
         MorningGameManager.Instance.SaveGame();
-
+        FindObjectOfType<OrderUIController>()?.RefreshOrderList();
         // TODO: 这里可以发送一个事件给 UI，显示 feedbackText
     }
 

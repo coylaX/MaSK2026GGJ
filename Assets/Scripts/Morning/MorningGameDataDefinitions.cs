@@ -16,12 +16,6 @@ public enum EmotionType
     Sad      // 悲伤
 }
 
-public enum OrderStatus
-{
-    Active,     // 进行中
-    Completed,  // 已完成
-    Expired     // 已过期
-}
 #endregion
 
 #region 2. 情绪存储容器 (EmotionStorage)
@@ -94,20 +88,7 @@ public class MorningInventoryData
         unlockedMemoryIDs = new List<string>();
     }
 
-    // 检查记忆是否解锁
-    public bool IsMemoryUnlocked(string memoryID)
-    {
-        return unlockedMemoryIDs.Contains(memoryID);
-    }
-
-    // 解锁新记忆
-    public void UnlockMemory(string memoryID)
-    {
-        if (!unlockedMemoryIDs.Contains(memoryID))
-        {
-            unlockedMemoryIDs.Add(memoryID);
-        }
-    }
+    //TODO:
 }
 #endregion
 
@@ -116,7 +97,7 @@ public class MorningInventoryData
 public class OrderData
 {
     public string orderID;      // 对应 OrderTemplate 的唯一 ID
-    public int daysRemaining;   // 状态标识：>0 剩余天数, -1 已完成, -2 已过期
+    public int daysRemaining;   // 状态标识：>0 剩余天数, -1 已完成好评, -2 已过期。-3已完成差评
 
     public OrderData(string id, int days)
     {
@@ -125,4 +106,3 @@ public class OrderData
     }
 }
 #endregion
-
