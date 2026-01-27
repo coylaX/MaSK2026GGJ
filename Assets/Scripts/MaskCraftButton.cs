@@ -17,9 +17,7 @@ public class MaskCraftButton : MonoBehaviour
     public GameObject emotion;
     public GameObject color;
     public GameObject memory;
-    [Header("逻辑仓库")]
-    public MaskInventory maskInventoryLogic;
-    List<MaskInstance> warehouse; // 逻辑仓库（也可以改成 PlayerInventory.I.warehouse）
+    
 
     [Header("显示仓库")]
     public WarehouseUI warehouseUI;
@@ -45,11 +43,8 @@ public class MaskCraftButton : MonoBehaviour
         
 
         var instance = new MaskInstance(Guid.NewGuid().ToString("N"), "xxx",emotionTrait,memoryTrait,colorTrait);
-        if (warehouse == null)
-        {
-            warehouse = maskInventoryLogic.maskInstances;
-        }
-        warehouse.Add(instance);//给仓库添加此面具
+      
+        MaskInventory.I.maskInstances.Add(instance);//给仓库添加此面具
         warehouseUI.Refresh();
 
         Debug.Log($"[MaskCraft] Crafted: {instance.displayName} | id={instance.instanceId} | instance={instance.instanceId} | traits={instance.colorTraitID}|{instance.emotionTraitID}|{instance.memoryTraitID}");

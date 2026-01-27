@@ -6,7 +6,7 @@ public class WarehouseItemUI : MonoBehaviour
 {
     // Start is called before the first frame update
     public MaskInstance mask;
-    public MaskInventory maskInventoryLogic;
+    
     
     public WarehouseUI warehouseUI;
     public BackPackView backPackUI;
@@ -31,7 +31,7 @@ public class WarehouseItemUI : MonoBehaviour
             //说明这个位置没有面具
             return;
         }
-        maskInventoryLogic.maskInstances.Remove(mask);//移出仓库
+        MaskInventory.I.maskInstances.Remove(mask);//移出仓库
         BackPackLogic.I.maskInstances.Add(mask);//加入背包
         this.mask = null;
         warehouseUI.Refresh();

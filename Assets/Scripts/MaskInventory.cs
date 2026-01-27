@@ -11,6 +11,7 @@ public class MaskInventory : MonoBehaviour
 
     private void Awake()
     {
+        I = this;
         maskInstances = new List<MaskInstance>();
     }
 

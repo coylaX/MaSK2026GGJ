@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class WarehouseUI : MonoBehaviour
 {
     [Header("Logic data")]
-    public MaskInventory maskInventoryLogic;
-    List<MaskInstance> warehouse; // 你的逻辑仓库（也可以改成 PlayerInventory.I.warehouse）
+    
+     // 你的逻辑仓库（也可以改成 PlayerInventory.I.warehouse）
 
     [Header("UI slots (pre-placed in scene, in order)")]
     public GameObject[] slots;   // 在Inspector按顺序拖入：Slot0, Slot1, Slot2...
@@ -19,9 +19,9 @@ public class WarehouseUI : MonoBehaviour
 
     public void Refresh()
     {
-        warehouse = maskInventoryLogic.maskInstances;
+        
         int slotCount = slots.Length;
-        int maskCount = warehouse?.Count ?? 0;
+        int maskCount = MaskInventory.I.maskInstances.Count;
 
         // 1) 先把所有slot清空
         for (int i = 0; i < slotCount; i++)
@@ -38,7 +38,7 @@ public class WarehouseUI : MonoBehaviour
         int showCount = Mathf.Min(maskCount, slotCount);
         for (int i = 0; i < showCount; i++)
         {
-            MaskInstance mask = warehouse[i];
+            MaskInstance mask = MaskInventory.I.maskInstances[i];
             slots[i].GetComponent<Image>().sprite = placeholderSprite;//目前只有一张图
             slots[i].GetComponent<WarehouseItemUI>().mask = mask;
         }
