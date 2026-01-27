@@ -5,20 +5,26 @@ using UnityEngine;
 
     public enum EmotionTraitID
     {
-        DoubleJump,
-        HealOnKill,
-        DashOnHit,
+        XI,
+        NU,
+        AI,
+        LE,
+
     }
 
 public enum ColorTraitID
 {
-    DoubleJump,
-    HealOnKill,
-    DashOnHit,
+    RED,
+    YELLOW,
+    BLUE,
+    GREEN,
+    BLACK,
+    WHITE
 }
 public enum MemoryTraitID
 {
-    DoubleJump,
-    HealOnKill,
-    DashOnHit,
+    A,
+    B,
+    C,
 }
+

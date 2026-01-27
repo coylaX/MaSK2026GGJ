@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 2986154254127855004}
   - component: {fileID: 1079848240}
   - component: {fileID: 7452973894331019621}
-  m_Layer: 0
+  - component: {fileID: 1086958620750686275}
+  - component: {fileID: 4133332378678176837}
+  m_Layer: 10
   m_Name: MainPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,8 +76,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1972186637
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f87bfc29686e4a844a778e224d77bccb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -121,7 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73c2d7785388864aa785ea480d8eb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveForce: 40
+  maxSpeed: 6
   spriteRenderer: {fileID: 0}
 --- !u!114 &7452973894331019621
 MonoBehaviour:
@@ -136,12 +139,72 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
-  firePoint: {fileID: 0}
-  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 4665829421222272327}
+  isMachineGun: 0
+  projectilePrefab1: {fileID: 3547582547241726214, guid: 64f7be06820feee4b8b9f5a86a72f78a, type: 3}
+  MachineGunCD: 0.15
+  MachineGunDamage: 20
+  isSad: 0
+  projectilePrefab2: {fileID: 0}
+  sadGunCD: 0
+  sadGunDamage: 0
+  isBlade: 0
+  projectilePrefab3: {fileID: 4004144186953632292, guid: a72c411b496c7aa4ca87418f9d21fd63, type: 3}
+  bladeCD: 1
+  bladeDamage: 70
   spawnDistance: 0.5
   rotateProjectileToDirection: 1
   fireKey: 323
-  fireCooldown: 0.15
+  fireCooldown: 0
+  damage: 0
+  prefab: {fileID: 0}
+--- !u!50 &1086958620750686275
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 5
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!61 &4133332378678176837
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.39533222, y: -2.1743288}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 20.48, y: 20.48}
+    newSize: {x: 20.48, y: 20.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.440798, y: 10.370783}
+  m_EdgeRadius: 0
 --- !u!1 &6333327996232467872
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4665829421222272327}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
