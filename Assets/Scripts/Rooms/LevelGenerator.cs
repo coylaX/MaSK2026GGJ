@@ -16,6 +16,15 @@ public class LevelGenerator : MonoBehaviour {
     private HashSet<Vector2Int> occupiedCoords = new HashSet<Vector2Int>();
     private List<GameObject> spawnedRooms = new List<GameObject>();
 
+    public static LevelGenerator Instance;
+
+    // 【新增】提供给外部访问的初始房间引用
+    public RoomController startRoom { get; private set; }
+
+    void Awake() {
+        Instance = this;
+    }
+
     void Start() {
         GenerateLevel();
     }

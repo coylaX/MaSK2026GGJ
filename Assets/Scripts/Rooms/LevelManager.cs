@@ -14,22 +14,54 @@ public class LevelManager : MonoBehaviour {
     void Awake() { Instance = this; }
 
     [ContextMenu("Initialize Dungeon")]
+    // 在 LevelManager.cs 中
+
     public void InitializeDungeon() {
         allRooms.Clear();
         allRooms.AddRange(FindObjectsOfType<RoomController>());
 
-        // 清理旧门
-        foreach (var room in allRooms) {
-            foreach (var d in room.doors) if(d != null) DestroyImmediate(d.gameObject);
-            room.doors.Clear();
+        // 【修复代码】：直接从 Generator 获取初始房间
+        RoomController startingRoom = null;
+        if (LevelGenerator.Instance != null) {
+            startingRoom = LevelGenerator.Instance.startRoom;
         }
 
-        // 生成门并建立邻居关系
-        foreach (var room in allRooms) {
-            LinkNeighbors(room);
+        // 如果还是没找到（保险措施），就按距离找最近的
+        if (startingRoom == null) {
+            startingRoom = FindClosestRoomToPlayer();
         }
+
+        // 1. 分配战利品 (传入找到的初始房间)
+        if (LootManager.Instance != null) {
+            LootManager.Instance.DistributeLoot(allRooms, startingRoom);
+        }
+
+        // 2. 建立门、初始化小地图
+        foreach (var room in allRooms) LinkNeighbors(room);
         
-        ActivateStartingRoom();
+        if (MiniMapManager.Instance != null) {
+            MiniMapManager.Instance.GenerateMiniMap(allRooms);
+        }
+
+        // 3. 激活初始房间
+        if (startingRoom != null) startingRoom.ActivateRoom();
+    }
+
+    // 备用方案：通过物理距离找玩家脚下的房间
+    private RoomController FindClosestRoomToPlayer() {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null) return allRooms.Count > 0 ? allRooms[0] : null;
+
+        RoomController closest = null;
+        float minDist = float.MaxValue;
+        foreach (var room in allRooms) {
+            float d = Vector2.Distance(player.transform.position, room.transform.position);
+            if (d < minDist) {
+                minDist = d;
+                closest = room;
+            }
+        }
+        return closest;
     }
 
     private void LinkNeighbors(RoomController currentRoom) {
