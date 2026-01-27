@@ -3,30 +3,18 @@ using UnityEngine;
 using static TMPro.Examples.ObjectSpin;
 
 // --- 文件名: MorningGameDataDefinitions.cs ---
-
-#region 1. 枚举定义 (Enums)
-
-
-#endregion
-
-#region 2. 情绪存储容器 (EmotionStorage)
-// ==========================================
-// 专门用于处理4种情绪数量的类
-// ==========================================
-
 [System.Serializable]
 
-#endregion
 
 #region 3. 经营背包数据 (Inventory)
 // ==========================================
 // 包含颜料、情绪、记忆的数据结构
 // ==========================================
 
-
 public class MorningInventoryData
 {
     public EmotionTraitID emotionTraitID;
+    public MemoryTraitID memoryTraitID;
 
     // --- 资源 A: 颜料 ---
     public int pigmentAmount;
@@ -38,7 +26,7 @@ public class MorningInventoryData
     public int leCount;
 
     // --- 资源 C: 记忆进度 (只记录进度) ---
-    public int memoryProcess;
+    public List<MemoryTraitID> memoryGet;
 
     public MorningInventoryData()
     {
@@ -47,7 +35,7 @@ public class MorningInventoryData
         nuCount = 0;
         aiCount = 0;
         leCount = 0;
-        memoryProcess = 0;
+        memoryGet = new List<MemoryTraitID>();
     }
 }
 #endregion

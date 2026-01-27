@@ -19,6 +19,8 @@ MonoBehaviour:
   daysLimit: 3
   baseReward: 100
   appearOnDay: 3
+  ifMemory: 1
+  id: 1
   tags:
   - Sad
   successReviewText: Good!

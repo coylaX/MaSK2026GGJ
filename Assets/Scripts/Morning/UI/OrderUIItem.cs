@@ -52,7 +52,6 @@ public class OrderUIItem : MonoBehaviour
             });
         }
         // --- B. 已完成 (好评 -1 或 差评 -3) ---
-        // 🔴 修正：这里必须用 || (或)，不能用 && (且)
         else if (data.daysRemaining == -1 || data.daysRemaining == -3)
         {
             timeText.text = "<color=green>已完成</color>";

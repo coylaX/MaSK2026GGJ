@@ -103,6 +103,10 @@ public class OrderManager : MonoBehaviour
             finalReward = template.baseReward;
             feedbackText = template.successReviewText;
             Debug.Log($"[结算] 好评！获得 {finalReward}");
+            if (template.ifMemory)
+            {
+                BagManager.Instance.earnMemory(template.id);
+            }
         }
         else
         {

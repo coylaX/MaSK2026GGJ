@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BagManager : MonoBehaviour
 {
     public static BagManager Instance;
 
     private EmotionTraitID emotionTraitID;
+    public MemoryTraitID memoryTraitID;
     SaveData data = MorningGameManager.Instance.currentSaveData;
 
     //UI要素
@@ -16,6 +18,14 @@ public class BagManager : MonoBehaviour
     public TextMeshProUGUI nuText;     // 情绪数量
     public TextMeshProUGUI aiText;     // 情绪数量
     public TextMeshProUGUI leText;     // 情绪数量
+
+    //memory对应的格子按钮
+    public Button buttonA;
+    public Button buttonB;
+    public Button buttonC;
+    public Button buttonD;
+    public Button buttonE;
+
     #region 颜料、情绪、记忆消耗和更新
     /// <summary>
     /// 消耗颜料数并更新UI
@@ -66,18 +76,17 @@ public class BagManager : MonoBehaviour
     ///<summary>
     ///推进记忆进度
     /// </summary>
-    public void pushMemory()
+    public void earnMemory(MemoryTraitID id)
     {
-        data.morningInventory.memoryProcess++;
+        data.morningInventory.memoryGet.Add(id);
+        //TODO:更新UI
+        
     }
 
     ///<summary>
-    ///查询记忆进度
+    ///查询记忆进度?
     /// </summary>
-    public int getMemory()
-    {
-        return data.morningInventory.memoryProcess;
-    }
+
     #endregion
     #region 合成消耗资源（绑定到合成Button上）
     public void craftUse(EmotionTraitID id)
