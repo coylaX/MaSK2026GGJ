@@ -77,6 +77,8 @@ MonoBehaviour:
   flashDuration: 0.1
   blocksPathfinding: 1
   myRoom: {fileID: 0}
+  emotionLootPrefab: {fileID: 5422459328569746800, guid: a7ad2bd7760e00a4e9a9aec9304dd50c, type: 3}
+  isElite: 0
 --- !u!114 &5879630219866374777
 MonoBehaviour:
   m_ObjectHideFlags: 0

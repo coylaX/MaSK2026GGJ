@@ -24,6 +24,10 @@ public class MonsterBase : MonoBehaviour {
     private bool isKnockingBack = false;
     private Coroutine flashCoroutine;       // 用于管理变色协程
 
+    [Header("掉落设置")]
+    public GameObject emotionLootPrefab; // 在 Inspector 中拖入 LootEmotion 预制体
+    public bool isElite = false;         // 标记是否为强化怪物
+
     protected virtual void Awake() {
         rb = GetComponent<Rigidbody2D>();
         // 尝试从本体或子物体获取渲染器
@@ -74,6 +78,17 @@ public class MonsterBase : MonoBehaviour {
 
     [ContextMenu("Kill Monster (Debug)")]
     public void Die() {
+        // --- 新增：掉落逻辑 ---
+        float dropChance = isElite ? 0.8f : 0.3f; // 强化怪 50%，普通怪 20%
+        
+        if (UnityEngine.Random.value <= dropChance) {
+            if (emotionLootPrefab != null) {
+                // 在怪物死亡位置生成情绪战利品
+                Instantiate(emotionLootPrefab, transform.position, Quaternion.identity);
+            }
+        }
+
+        // --- 原有死亡逻辑 ---
         gameObject.SetActive(false); 
         if (myRoom != null) {
             myRoom.OnMonsterKilled(this);
@@ -81,36 +96,30 @@ public class MonsterBase : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    // 修改之前的 ApplyEliteBuff，记录强化状态
     public void ApplyEliteBuff(int type) {
-        // 获取渲染器用于发光效果
+        isElite = true; // 只要施加了增益，就标记为精英
+        
         if (sr == null) sr = GetComponentInChildren<SpriteRenderer>();
-
         switch (type) {
-            case 0: // 移速 +50%
+            case 0: // 移速
                 moveSpeed *= 1.5f;
-                SetGlow(new Color(1f, 1f, 0f, 1f)); // 黄色
+                SetGlow(Color.yellow);
                 break;
-            case 1: // 生命翻倍
+            case 1: // 生命
                 health *= 2f;
-                SetGlow(new Color(0f, 1f, 0f, 1f)); // 绿色
+                SetGlow(Color.green);
                 break;
-            case 2: // 攻击力翻倍
+            case 2: // 攻击
                 contactDamage *= 2f;
-                SetGlow(new Color(1f, 0f, 0f, 1f)); // 红色
+                SetGlow(Color.red);
                 break;
         }
     }
 
-    private void SetGlow(Color color) {
-        if (sr != null) {
-            // 这里我们通过修改材质的颜色来实现发光感
-            // 如果你使用了特殊的 Shader，可以改为 sr.material.SetColor("_GlowColor", color);
-            sr.color = color; 
-            
-            // 进阶建议：在怪物脚下实例化一个带颜色的光环 Prefab
-            // GameObject halo = Instantiate(eliteHaloPrefab, transform);
-            // halo.GetComponent<SpriteRenderer>().color = color;
-        }
+    // 辅助变色方法（保持简洁）
+    private void SetGlow(Color c) {
+        if (sr != null) sr.color = c;
     }
 
 }
