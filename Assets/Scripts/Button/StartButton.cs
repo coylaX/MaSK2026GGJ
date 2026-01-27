@@ -8,8 +8,13 @@ public class StartButton : MonoBehaviour
    public GameObject[] shixiaoGOs;
    public GameObject[] dongjieGOs;
     public GameObject PLAYER;
+    public GameObject HPBar;
    public void onClick()
     {
+        if (BackPackLogic.I.maskInstances.Count < 3)
+        {
+            return;
+        }
         foreach (var go in shixiaoGOs)
         {
             if (go != null)
@@ -21,5 +26,7 @@ public class StartButton : MonoBehaviour
                 go.GetComponent<Button>().interactable = false;
         }
         PLAYER.SetActive(true);
+        PLAYER.GetComponent<MaskRead>().onStart();
+        HPBar.SetActive(true);
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3628372256033154135}
   - component: {fileID: 7400539646633313279}
   - component: {fileID: 2986154254127855004}
+  - component: {fileID: 205179350546464834}
   - component: {fileID: 1079848240}
   - component: {fileID: 7452973894331019621}
   - component: {fileID: 1086958620750686275}
@@ -111,6 +112,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &205179350546464834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8936750a6d8f0e4c9dfadf6cf95d968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSleep: 100
+  currentSleep: 100
+  drainPerSecond: 2
 --- !u!114 &1079848240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +168,10 @@ MonoBehaviour:
   projectilePrefab3: {fileID: 4004144186953632292, guid: a72c411b496c7aa4ca87418f9d21fd63, type: 3}
   bladeCD: 1
   bladeDamage: 70
+  isHappy: 0
+  projectilePrefab4: {fileID: 0}
+  happyCD: 0
+  happyDamage: 0
   spawnDistance: 0.5
   rotateProjectileToDirection: 1
   fireKey: 323

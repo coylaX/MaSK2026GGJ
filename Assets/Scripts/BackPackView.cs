@@ -19,7 +19,7 @@ public class BackPackView : MonoBehaviour
 
     public void Refresh()
     {
-        backpackMaskInstances = backPackLogic.maskInstances;
+        backpackMaskInstances = BackPackLogic.I.maskInstances;
         int slotCount = slots.Length;
         int maskCount = backpackMaskInstances.Count;
 

@@ -5,12 +5,13 @@ using UnityEngine;
 public class BackPackLogic : MonoBehaviour
 {
     // Start is called before the first frame update
-    public List<MaskInstance> maskInstances;
+    public  List<MaskInstance> maskInstances;
 
     public static BackPackLogic I { get; private set; }
-    void Start()
+    void Awake()
     {
-        
+        I = this;
+        maskInstances = new List<MaskInstance>();
     }
 
     // Update is called once per frame
