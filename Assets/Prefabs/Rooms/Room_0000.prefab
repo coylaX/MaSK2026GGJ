@@ -94,7 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6201800372321753775}
   - component: {fileID: 6201800372321753772}
-  - component: {fileID: 3461052645013096459}
+  - component: {fileID: 5971865427054172010}
+  - component: {fileID: 1877499041782403203}
   m_Layer: 0
   m_Name: Room_0000
   m_TagString: Untagged
@@ -134,7 +135,7 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &3461052645013096459
+--- !u!114 &5971865427054172010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,4 +147,106 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc6195ab48f51d4fa3ff4600703dc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
+  waypoints:
+  - {x: -6, y: -3}
+  - {x: -6, y: -2}
+  - {x: -6, y: -1}
+  - {x: -6, y: 0}
+  - {x: -6, y: 1}
+  - {x: -6, y: 2}
+  - {x: -6, y: 3}
+  - {x: -5, y: -3}
+  - {x: -5, y: -2}
+  - {x: -5, y: -1}
+  - {x: -5, y: 0}
+  - {x: -5, y: 1}
+  - {x: -5, y: 2}
+  - {x: -5, y: 3}
+  - {x: -4, y: -3}
+  - {x: -4, y: -1}
+  - {x: -4, y: 0}
+  - {x: -4, y: 1}
+  - {x: -4, y: 3}
+  - {x: -3, y: -3}
+  - {x: -3, y: -2}
+  - {x: -3, y: -1}
+  - {x: -3, y: 0}
+  - {x: -3, y: 1}
+  - {x: -3, y: 2}
+  - {x: -3, y: 3}
+  - {x: -2, y: -3}
+  - {x: -2, y: -2}
+  - {x: -2, y: -1}
+  - {x: -2, y: 0}
+  - {x: -2, y: 1}
+  - {x: -2, y: 2}
+  - {x: -2, y: 3}
+  - {x: -1, y: -3}
+  - {x: -1, y: -2}
+  - {x: -1, y: -1}
+  - {x: -1, y: 0}
+  - {x: -1, y: 1}
+  - {x: -1, y: 2}
+  - {x: -1, y: 3}
+  - {x: 0, y: -3}
+  - {x: 0, y: -2}
+  - {x: 0, y: -1}
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
+  - {x: 0, y: 3}
+  - {x: 1, y: -3}
+  - {x: 1, y: -2}
+  - {x: 1, y: -1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  - {x: 1, y: 2}
+  - {x: 1, y: 3}
+  - {x: 2, y: -3}
+  - {x: 2, y: -2}
+  - {x: 2, y: -1}
+  - {x: 2, y: 0}
+  - {x: 2, y: 1}
+  - {x: 2, y: 2}
+  - {x: 2, y: 3}
+  - {x: 3, y: -3}
+  - {x: 3, y: -2}
+  - {x: 3, y: -1}
+  - {x: 3, y: 0}
+  - {x: 3, y: 1}
+  - {x: 3, y: 2}
+  - {x: 3, y: 3}
+  - {x: 4, y: -3}
+  - {x: 4, y: -1}
+  - {x: 4, y: 0}
+  - {x: 4, y: 1}
+  - {x: 4, y: 3}
+  - {x: 5, y: -3}
+  - {x: 5, y: -2}
+  - {x: 5, y: -1}
+  - {x: 5, y: 0}
+  - {x: 5, y: 1}
+  - {x: 5, y: 2}
+  - {x: 5, y: 3}
+  - {x: 6, y: -3}
+  - {x: 6, y: -2}
+  - {x: 6, y: -1}
+  - {x: 6, y: 0}
+  - {x: 6, y: 1}
+  - {x: 6, y: 2}
+  - {x: 6, y: 3}
+--- !u!114 &1877499041782403203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201800372321753773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89025c586918b0542a9c5f8cc61b5152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  monsters: []
+  doors: []

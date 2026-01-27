@@ -42,6 +42,7 @@ public class LevelGenerator : MonoBehaviour {
             GameObject randomPrefab = roomPool[Random.Range(0, roomPool.Count)];
             PlaceRoom(randomPrefab, nextCoord);
         }
+        LevelManager.Instance.InitializeDungeon();
     }
 
     private Vector2Int GetRandomNeighborCoord() {
