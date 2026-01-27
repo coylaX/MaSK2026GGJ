@@ -8,7 +8,10 @@ public class RoomController : MonoBehaviour {
     public List<MonsterBase> monsters = new List<MonsterBase>();
     public List<Door> doors = new List<Door>();
 
+    private RoomNavGraph navGraph;
+
     void Awake() {
+        navGraph = GetComponent<RoomNavGraph>();
         MonsterBase[] mbs = GetComponentsInChildren<MonsterBase>(true);
         foreach (var m in mbs) {
             monsters.Add(m);
@@ -17,45 +20,40 @@ public class RoomController : MonoBehaviour {
         }
     }
 
-    // 在 RoomController 类中修改 ActivateRoom 方法
     public void ActivateRoom() {
         if (state == RoomState.Cleared || state == RoomState.Active) return;
 
         state = RoomState.Active;
-        Debug.Log($"激活房间: {gameObject.name}");
 
-        // 唤醒怪物
-        foreach (var m in monsters) {
-            if (m != null) m.gameObject.SetActive(true);
-        }
+        // 1. 先唤醒怪物
+        foreach (var m in monsters) if (m != null) m.gameObject.SetActive(true);
 
-        // 检查是否需要关门（如果有怪就关，没怪就直接清空）
+        // 【功能 2】：房间激活时立即 Baking 一次，此时会排除掉刚醒来的 Shooter 占据的格子
+        if (navGraph != null) navGraph.BakeWaypoints();
+
         CheckDoors();
     }
 
-    private void CheckDoors() {
-        // 只有在 Active 状态且有怪物时才真正“锁死”门
-        bool needsLock = (state == RoomState.Active && monsters.Count > 0);
-        foreach (var d in doors) {
-            d.SetLock(needsLock);
-        }
+    public void OnMonsterKilled(MonsterBase m) {
+        if (monsters.Contains(m)) monsters.Remove(m);
         
-        // 如果激活时发现没怪，直接转为清空状态
+        // 【功能 1】：怪物死亡时重新 Baking。
+        // 这会释放该怪物之前占据的格子（黄点会重新出现），并更新寻路预处理。
+        if (navGraph != null) navGraph.BakeWaypoints();
+
+        if (monsters.Count <= 0) {
+            state = RoomState.Cleared;
+            CheckDoors();
+        }
+    }
+
+    private void CheckDoors() {
+        bool shouldLock = (state == RoomState.Active && monsters.Count > 0);
+        foreach (var d in doors) d.SetLock(shouldLock);
+        
         if (state == RoomState.Active && monsters.Count == 0) {
             state = RoomState.Cleared;
             foreach (var d in doors) d.SetLock(false);
         }
     }
-
-    // 在 RoomController.cs 中修改 OnMonsterKilled
-    public void OnMonsterKilled(MonsterBase m) {
-        if (monsters.Contains(m)) monsters.Remove(m);
-        
-        if (monsters.Count <= 0) {
-            state = RoomState.Cleared; // 必须先设为 Cleared
-            Debug.Log($"{gameObject.name} 已清空！");
-            CheckDoors(); // 然后开门
-        }
-    }
-
 }
