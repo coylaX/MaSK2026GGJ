@@ -52,11 +52,11 @@ TagManager:
   - name: monsters
     uniqueID: 3397422259
     locked: 0
-  - name: player
-    uniqueID: 2322780659
-    locked: 0
   - name: loots
     uniqueID: 968492413
+    locked: 0
+  - name: player
+    uniqueID: 2322780659
     locked: 0
   - name: UI
     uniqueID: 1410446213
