@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6030894156374835865}
   - component: {fileID: 7395837176634751275}
   - component: {fileID: 8273839392839526046}
+  - component: {fileID: -2596810646749502904}
   m_Layer: 0
   m_Name: WakenStone
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 968492413
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
@@ -123,3 +124,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-2596810646749502904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4352615468214563915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bef214d8cd6f0e428a3f4aecdd8b1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredTime: 3
+  promptMessage: "\u6B63\u5728\u79BB\u5F00\u68A6\u5883..."
+  subtitleText: {fileID: 0}
+  whiteFilter: {fileID: 0}

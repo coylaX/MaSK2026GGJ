@@ -63,19 +63,34 @@ public class RoomController : MonoBehaviour {
     }
 
     public void ActivateRoom() {
-        // 【核心修复】：只要玩家进入房间，无论房间是什么状态，都必须先更新小地图
+        // 1. 更新小地图
         if (MiniMapManager.Instance != null) {
             MiniMapManager.Instance.UpdateCurrentRoom(this);
         }
 
-        // 如果房间已经激活过或已清空，后续的怪物生成逻辑才跳过
         if (state == RoomState.Cleared || state == RoomState.Active) {
             return; 
         }
 
-        // 第一次进入未探索房间的逻辑...
+        // 2. 激活房间状态
         state = RoomState.Active;
-        foreach (var m in monsters) if (m != null) m.gameObject.SetActive(true);
+
+        // 3. 激活所有怪物
+        foreach (var m in monsters) {
+            if (m != null) m.gameObject.SetActive(true);
+        }
+
+        // 【新增逻辑】：如果是精英房间且尚未强化过，则挑选一个怪物进行强化
+        if (isGuaranteedRoom && !buffApplied && monsters.Count > 0) {
+            // 默认强化列表中的第一个怪物，或者你可以随机选一个
+            MonsterBase targetMonster = monsters[0]; 
+            if (targetMonster != null) {
+                ApplyRandomBuffToMonster(targetMonster);
+                buffApplied = true; // 标记已强化，防止重复
+                Debug.Log($"{gameObject.name} 是精英房间，已强化怪物：{targetMonster.name}");
+            }
+        }
+
         if (navGraph != null) navGraph.BakeWaypoints();
         CheckDoors();
     }
