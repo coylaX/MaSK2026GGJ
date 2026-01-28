@@ -7,7 +7,7 @@ public class BackPackView : MonoBehaviour
 {
     [Header("Logic data")]
     public BackPackLogic backPackLogic;
-    List<MaskInstance> backpackMaskInstances; // 你的逻辑仓库（也可以改成 PlayerInventory.I.warehouse）
+    
 
     [Header("UI slots (pre-placed in scene, in order)")]
     public GameObject[] slots;   // 在Inspector按顺序拖入：Slot0, Slot1, Slot2...
@@ -22,9 +22,9 @@ public class BackPackView : MonoBehaviour
 
     public void Refresh()
     {
-        backpackMaskInstances = BackPackLogic.I.maskInstances;
+        
         int slotCount = slots.Length;
-        int maskCount = backpackMaskInstances.Count;
+        int maskCount = BackPackLogic.I.maskInstances.Count;
 
         // 1) 先把所有slot清空
         for (int i = 0; i < slotCount; i++)
@@ -40,9 +40,9 @@ public class BackPackView : MonoBehaviour
             Debug.Log($"[WarehouseUI] Overflow: {maskCount} masks, but only {slotCount} slots shown.");
             return;
         }
-        for (int i = 0; i < showCount; i++)
+        for (int i = 0; i < BackPackLogic.I.maskInstances.Count; i++)
         {
-            MaskInstance mask = backpackMaskInstances[i];
+            MaskInstance mask = BackPackLogic.I.maskInstances[i];
             switch (mask.emotionTraitID)
             {
                 case EmotionTraitID.XI:
@@ -84,7 +84,11 @@ public class BackPackView : MonoBehaviour
             }
             slots[i].GetComponent<BackItemUI>().mask = mask;
         }
+        for (int i = BackPackLogic.I.maskInstances.Count; i < slotCount; i++)
+        {
+            slots[i].GetComponent<BackItemUI>().mask = null;
+            slots[i].GetComponent<Image>().color = Color.white;
+        }
 
-       
     }
 }

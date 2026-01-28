@@ -28,11 +28,11 @@ public class MorningInventoryData
 
     public MorningInventoryData()
     {
-        pigmentAmount = 10;
-        xiCount = 5;
-        nuCount = 5;
-        aiCount = 5;
-        leCount = 5;
+        pigmentAmount = 999;
+        xiCount = 999;
+        nuCount = 999;
+        aiCount = 999;
+        leCount = 999;
         memoryGet = new List<MemoryTraitID>();
         memoryNight = MemoryTraitID.A;
     }

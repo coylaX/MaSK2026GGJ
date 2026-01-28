@@ -39,6 +39,10 @@ public class MaskCraftButton : MonoBehaviour
         emotionTrait = emotion.GetComponent<EmotionSource>().emotionTraitID;
         memoryTrait = memory.GetComponent<MemorySource>().memoryTraitID;
         colorTrait = color.GetComponent<ColorSource>().colorTraitID;
+        if (MaskInventory.I.maskInstances.Count >= warehouseUI.slots.Length)
+        {
+            return;
+        }
 
         //消耗对应数量的资源
         if (!BagManager.Instance.CraftUse(emotionTrait))
@@ -47,6 +51,7 @@ public class MaskCraftButton : MonoBehaviour
 
         var instance = new MaskInstance(Guid.NewGuid().ToString("N"), "xxx",emotionTrait,memoryTrait,colorTrait);
       
+        
         MaskInventory.I.maskInstances.Add(instance);//给仓库添加此面具
         warehouseUI.Refresh();
 

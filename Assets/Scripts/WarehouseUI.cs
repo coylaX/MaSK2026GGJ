@@ -49,7 +49,7 @@ public class WarehouseUI : MonoBehaviour
         }
         // 2) 再把仓库里的面具按顺序填进去（最多填满slots）
         int showCount = Mathf.Min(maskCount, slotCount);
-        for (int i = 0; i < showCount; i++)
+        for (int i = 0; i < MaskInventory.I.maskInstances.Count; i++)
         {
             MaskInstance mask = MaskInventory.I.maskInstances[i];
             switch (mask.emotionTraitID)
@@ -96,7 +96,12 @@ public class WarehouseUI : MonoBehaviour
             slots[i].GetComponent<WarehouseItemUI>().mask = mask;
         }
 
-        // 3) 如果仓库比slot多，你可以先debug提示（后面做分页/滚动）
+        // 清空后面的格子
+        for(int i = MaskInventory.I.maskInstances.Count; i < slotCount; i++)
+        {
+            slots[i].GetComponent<WarehouseItemUI>().mask = null;
+            slots[i].GetComponent<Image>().color = Color.white;
+        }
 
     }
 }

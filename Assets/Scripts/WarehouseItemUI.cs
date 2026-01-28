@@ -36,12 +36,18 @@ public class WarehouseItemUI : MonoBehaviour
             //说明这个位置没有面具
             return;
         }
-        MaskInventory.I.maskInstances.Remove(mask);//移出仓库
-        BackPackLogic.I.maskInstances.Add(mask);//加入背包
-        this.mask = null;
-        GetComponent<Image>().color = Color.white;
-        warehouseUI.Refresh();
-        backPackUI.Refresh();
+
+        //超出数量则不能再加
+            if (BackPackLogic.I.maskInstances.Count >= backPackUI.slots.Length)
+            {
+                return;
+            }
+            MaskInventory.I.maskInstances.Remove(mask);//移出仓库
+            BackPackLogic.I.maskInstances.Add(mask);//加入背包
+            this.mask = null;
+            GetComponent<Image>().color = Color.white;
+            warehouseUI.Refresh();
+            backPackUI.Refresh();
         }
         else
         {
