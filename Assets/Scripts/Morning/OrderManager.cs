@@ -11,6 +11,7 @@ public class OrderManager : MonoBehaviour
     public WarehouseUI warehouseUI;
 
     public bool maskChooseState = true;
+    public OrderUIController orderUICont;
     private string currentTargetOrderID;
     private MaskInstance selectedMask;
     public WarehouseItemUI selectedUI;
@@ -44,6 +45,28 @@ public class OrderManager : MonoBehaviour
         // 1. 获取当前的存档数据引用
         SaveData data = MorningGameManager.Instance.currentSaveData;
 
+        //添加第一个记忆订单A
+        if (data.currentDay == 1)
+        {
+            foreach (var template in allOrderTemplates)
+            {
+                if (template.id == MemoryTraitID.A)
+                {
+                    // 防重复检查：防止同一天多次刷新导致重复添加
+                    bool alreadyExists = data.activeOrders.Any(o => o.orderID == template.orderID);
+
+                    if (!alreadyExists)
+                    {
+                        // 3. 创建精简版订单 (只存ID和天数)
+                        template.daysLimit = -4;
+                        OrderData newOrder = new OrderData(template.orderID, template.daysLimit);
+                        data.activeOrders.Add(newOrder);
+                        Debug.Log($"[OrderManager] 新订单已生成: {template.customerName}");
+                    }
+                }
+            }
+        }
+
         // 2. 遍历所有模板，寻找符合今天日期的
         foreach (var template in allOrderTemplates)
         {
@@ -68,6 +91,8 @@ public class OrderManager : MonoBehaviour
 
         // 4. 处理旧订单的时间流逝
         ProcessOrdersTimePass(data);
+        //更新订单状态
+        orderUICont.RefreshOrderList();
     }
 
     // 辅助：让所有存活的订单倒计时 -1，同时处理过期订单
@@ -91,7 +116,7 @@ public class OrderManager : MonoBehaviour
         }
     }
 
-    //处理记忆订单,每次获得记忆earnMemory后执行
+    //处理记忆订单,每次提交记忆订单后执行
     public void nextMemoeyOrder()
     {
         // 1. 获取当前的存档数据引用
@@ -166,7 +191,7 @@ public class OrderManager : MonoBehaviour
         Submitorder(currentTargetOrderID, selectedMask);
         Debug.Log("面具提交成功！");
 
-        // --- C. 结束流程 ---
+        // --- C. 结束选择流程 ---
         CloseAll();
     }
     // ==================================================
@@ -233,6 +258,15 @@ public class OrderManager : MonoBehaviour
             feedbacktext = template.failReviewText;
             Debug.Log($"[结算] 差评！获得 {finalreward}");
         }
+        //刷新下一个记忆订单
+        if (template.ifMemory)
+        {
+            nextMemoeyOrder();
+        }
+        //更新订单状态
+        orderUICont.RefreshOrderList();
+        //更新订单列表状态
+        MorningGameManager.Instance.UpdateUI();
 
         // 5. (基础版暂定) 提交后，无论成功失败，都要消耗掉这个面具
         // 仓库移除提交的面具以及更新UI
@@ -284,23 +318,6 @@ public class OrderManager : MonoBehaviour
     //    findobjectoftype<orderuicontroller>()?.refreshorderlist();
     // todo: 这里可以发送一个事件给 ui，显示 feedbacktext
 
-
-    // 辅助：比对标签
-    private bool CheckTagsMatch(List<string> required, List<string> provided)
-    {
-        // 如果没有要求，直接通过
-        if (required == null || required.Count == 0) return true;
-
-        // 检查 required 里的每一个标签，是否都在 provided 里出现过
-        foreach (var tag in required)
-        {
-            if (!provided.Contains(tag))
-            {
-                return false; // 只要缺一个，就算失败
-            }
-        }
-        return true;
-    }
     #endregion
 
     #region 4. 工具方法：查表 (Rehydration)

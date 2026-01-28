@@ -195,13 +195,13 @@ public class BagManager : MonoBehaviour
         //data.morningInventory.memoryGet.Add(id);
         if (id==data.morningInventory.memoryNight)
         {
-            // 更新记忆订单进度
-            OrderManager.Instance.nextMemoeyOrder();
 
-            // 加到 B (列表长度+1)
+            // memory背包+1
             data.morningInventory.memoryGet.Add(id);
 
             Debug.Log($"获取记忆 {id} ，并从关卡移除了");
+
+            //解锁合成台的对应memory
 
             // 更新memoryUI
             switch (id)

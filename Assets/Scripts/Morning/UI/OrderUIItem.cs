@@ -34,12 +34,13 @@ public class OrderUIItem : MonoBehaviour
         avatarImage.sprite = template.portrait;
 
         // 2. 状态分流
-        // --- A. 进行中 ---
-        if (data.daysRemaining > 0)
+        // --- 记忆订单 ---
+        if (template.ifMemory)
         {
-            timeText.text = $"剩余 <color=red>{data.daysRemaining}</color> 天";
+            //处理记忆订单
+            timeText.text = "记忆订单";
             reviewText.text = template.requirementText;
-            rewardText.text = $"报酬: {template.baseReward}";
+            rewardText.text = $"报酬: {template.baseReward}&&记忆";
 
             //buttonText.text = "提交面具";
             submitButton.interactable = true;
@@ -50,12 +51,13 @@ public class OrderUIItem : MonoBehaviour
                 Debug.Log($"打开仓库，准备提交订单: {template.orderID}");
                 OrderManager.Instance.SubmitOrder(template.orderID);
             });
-        }else if(data.daysRemaining ==-4)
+        }
+        // --- A. 进行中 ---
+        if (data.daysRemaining > 0)
         {
-            //处理记忆订单
-            timeText.text = "记忆订单";
+            timeText.text = $"剩余 <color=red>{data.daysRemaining}</color> 天";
             reviewText.text = template.requirementText;
-            rewardText.text = $"报酬: {template.baseReward}&&记忆";
+            rewardText.text = $"报酬: {template.baseReward}";
 
             //buttonText.text = "提交面具";
             submitButton.interactable = true;

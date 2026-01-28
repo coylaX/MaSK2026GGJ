@@ -80,16 +80,20 @@ public static class SaveManager
 
             // 读档最后，发出广播通知刷新面具UI
             // ?.Invoke 的意思是：如果有人在听，就喊一声；没人听就不喊
-            OnLoadComplete?.Invoke();
+            //OnLoadComplete?.Invoke();
 
             Debug.Log("[SaveManager] 读档成功!");
             return data;
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"[SaveManager] 读档出错 (可能是存档损坏): {e.Message}");
-            // 如果读取出错，为了防止卡死，返回一个新的空存档
+            // 打印详细的堆栈信息，这样你就能看到具体是哪一行报错了
+            Debug.LogError($"[SaveManager] 读档严重错误: {e.Message}\n具体位置: {e.StackTrace}");
+
+            // 出错后返回空存档，防止游戏卡死
             return new SaveData();
+           // Debug.LogError($"[SaveManager] 读档出错 (可能是存档损坏): {e.Message}");
+            // 如果读取出错，为了防止卡死，返回一个新的空存档
         }
 
     }
