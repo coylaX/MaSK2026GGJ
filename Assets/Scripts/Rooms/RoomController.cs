@@ -80,15 +80,15 @@ public class RoomController : MonoBehaviour {
             if (m != null) m.gameObject.SetActive(true);
         }
 
-        // 【新增逻辑】：如果是精英房间且尚未强化过，则挑选一个怪物进行强化
+        // 【修改后】：遍历房间内所有怪物进行强化
         if (isGuaranteedRoom && !buffApplied && monsters.Count > 0) {
-            // 默认强化列表中的第一个怪物，或者你可以随机选一个
-            MonsterBase targetMonster = monsters[0]; 
-            if (targetMonster != null) {
-                ApplyRandomBuffToMonster(targetMonster);
-                buffApplied = true; // 标记已强化，防止重复
-                Debug.Log($"{gameObject.name} 是精英房间，已强化怪物：{targetMonster.name}");
+            foreach (var m in monsters) {
+                if (m != null) {
+                    ApplyRandomBuffToMonster(m);
+                }
             }
+            buffApplied = true; // 标记已强化，防止重复
+            Debug.Log($"{gameObject.name} 是精英房间，已强化该房间内所有怪物（共 {monsters.Count} 个）");
         }
 
         if (navGraph != null) navGraph.BakeWaypoints();
@@ -118,10 +118,14 @@ public class RoomController : MonoBehaviour {
 
     private void SpawnLoot() {
         if (assignedLootPrefab != null && !lootSpawned) {
-            // 在房间正中央生成 (房间根物体的坐标)
-            Instantiate(assignedLootPrefab, transform.position, Quaternion.identity);
+            // 获取全局掉落物容器
+            Transform parent = LevelManager.Instance != null ? LevelManager.Instance.lootContainer : null;
+
+            // 在房间中心生成并设为 parent 的子物体
+            Instantiate(assignedLootPrefab, transform.position, Quaternion.identity, parent);
+            
             lootSpawned = true;
-            Debug.Log($"{gameObject.name} 怪物已清空，战利品已出现！");
+            Debug.Log($"{gameObject.name} 战利品已生成至容器。");
         }
     }
 

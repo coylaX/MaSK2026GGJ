@@ -1681,6 +1681,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356362615}
   m_CullTransparentMesh: 1
+--- !u!1 &1481260876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481260877}
+  m_Layer: 0
+  m_Name: LootContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481260877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481260876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1675852928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,7 +1761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675852928}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.6115272, y: -6.0314264, z: -0.4974708}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1769,7 +1800,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRoomPrefab: {fileID: 6201800372321753773, guid: 72231ba9803cf2f4f87241ab290b010f, type: 3}
   roomPool:
+  - {fileID: 6201800372321753773, guid: 2e8b04f7f9a233b4b92677f6a2a9c7ad, type: 3}
+  - {fileID: 6201800372321753773, guid: 1e189b938f101f343a9e71999b8261d8, type: 3}
   - {fileID: 6201800372321753773, guid: 1d494c52ac690e446a0301bc6ba8c79e, type: 3}
+  - {fileID: 6201800372321753773, guid: 59ada599838372546bfc2de70a0a7f08, type: 3}
+  - {fileID: 6201800372321753773, guid: 2691095cfeaca904e81575818a3a03e5, type: 3}
   additionalRoomCount: 10
   roomSpacing: {x: 16, y: 9}
 --- !u!4 &1703699573
@@ -1805,6 +1840,7 @@ MonoBehaviour:
   combatUIs:
   - {fileID: 747327685}
   - {fileID: 620510703}
+  lootContainer: {fileID: 1481260877}
 --- !u!1 &1740368153
 GameObject:
   m_ObjectHideFlags: 0

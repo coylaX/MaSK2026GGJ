@@ -4,6 +4,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Linq; // <--- 补充这一行
 
 public class SettlementUI : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class SettlementUI : MonoBehaviour
     public Image continueBtnImage;        
     public TextMeshProUGUI continueBtnText; 
 
+    // 在 SettlementUI.cs 中增加一个变量记录当前结算状态
+    private bool currentSettlementIsSuccess;
+
     private void Awake() { Instance = this; }
 
     private void OnEnable()
@@ -67,6 +71,8 @@ public class SettlementUI : MonoBehaviour
 
     public void ShowSettlement(bool isSuccess)
     {
+        currentSettlementIsSuccess = isSuccess; // 记录状态
+
         // 1. 隐藏战斗 UI 和撤离小字
         foreach (GameObject ui in combatUIs) if (ui != null) ui.SetActive(false);
         if (evacSubtitle != null) evacSubtitle.gameObject.SetActive(false);
@@ -178,15 +184,92 @@ public class SettlementUI : MonoBehaviour
         remainingText.text = sb.ToString();
     }
 
+    // 在 SettlementUI 类中修改或添加
     private void OnContinuePressed()
     {
         continueButton.interactable = false;
-        
-        // 彻底清理所有撤离视觉
+
+        // 1. 发送结算广播 (存档/成就系统)
+        if (CollectionManager.Instance != null)
+        {
+            var report = CollectionManager.Instance.GetCurrentReport(currentSettlementIsSuccess);
+            CollectionManager.OnNightEndSummary?.Invoke(report);
+        }
+
+        // 执行自定义重置功能
+        PerformSoftReset();
+
+        // 恢复时间流速
+        Time.timeScale = 1;
+        Debug.Log("<color=green>[系统]</color> 场景软重置完成，已回到起始状态。");
+    }
+
+    private void PerformSoftReset()
+    {
+        // --- 任务 1: 删除 LootContainer 下的所有子物体 ---
+        if (LevelManager.Instance != null && LevelManager.Instance.lootContainer != null)
+        {
+            foreach (Transform child in LevelManager.Instance.lootContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // --- 任务 2: 删除 LevelManager 下的所有子物体 (即删除关卡房间和怪物) ---
+        if (LevelManager.Instance != null)
+        {
+            foreach (Transform child in LevelManager.Instance.transform)
+            {
+                // 注意：不要把 LootContainer 自己删了，如果它是 LevelManager 的子物体的话
+                if (child != LevelManager.Instance.lootContainer)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+
+        // --- 任务 3: 把 Canvas 下的所有子物体及其深层子物体都设为 Active ---
+        // 假设你的脚本挂在 Canvas 的某个物体上，或者直接找场景中的 Canvas
+        Canvas mainCanvas = GetComponentInParent<Canvas>();
+        if (mainCanvas != null)
+        {
+            // GetComponentsInChildren(true) 会包含隐藏的物体
+            Transform[] allUITransforms = mainCanvas.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in allUITransforms)
+            {
+                // 排除 Canvas 自身，只激活子物体
+                if (t != mainCanvas.transform)
+                {
+                    t.gameObject.SetActive(true);
+                }
+            }
+            
+            // 额外提醒：结算面板 settlementPanel 应该在激活后立即手动隐藏，否则第二天早上会挡住屏幕
+            if (settlementPanel != null) settlementPanel.SetActive(false);
+        }
+
+        // --- 任务 4: 把 MainPlayer 和 MainCamera 重新移回 (0,0) ---
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            player.transform.position = Vector3.zero;
+        }
+
+        if (Camera.main != null)
+        {
+            // 2D 场景中摄像机的 Z 轴通常保持为 -10
+            Camera.main.transform.position = new Vector3(0, 0, -10f);
+            
+            // 如果你有 CameraManager，建议调用它的复位方法
+            if (CameraManager.Instance != null)
+            {
+                CameraManager.Instance.SwitchToRoom(Vector3.zero);
+            }
+        }
+
+        // 特别清理：隐藏撤离过程中的白光和字幕
         if (evacWhiteFilter != null) evacWhiteFilter.gameObject.SetActive(false);
         if (evacSubtitle != null) evacSubtitle.gameObject.SetActive(false);
-
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (settlementPanel != null) settlementPanel.gameObject.SetActive(false);
     }
 }

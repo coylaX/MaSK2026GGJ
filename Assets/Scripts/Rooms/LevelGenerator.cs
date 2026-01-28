@@ -26,7 +26,7 @@ public class LevelGenerator : MonoBehaviour {
     }
 
     void Start() {
-        GenerateLevel();
+        //GenerateLevel();
     }
 
     [ContextMenu("Generate New Level")] // 允许你在编辑器模式下右键脚本测试

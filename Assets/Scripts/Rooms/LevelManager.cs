@@ -14,6 +14,10 @@ public class LevelManager : MonoBehaviour {
     [Header("UI 自动管理")]
     public List<GameObject> combatUIs; // 拖入需要开局显示的 UI
 
+    // 在 LevelManager.cs 中添加
+    [Header("容器引用")]
+    public Transform lootContainer; // 在 Inspector 中拖入一个名为 "LootContainer" 的空物体
+
     void Awake() { Instance = this; }
 
     public void InitializeDungeon() {

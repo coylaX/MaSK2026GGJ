@@ -87,7 +87,11 @@ public class MonsterBase : MonoBehaviour {
         
         if (UnityEngine.Random.value <= dropChance) {
             if (emotionLootPrefab != null) {
-                Instantiate(emotionLootPrefab, transform.position, Quaternion.identity);
+                // 获取全局掉落物容器
+                Transform parent = LevelManager.Instance != null ? LevelManager.Instance.lootContainer : null;
+                
+                // 使用带 parent 参数的重载
+                Instantiate(emotionLootPrefab, transform.position, Quaternion.identity, parent);
             }
         }
 
