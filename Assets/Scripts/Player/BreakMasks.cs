@@ -8,6 +8,8 @@ public class BreakMasks : MonoBehaviour
     public float addspeed;
     [Header("亡语增加的单位生命")]
     public float addHealth;
+    [Header("面具UI")]
+    public GameObject MaskUI;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -19,6 +21,7 @@ public class BreakMasks : MonoBehaviour
     // 撕毁面具方法
     private void TearMask()
     {
+        
         //调用亡语效果
         if (GetComponent<MaskRead>().currentMask == null)
         {
@@ -57,7 +60,9 @@ public class BreakMasks : MonoBehaviour
                 break;
         }
 
-        GetComponent<MaskRead>().MaskNum += 1;//
+        //移出面具，UI同步更改
+        BackPackLogic.I.maskInstances.Remove(GetComponent<MaskRead>().currentMask);
+        MaskUI.GetComponent<MaskUI>().Refresh();
 
 
 

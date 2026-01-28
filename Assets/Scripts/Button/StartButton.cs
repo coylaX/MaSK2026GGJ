@@ -6,10 +6,8 @@ using UnityEngine.UI;
 public class StartButton : MonoBehaviour
 {
    public GameObject[] shixiaoGOs;
-   public GameObject[] dongjieGOs;
-    public GameObject PLAYER;
-    public GameObject HPBar1;
-    public GameObject HPBar2;
+   public GameObject[] activeGOs;
+    
     public void onClick()
     {
         if (BackPackLogic.I.maskInstances.Count < 3)
@@ -21,14 +19,11 @@ public class StartButton : MonoBehaviour
             if (go != null)
                 go.SetActive(false);
         }
-        foreach (var go in dongjieGOs)
+        foreach (var go in activeGOs)
         {
             if (go != null)
-                go.GetComponent<Button>().interactable = false;
+                go.SetActive(true);
         }
-        PLAYER.SetActive(true);
-        PLAYER.GetComponent<MaskRead>().onStart();
-        HPBar1.SetActive(true);
-        HPBar2.SetActive(true);
+       
     }
 }

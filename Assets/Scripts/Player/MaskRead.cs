@@ -6,16 +6,16 @@ public class MaskRead : MonoBehaviour
 {
    
     public MaskInstance currentMask;
-    public int MaskNum;
+    
     public void onStart()
     {
-        MaskNum = 1;
+       
         
     }
     private void Update()
     {
         //撕面具masknum-1
-        if (MaskNum > 3)
+        if (BackPackLogic.I.maskInstances.Count == 0)
         {
             //面具撕完了
             GetComponent<PlayerAttack1>().isHappy = false;
@@ -26,7 +26,7 @@ public class MaskRead : MonoBehaviour
             currentMask = null;
             return;
         }
-        currentMask = BackPackLogic.I.maskInstances[MaskNum-1];
+        currentMask = BackPackLogic.I.maskInstances[0];
         Debug.Log(currentMask);
         //加载武器相关
         switch (currentMask.emotionTraitID)
