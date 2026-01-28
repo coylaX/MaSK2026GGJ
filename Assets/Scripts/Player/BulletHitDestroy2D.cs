@@ -32,7 +32,7 @@ public class BulletHitDestroy2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (IsIgnored(other.gameObject)) return;
 
         //距离相关buff具体实现功能
         if (PlayerBuff.PlayerBuffInstance.attackFarEnemy)
@@ -74,19 +74,25 @@ public class BulletHitDestroy2D : MonoBehaviour
             }
         }
 
+        Debug.Log("原初"+damage);
+        Debug.Log(other.gameObject);
         if (PlayerBuff.PlayerBuffInstance.baoxue)
         {
             damage *= PlayerBuff.PlayerBuffInstance.baoxueBeilv;
+            Debug.Log(11);
+            Debug.Log("变化" + damage);
+            
         }
 
         if (!destroyOnTrigger) return;
         if (other == null) return;
         if (other.gameObject == gameObject) return;
-        if (IsIgnored(other.gameObject)) return;
+       
         //如果碰到怪物就掉血
         if (other.GetComponent<MonsterBase>())
         {
             Vector2 hitPoint = other.ClosestPoint(transform.position);
+            Debug.Log("伤害之前" + damage);
             other.GetComponent<MonsterBase>().TakeDamage(damage,hitPoint);
         }
         //有穿透buff不销毁

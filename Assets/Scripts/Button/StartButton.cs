@@ -7,6 +7,7 @@ public class StartButton : MonoBehaviour
 {
    public GameObject[] shixiaoGOs;
    public GameObject[] activeGOs;
+    public LevelGenerator generator;
     
     public void onClick()
     {
@@ -24,6 +25,6 @@ public class StartButton : MonoBehaviour
             if (go != null)
                 go.SetActive(true);
         }
-       
+        generator.GenerateLevel();
     }
 }

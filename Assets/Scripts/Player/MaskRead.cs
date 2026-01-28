@@ -12,8 +12,12 @@ public class MaskRead : MonoBehaviour
        
         
     }
+    public int baoxuenum;
+    public int invincibleNum;
+    public int bombAddNum;
     private void Update()
     {
+
         //撕面具masknum-1
         if (BackPackLogic.I.maskInstances.Count == 0)
         {
@@ -60,17 +64,30 @@ public class MaskRead : MonoBehaviour
         switch (currentMask.memoryTraitID)
         {
             case MemoryTraitID.A:
-                PlayerBuff.PlayerBuffInstance.isInvinvible = true;
+                if (invincibleNum == 0)
+                {
+                    PlayerBuff.PlayerBuffInstance.isInvinvible = true;
+                    invincibleNum++;
+                }
+                
                 //无敌五秒
                 break;
             case MemoryTraitID.B:
                 //扣除血量伤害翻倍
                 PlayerBuff.PlayerBuffInstance.baoxue = true;
-                GetComponent<SleepHealth>().currentSleep -= 50;
+                if (baoxuenum == 0) {
+                    GetComponent<SleepHealth>().currentSleep/=2;
+                    baoxuenum += 1;
+                }
+                
                 break;
             case MemoryTraitID.C:
                 //获得三枚炸弹
-                GetComponent<UseBomb>().bombNum += 3;
+                if (bombAddNum == 0)
+                {
+                    GetComponent<UseBomb>().bombNum +=3;
+                    bombAddNum += 1;
+                }
                 break;
         }
     }

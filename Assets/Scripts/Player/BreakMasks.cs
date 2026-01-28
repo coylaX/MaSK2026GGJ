@@ -21,7 +21,9 @@ public class BreakMasks : MonoBehaviour
     // 撕毁面具方法
     private void TearMask()
     {
-        
+        GetComponent<MaskRead>().invincibleNum = 0;
+        GetComponent<MaskRead>().baoxuenum = 0;
+        GetComponent<MaskRead>().bombAddNum = 0;
         //调用亡语效果
         if (GetComponent<MaskRead>().currentMask == null)
         {
