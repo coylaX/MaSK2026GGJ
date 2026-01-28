@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 4133332378678176837}
   - component: {fileID: 638475128}
   - component: {fileID: 638475129}
+  - component: {fileID: 8744284866026613914}
+  - component: {fileID: 1899134185925431973}
   m_Layer: 10
   m_Name: MainPlayer
   m_TagString: Player
@@ -80,7 +82,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1972186637
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f87bfc29686e4a844a778e224d77bccb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -263,6 +265,46 @@ MonoBehaviour:
     memoryTraitID: 0
     colorTraitID: 0
   MaskNum: 0
+--- !u!114 &8744284866026613914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23b478c629992a4cbcde61388877a75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackFarEnemy: 0
+  farDis: 7
+  AttackBeilvfar: 2
+  attackCloseEnemy: 0
+  closeDis: 3
+  AttackBeilvclose: 2
+  bulletPenetrate: 0
+  breakEnemyBullet: 0
+  isInvinvible: 0
+  invincibleTime: 5
+  baoxue: 0
+  baoxueBeilv: 2
+--- !u!114 &1899134185925431973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9410594a767034a49875324ee6800902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombNum: 0
+  bombPrefab: {fileID: 2941376743148546588, guid: c8b5cdb718c14f945850d6f812cd5cde, type: 3}
+  bombKey: 324
+  cooldown: 0.3
 --- !u!1 &6333327996232467872
 GameObject:
   m_ObjectHideFlags: 0
