@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CollectionManager : MonoBehaviour
 {
@@ -78,5 +79,33 @@ public class CollectionManager : MonoBehaviour
     public bool HasMemory(MemoryTraitID trait)
     {
         return collectedMemories.Contains(trait);
+    }
+
+    // 【新功能】：处理死亡损失
+    public void HandleDeathLoss()
+    {
+        // 损失所有记忆
+        collectedMemories.Clear();
+
+        // 随机损失一半情绪
+        int totalEmotions = 0;
+        foreach (var count in emotionCounts.Values) totalEmotions += count;
+
+        int toRemove = totalEmotions / 2;
+
+        for (int i = 0; i < toRemove; i++)
+        {
+            // 这里使用了 LINQ 语法，所以需要 System.Linq
+            var availableKeys = emotionCounts
+                .Where(kvp => kvp.Value > 0)
+                .Select(kvp => kvp.Key)
+                .ToList();
+            
+            if (availableKeys.Count > 0)
+            {
+                EmotionTraitID target = availableKeys[Random.Range(0, availableKeys.Count)];
+                emotionCounts[target]--;
+            }
+        }
     }
 }

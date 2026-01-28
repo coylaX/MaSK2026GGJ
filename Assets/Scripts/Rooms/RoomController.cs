@@ -18,6 +18,40 @@ public class RoomController : MonoBehaviour {
     public bool isGuaranteedRoom = false; // 是否为必定生成战利品的房间
     private bool buffApplied = false;
 
+    [Header("位置锚点")]
+    public Transform doorTop;
+    public Transform doorBottom;
+    public Transform doorLeft;
+    public Transform doorRight;
+
+    [Space]
+    public Transform spawnTop;
+    public Transform spawnBottom;
+    public Transform spawnLeft;
+    public Transform spawnRight;
+
+    // 根据方向获取门的位置
+    public Transform GetDoorPoint(Door.Dir dir) {
+        switch (dir) {
+            case Door.Dir.North: return doorTop;
+            case Door.Dir.South: return doorBottom;
+            case Door.Dir.West:  return doorLeft;
+            case Door.Dir.East:  return doorRight;
+            default: return null;
+        }
+    }
+
+    // 根据方向获取玩家生成点
+    public Transform GetSpawnPoint(Door.Dir dir) {
+        switch (dir) {
+            case Door.Dir.North: return spawnTop;
+            case Door.Dir.South: return spawnBottom;
+            case Door.Dir.West:  return spawnLeft;
+            case Door.Dir.East:  return spawnRight;
+            default: return null;
+        }
+    }
+
     void Awake() {
         navGraph = GetComponent<RoomNavGraph>();
         MonsterBase[] mbs = GetComponentsInChildren<MonsterBase>(true);
@@ -29,23 +63,19 @@ public class RoomController : MonoBehaviour {
     }
 
     public void ActivateRoom() {
-        if (state == RoomState.Cleared || state == RoomState.Active) return;
-
-        state = RoomState.Active;
-        if (MiniMapManager.Instance != null) MiniMapManager.Instance.UpdateCurrentRoom(this);
-
-        // 唤醒怪物
-        foreach (var m in monsters) {
-            if (m != null) {
-                m.gameObject.SetActive(true);
-                // 【新功能】：如果是保底房间，激活时施加增益
-                if (isGuaranteedRoom && !buffApplied) {
-                    ApplyRandomBuffToMonster(m);
-                }
-            }
+        // 【核心修复】：只要玩家进入房间，无论房间是什么状态，都必须先更新小地图
+        if (MiniMapManager.Instance != null) {
+            MiniMapManager.Instance.UpdateCurrentRoom(this);
         }
-        buffApplied = true;
 
+        // 如果房间已经激活过或已清空，后续的怪物生成逻辑才跳过
+        if (state == RoomState.Cleared || state == RoomState.Active) {
+            return; 
+        }
+
+        // 第一次进入未探索房间的逻辑...
+        state = RoomState.Active;
+        foreach (var m in monsters) if (m != null) m.gameObject.SetActive(true);
         if (navGraph != null) navGraph.BakeWaypoints();
         CheckDoors();
     }

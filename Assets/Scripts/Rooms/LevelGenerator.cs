@@ -74,11 +74,16 @@ public class LevelGenerator : MonoBehaviour {
 
     private GameObject PlaceRoom(GameObject prefab, Vector2Int coord) {
         Vector3 worldPos = new Vector3(coord.x * roomSpacing.x, coord.y * roomSpacing.y, 0);
-        GameObject room = Instantiate(prefab, worldPos, Quaternion.identity, transform);
+        GameObject roomObj = Instantiate(prefab, worldPos, Quaternion.identity, transform);
         
+        // 【关键修改】：如果是第一个坐标(0,0)，赋值给 startRoom 引用
+        if (coord == Vector2Int.zero) {
+            startRoom = roomObj.GetComponent<RoomController>();
+        }
+
         occupiedCoords.Add(coord);
-        spawnedRooms.Add(room);
-        return room;
+        spawnedRooms.Add(roomObj);
+        return roomObj;
     }
 
     public void ClearLevel() {
