@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BackItemUI : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class BackItemUI : MonoBehaviour
        MaskInventory.I.maskInstances.Add(mask);//移出仓库
         BackPackLogic.I.maskInstances.Remove(mask);//加入背包
         mask = null;
+        GetComponent<Image>().color = Color.white;
         warehouseUI.Refresh();
         backPackUI.Refresh();
     }

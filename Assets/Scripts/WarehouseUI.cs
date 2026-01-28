@@ -13,9 +13,11 @@ public class WarehouseUI : MonoBehaviour
     public GameObject[] slots;   // 在Inspector按顺序拖入：Slot0, Slot1, Slot2...
 
     [Header("Placeholder")]
-    public Sprite placeholderSprite;     // 没美术就留空，或者用一个默认图
+    public Sprite XI;     // 没美术就留空，或者用一个默认图
+    public Sprite NU;
+    public Sprite AI;
+    public Sprite LE;
 
-   
 
     public void Refresh()
     {
@@ -39,12 +41,52 @@ public class WarehouseUI : MonoBehaviour
         for (int i = 0; i < showCount; i++)
         {
             MaskInstance mask = MaskInventory.I.maskInstances[i];
-            slots[i].GetComponent<Image>().sprite = placeholderSprite;//目前只有一张图
+            switch (mask.emotionTraitID)
+            {
+                case EmotionTraitID.None:
+                    break;
+                case EmotionTraitID.XI:
+                    slots[i].GetComponent<Image>().sprite = XI;
+                    break;
+                case EmotionTraitID.NU:
+                    slots[i].GetComponent<Image>().sprite = NU;
+                    break;
+                case EmotionTraitID.AI:
+                    slots[i].GetComponent<Image>().sprite = AI;
+                    break;
+                case EmotionTraitID.LE:
+                    slots[i].GetComponent<Image>().sprite = LE;
+                    break;
+            }
+            switch (mask.colorTraitID)
+            {
+                case ColorTraitID.None:
+                    slots[i].GetComponent<Image>().color = Color.white;
+                    break;
+                case ColorTraitID.RED:
+                    slots[i].GetComponent<Image>().color = Color.red;
+                    break;
+                case ColorTraitID.YELLOW:
+                    slots[i].GetComponent<Image>().color = Color.yellow;
+                    break;
+                case ColorTraitID.BLUE:
+                    slots[i].GetComponent<Image>().color = Color.blue;
+                    break;
+                case ColorTraitID.GREEN:
+                    slots[i].GetComponent<Image>().color = Color.green;
+                    break;
+                case ColorTraitID.BLACK:
+                    slots[i].GetComponent<Image>().color = Color.gray;
+                    break;
+                case ColorTraitID.WHITE:
+                    slots[i].GetComponent<Image>().color = Color.white;
+                    break;
+            }
             slots[i].GetComponent<WarehouseItemUI>().mask = mask;
         }
 
         // 3) 如果仓库比slot多，你可以先debug提示（后面做分页/滚动）
-       
+
     }
 }
 
