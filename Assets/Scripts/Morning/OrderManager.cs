@@ -13,6 +13,7 @@ public class OrderManager : MonoBehaviour
     public bool maskChooseState = true;
     private string currentTargetOrderID;
     private MaskInstance selectedMask;
+    public WarehouseItemUI selectedUI;
     [Header("提交的UI 组件")]
     public GameObject selectionOverlayPanel; // 全屏遮罩
     public GameObject confirmPopupPanel;     // 确认弹窗
@@ -236,6 +237,8 @@ public class OrderManager : MonoBehaviour
         // 5. (基础版暂定) 提交后，无论成功失败，都要消耗掉这个面具
         // 仓库移除提交的面具以及更新UI
         MaskInventory.I.maskInstances.Remove(mask);
+        selectedUI.mask = null;
+        selectedUI.GetComponent<Image>().color = Color.white;
         warehouseUI.Refresh();
         //提交订单获得的资金
         BagManager.Instance.EarnPigment(finalreward);

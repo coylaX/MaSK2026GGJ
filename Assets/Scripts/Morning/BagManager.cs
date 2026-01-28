@@ -233,7 +233,7 @@ public class BagManager : MonoBehaviour
     #region 合成消耗资源（绑定到合成Button上）
     public bool CraftUse(EmotionTraitID id)
     {
-        if (!EarnPigment(-5))
+        if (!EarnPigment(-2))
             return false;
         if (!EarnEmotion(id, -1))
             return false;

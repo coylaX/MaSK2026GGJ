@@ -46,6 +46,7 @@ public class WarehouseItemUI : MonoBehaviour
         else
         {
             OrderManager.Instance.OnMaskSelected(mask);
+            OrderManager.Instance.selectedUI = this;
         }
     }
 }
