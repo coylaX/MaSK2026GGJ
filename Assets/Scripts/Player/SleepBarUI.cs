@@ -3,32 +3,26 @@ using UnityEngine.UI;
 
 public class SleepBarUI : MonoBehaviour
 {
-    public SleepHealth target; // 玩家身上的 SleepHealth
-    public Slider slider;      // UI条
+    [Header("Data")]
+    public SleepHealth target;   // 玩家身上的 SleepHealth
+
+    [Header("UI")]
+    public Image fillImage;      // 血条填充图（Image Type = Filled）
 
     private void Awake()
     {
-        if (slider == null) slider = GetComponent<Slider>();
-    }
-
-    private void Start()
-    {
-        if (target != null && slider != null)
-        {
-            slider.minValue = 0f;
-            slider.maxValue = target.maxSleep;
-            slider.value = target.currentSleep;
-        }
+        if (fillImage == null)
+            fillImage = GetComponent<Image>();
     }
 
     private void Update()
     {
-        if (target == null || slider == null) return;
+        if (target == null || fillImage == null) return;
 
-        // 如果 maxSleep 会变，确保条的上限同步
-        if (slider.maxValue != target.maxSleep)
-            slider.maxValue = target.maxSleep;
+        float max = target.maxSleep;
+        float cur = target.currentSleep;
 
-        slider.value = target.currentSleep;
+        float normalized = (max <= 0f) ? 0f : Mathf.Clamp01(cur / max);
+        fillImage.fillAmount = normalized;
     }
 }

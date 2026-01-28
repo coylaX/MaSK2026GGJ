@@ -23,6 +23,7 @@ public class MaskRead : MonoBehaviour
             GetComponent<PlayerAttack1>().isSad = false;
             GetComponent<PlayerAttack1>().isMachineGun = false;
             GetComponent<PlayerAttack1>().prefab = null;
+            currentMask = null;
             return;
         }
         currentMask = BackPackLogic.I.maskInstances[MaskNum-1];
@@ -55,5 +56,23 @@ public class MaskRead : MonoBehaviour
                 GetComponent<PlayerAttack1>().isSad = false;
                 break;
         }
+        //上记忆相关buff
+        switch (currentMask.memoryTraitID)
+        {
+            case MemoryTraitID.A:
+                PlayerBuff.PlayerBuffInstance.isInvinvible = true;
+                //无敌五秒
+                break;
+            case MemoryTraitID.B:
+                //扣除血量伤害翻倍
+                PlayerBuff.PlayerBuffInstance.baoxue = true;
+                GetComponent<SleepHealth>().currentSleep -= 50;
+                break;
+            case MemoryTraitID.C:
+                //获得三枚炸弹
+                GetComponent<UseBomb>().bombNum += 3;
+                break;
+        }
     }
+   
 }

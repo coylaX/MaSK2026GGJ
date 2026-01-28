@@ -39,8 +39,21 @@ public class SleepHealth : MonoBehaviour
 
     private void Update()
     {
+
+
         if (IsDead) return;
         if (drainPerSecond > 0f) ChangeSleep(-drainPerSecond * Time.deltaTime);
+        if (PlayerBuff.PlayerBuffInstance.isInvinvible)
+        {
+            isInvincible = true;
+            PlayerBuff.PlayerBuffInstance.invincibleTime -= Time.deltaTime;
+            if (PlayerBuff.PlayerBuffInstance.invincibleTime <= 0f)
+            {
+                isInvincible = false;
+                PlayerBuff.PlayerBuffInstance.isInvinvible = false;
+            }
+            //补一个五秒timer
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) => HandleCollision(other.gameObject);

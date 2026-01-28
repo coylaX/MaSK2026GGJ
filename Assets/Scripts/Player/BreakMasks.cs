@@ -16,24 +16,36 @@ public class BreakMasks : MonoBehaviour
         }
     }
 
-    // 撕毁面具方法（先留空，之后你再补逻辑）
+    // 撕毁面具方法
     private void TearMask()
     {
         //调用亡语效果
+        if (GetComponent<MaskRead>().currentMask == null)
+        {
+            return;
+        }
+        //撕面具掉1/3血量上限
+        
+        GetComponent<SleepHealth>().maxSleep -= 33;
+        Debug.Log(11);
         
         switch (GetComponent<MaskRead>().currentMask.colorTraitID)
         {
             case ColorTraitID.RED:
-                //减少攻速，对范围小于5的敌人大幅提高攻击力
+                //对范围小于5的敌人大幅提高攻击力
+                PlayerBuff.PlayerBuffInstance.attackCloseEnemy = true;
                 break;
             case ColorTraitID.YELLOW:
                 //后续武器攻击可以抵消敌人弹幕
+                PlayerBuff.PlayerBuffInstance.breakEnemyBullet = true;
                 break;
             case ColorTraitID.BLUE:
                 //子弹穿透亡语
+                PlayerBuff.PlayerBuffInstance.bulletPenetrate = true;
                 break;
             case ColorTraitID.GREEN:
                 //后续武器对越远的敌人造成伤害更高
+                PlayerBuff.PlayerBuffInstance.attackFarEnemy = true;
                 break;
             case ColorTraitID.BLACK:
                 //加移速亡语
