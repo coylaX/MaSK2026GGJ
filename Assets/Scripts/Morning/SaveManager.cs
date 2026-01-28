@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 using System.IO; // 必须引用，用于读写文件
 
 // --- 文件名: SaveManager.cs ---
@@ -8,6 +10,8 @@ public static class SaveManager
     // 定义存档文件的名称
     private static readonly string SAVE_FILE_NAME = "GameSaveData.json";
 
+    // 定义一个静态事件：当读档完成时触发
+    public static event Action OnLoadComplete;
     #region 1. 获取存档路径
     // ==========================================
     // 获取当前设备上的安全存档路径
@@ -26,6 +30,10 @@ public static class SaveManager
     // ==========================================
     public static void Save(SaveData data)
     {
+        // 把当前场景中仓库里的面具数据，同步给存档对象
+        data.maskInventoryList = new List<MaskInstance>(MaskInventory.I.maskInstances);
+        data.backPackList = new List<MaskInstance>(BackPackLogic.I.maskInstances);
+
         try
         {
             // 1. 序列化：把对象变成文本
@@ -67,6 +75,13 @@ public static class SaveManager
             // 3. 反序列化：把文本变回对象
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
+            // 把存档里的面具数据，还原给单例仓库，并且刷新UI。注意，只读取仓库的面具，没有背包的面具！
+            MaskInventory.I.maskInstances = new List<MaskInstance>(data.maskInventoryList);
+
+            // 读档最后，发出广播通知刷新面具UI
+            // ?.Invoke 的意思是：如果有人在听，就喊一声；没人听就不喊
+            OnLoadComplete?.Invoke();
+
             Debug.Log("[SaveManager] 读档成功!");
             return data;
         }
@@ -76,6 +91,7 @@ public static class SaveManager
             // 如果读取出错，为了防止卡死，返回一个新的空存档
             return new SaveData();
         }
+
     }
     #endregion
 

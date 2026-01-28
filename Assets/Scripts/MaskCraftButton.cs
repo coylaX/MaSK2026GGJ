@@ -40,6 +40,9 @@ public class MaskCraftButton : MonoBehaviour
         memoryTrait = memory.GetComponent<MemorySource>().memoryTraitID;
         colorTrait = color.GetComponent<ColorSource>().colorTraitID;
 
+        //消耗对应数量的资源
+        if (!BagManager.Instance.CraftUse(emotionTrait))
+            return;
         
 
         var instance = new MaskInstance(Guid.NewGuid().ToString("N"), "xxx",emotionTrait,memoryTrait,colorTrait);

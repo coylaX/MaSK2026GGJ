@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 [CreateAssetMenu(fileName = "NewOrderTemplate", menuName = "Game/Order Template")]
 public class OrderTemplate : ScriptableObject
 {
-    private MemoryTraitID memoryTraitID;
+    
+    
 
     [Header("核心数据")]
     public string orderID;      // 比如 "ORDER_001" (唯一ID)
@@ -22,11 +24,13 @@ public class OrderTemplate : ScriptableObject
     public int daysLimit;       // 期限
     public int baseReward;      // 报酬
     public int appearOnDay;     // 第几天出现
-    public bool ifMemory; //是否获得Memory
+    public bool ifMemory; //是否获得Memory，勾选了下一项才有用
     public MemoryTraitID id; //对应获得的Memory
 
-    [Header("判定与反馈")]
-    public List<string> tags;   // 需求标签，如 ["Happy", "Blue"]
+    [Header("面具判定与反馈")]
+    public MemoryTraitID memoryTraitID;
+    public ColorTraitID colorTraitID;
+    public EmotionTraitID emotionTraitID;
 
     [TextArea] public string successReviewText; // 好评
     [TextArea] public string failReviewText;    // 差评

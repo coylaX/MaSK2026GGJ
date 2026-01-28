@@ -48,7 +48,23 @@ public class OrderUIItem : MonoBehaviour
             submitButton.onClick.RemoveAllListeners();
             submitButton.onClick.AddListener(() => {
                 Debug.Log($"打开仓库，准备提交订单: {template.orderID}");
-                // TODO: 在这里调用面具选择界面
+                OrderManager.Instance.SubmitOrder(template.orderID);
+            });
+        }else if(data.daysRemaining ==-4)
+        {
+            //处理记忆订单
+            timeText.text = "记忆订单";
+            reviewText.text = template.requirementText;
+            rewardText.text = $"报酬: {template.baseReward}&&记忆";
+
+            //buttonText.text = "提交面具";
+            submitButton.interactable = true;
+            submitButton.image.color = activeBtnColor;
+
+            submitButton.onClick.RemoveAllListeners();
+            submitButton.onClick.AddListener(() => {
+                Debug.Log($"打开仓库，准备提交订单: {template.orderID}");
+                OrderManager.Instance.SubmitOrder(template.orderID);
             });
         }
         // --- B. 已完成 (好评 -1 或 差评 -3) ---

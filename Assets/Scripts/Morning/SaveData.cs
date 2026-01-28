@@ -21,6 +21,13 @@ public class SaveData
     // ==========================================
     public List<OrderData> activeOrders;
 
+    // 4. 面具仓库数据 ---
+    // 对应 MaskInventory 中的数据
+    public List<MaskInstance> maskInventoryList;
+
+    // 对应 BackPackLogic 中的数据
+    public List<MaskInstance> backPackList;
+
     // ==========================================
     // 构造函数 (初始化)
     // 当 SaveManager 创建“新游戏”时，会调用这个
@@ -35,5 +42,9 @@ public class SaveData
 
         // 初始化订单列表 (必须 new 出来，否则是 null)
         activeOrders = new List<OrderData>();
+
+        // 初始化面具仓库，防止 null 报错 ---
+        maskInventoryList = new List<MaskInstance>();
+        backPackList = new List<MaskInstance>();
     }
 }

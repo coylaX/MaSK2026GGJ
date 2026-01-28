@@ -112,9 +112,11 @@ public class MorningGameManager : MonoBehaviour
     private void LoadGame()
     {
         currentSaveData = SaveManager.Load();
-
+        
         Debug.Log($"[数据加载] 载入完成。当前天数: {currentSaveData.currentDay}, " +
                   $"颜料: {currentSaveData.morningInventory.pigmentAmount}");
+        //更新游戏UI
+        BagManager.Instance.RefreshBagUI();
     }
 
     // ==========================================
@@ -142,4 +144,8 @@ public class MorningGameManager : MonoBehaviour
         currentSaveData.morningInventory.pigmentAmount += 100;
         Debug.Log("作弊成功：颜料 +100");
     }
+
+    #region 辅助功能，调节数量
+
+    #endregion
 }

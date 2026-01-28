@@ -1,17 +1,31 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; // ÓÃÓÚ¼ò»¯ÁĞ±í²éÑ¯´úÂë
+using System.Linq;
+using TMPro;
+using UnityEngine.UI; // ç”¨äºç®€åŒ–åˆ—è¡¨æŸ¥è¯¢ä»£ç 
 
 public class OrderManager : MonoBehaviour
 {
     public static OrderManager Instance;
 
-    #region 1. ÍêÕûµÄ¶©µ¥ÁĞ±í£¬°üº¬ËùÓĞOrder£¬Äã¿ÉÒÔÔÚInspectorÖĞÔö¼Óorder
+    public WarehouseUI warehouseUI;
+
+    public bool maskChooseState = true;
+    private string currentTargetOrderID;
+    private MaskInstance selectedMask;
+    [Header("æäº¤çš„UI ç»„ä»¶")]
+    public GameObject selectionOverlayPanel; // å…¨å±é®ç½©
+    public GameObject confirmPopupPanel;     // ç¡®è®¤å¼¹çª—
+    public TextMeshProUGUI confirmText;      // (å¯é€‰) å¼¹çª—ä¸Šçš„æ–‡å­—ï¼Œæ˜¾ç¤ºé¢å…·å
+    //public Button exitMaskSubmit; //é€€å‡ºé¢å…·æäº¤çš„æŒ‰é’®ï¼Œè§¦å‘CloseAll()
+
+
+    #region 1. å®Œæ•´çš„è®¢å•åˆ—è¡¨ï¼ŒåŒ…å«æ‰€æœ‰Orderï¼Œä½ å¯ä»¥åœ¨Inspectorä¸­å¢åŠ order
     // ==========================================
-    // ÕâÀïµÄÁĞ±íÏàµ±ÓÚ¡°×Öµä¡±£¬´æ·ÅÓÎÏ·ÖĞËùÓĞ¿ÉÄÜ³öÏÖµÄ¶©µ¥ÅäÖÃ
-    // ÇëÔÚ Unity ±à¼­Æ÷Àï°Ñ×öºÃµÄ OrderTemplate ÎÄ¼şÍÏ½øÈ¥
+    // è¿™é‡Œçš„åˆ—è¡¨ç›¸å½“äºâ€œå­—å…¸â€ï¼Œå­˜æ”¾æ¸¸æˆä¸­æ‰€æœ‰å¯èƒ½å‡ºç°çš„è®¢å•é…ç½®
+    // è¯·åœ¨ Unity ç¼–è¾‘å™¨é‡ŒæŠŠåšå¥½çš„ OrderTemplate æ–‡ä»¶æ‹–è¿›å»
     // ==========================================
-    [Header("¶©µ¥Êı¾İ¿â")]
+    [Header("è®¢å•æ•°æ®åº“")]
     public List<OrderTemplate> allOrderTemplates;
 
     private void Awake()
@@ -20,147 +34,288 @@ public class OrderManager : MonoBehaviour
     }
     #endregion
 
-    #region 2. ºËĞÄÂß¼­£ºË¢ĞÂÃ¿ÈÕ¶©µ¥
+    #region 2. æ ¸å¿ƒé€»è¾‘ï¼šåˆ·æ–°æ¯æ—¥è®¢å•
     // ==========================================
-    // Ã¿ÌìÔçÉÏµ÷ÓÃ£¬¼ì²éÓĞÄÄĞ©¶©µ¥Ó¦¸Ã½ñÌì³öÏÖ
+    // æ¯å¤©æ—©ä¸Šè°ƒç”¨ï¼Œæ£€æŸ¥æœ‰å“ªäº›è®¢å•åº”è¯¥ä»Šå¤©å‡ºç°
     // ==========================================
     public void RefreshDailyOrders(int currentDay)
     {
-        // 1. »ñÈ¡µ±Ç°µÄ´æµµÊı¾İÒıÓÃ
+        // 1. è·å–å½“å‰çš„å­˜æ¡£æ•°æ®å¼•ç”¨
         SaveData data = MorningGameManager.Instance.currentSaveData;
 
-        // 2. ±éÀúËùÓĞÄ£°å£¬Ñ°ÕÒ·ûºÏ½ñÌìÈÕÆÚµÄ
+        // 2. éå†æ‰€æœ‰æ¨¡æ¿ï¼Œå¯»æ‰¾ç¬¦åˆä»Šå¤©æ—¥æœŸçš„
         foreach (var template in allOrderTemplates)
         {
+            if (template.ifMemory)
+            {
+                continue; // ğŸ‘ˆ é‡åˆ°è¿™å¥ï¼Œç›´æ¥è·³å›ç¬¬ä¸€è¡Œ foreachï¼Œå–ä¸‹ä¸€ä¸ªå€¼
+            }
             if (template.appearOnDay == currentDay)
             {
-                // ·ÀÖØ¸´¼ì²é£º·ÀÖ¹Í¬Ò»Ìì¶à´ÎË¢ĞÂµ¼ÖÂÖØ¸´Ìí¼Ó
+                // é˜²é‡å¤æ£€æŸ¥ï¼šé˜²æ­¢åŒä¸€å¤©å¤šæ¬¡åˆ·æ–°å¯¼è‡´é‡å¤æ·»åŠ 
                 bool alreadyExists = data.activeOrders.Any(o => o.orderID == template.orderID);
 
                 if (!alreadyExists)
                 {
-                    // 3. ´´½¨¾«¼ò°æ¶©µ¥ (Ö»´æIDºÍÌìÊı)
+                    // 3. åˆ›å»ºç²¾ç®€ç‰ˆè®¢å• (åªå­˜IDå’Œå¤©æ•°)
                     OrderData newOrder = new OrderData(template.orderID, template.daysLimit);
                     data.activeOrders.Add(newOrder);
-
-                    Debug.Log($"[OrderManager] ĞÂ¶©µ¥ÒÑÉú³É: {template.customerName}");
+                    Debug.Log($"[OrderManager] æ–°è®¢å•å·²ç”Ÿæˆ: {template.customerName}");
                 }
             }
         }
 
-        // 4. ´¦Àí¾É¶©µ¥µÄÊ±¼äÁ÷ÊÅ
+        // 4. å¤„ç†æ—§è®¢å•çš„æ—¶é—´æµé€
         ProcessOrdersTimePass(data);
     }
 
-    // ¸¨Öú£ºÈÃËùÓĞ´æ»îµÄ¶©µ¥µ¹¼ÆÊ± -1
+    // è¾…åŠ©ï¼šè®©æ‰€æœ‰å­˜æ´»çš„è®¢å•å€’è®¡æ—¶ -1ï¼ŒåŒæ—¶å¤„ç†è¿‡æœŸè®¢å•
     private void ProcessOrdersTimePass(SaveData data)
     {
         foreach (var order in data.activeOrders)
         {
-            // Èç¹û¶©µ¥»¹ÔÚ½øĞĞÖĞ (daysRemaining > 0)
+            // å¦‚æœè®¢å•è¿˜åœ¨è¿›è¡Œä¸­ (daysRemaining > 0)
             if (order.daysRemaining > 0)
             {
                 order.daysRemaining--;
 
-                // Èç¹û¼õÍê±ä³ÉÁË0£¬±ê¼ÇÎª¹ıÆÚ (-2)
+                // å¦‚æœå‡å®Œå˜æˆäº†0ï¼Œæ ‡è®°ä¸ºè¿‡æœŸ (-2)
                 if (order.daysRemaining == 0)
                 {
                     order.daysRemaining = -2;
-                    Debug.Log($"[OrderManager] ¶©µ¥ÒÑ¹ıÆÚ: {order.orderID}");
+                    Debug.Log($"[OrderManager] è®¢å•å·²è¿‡æœŸ: {order.orderID}");
+                    OrderTemplate template = GetTemplateByID(order.orderID);
                 }
             }
         }
     }
+
+    //å¤„ç†è®°å¿†è®¢å•,æ¯æ¬¡è·å¾—è®°å¿†earnMemoryåæ‰§è¡Œ
+    public void nextMemoeyOrder()
+    {
+        // 1. è·å–å½“å‰çš„å­˜æ¡£æ•°æ®å¼•ç”¨
+        SaveData data = MorningGameManager.Instance.currentSaveData;
+        int currentInt = (int)data.morningInventory.memoryNight;
+        currentInt++;
+        //å¦‚æœè¾¾åˆ°æœ€å¤§æšä¸¾æ•°ï¼Œç›´æ¥è·³è¿‡
+        if (currentInt > System.Enum.GetNames(typeof(MemoryTraitID)).Length) return;
+        data.morningInventory.memoryNight = (MemoryTraitID)currentInt;
+
+        //å¤„ç†è®°å¿†è®¢å•
+        foreach (var template in allOrderTemplates)
+        {
+            if (!template.ifMemory)
+            {
+                continue; // ğŸ‘ˆ é‡åˆ°è¿™å¥ï¼Œç›´æ¥è·³å›ç¬¬ä¸€è¡Œ foreachï¼Œå–ä¸‹ä¸€ä¸ªå€¼
+            }
+            if (template.id == data.morningInventory.memoryNight)
+            {
+                //è®°å¿†è®¢å•çš„daysRemainingè®°ä¸º-4
+                OrderData newOrder = new OrderData(template.orderID, -4);
+                data.activeOrders.Add(newOrder);
+                Debug.Log($"[OrderManager] æ–°è®°å¿†è®¢å•å·²ç”Ÿæˆ: {template.customerName}");
+            }
+        }
+    }
+
     #endregion
 
-    #region 3. ºËĞÄÂß¼­£ºÌá½»Óë½áËã
+    #region 3. æ ¸å¿ƒé€»è¾‘ï¼šæäº¤ä¸ç»“ç®—
     // ==========================================
-    // µ±Íæ¼ÒÔÚ UI ÉÏµã»÷Ìá½»Ãæ¾ßÊ±µ÷ÓÃ
-    // maskTags: Ãæ¾ßÓµÓĞµÄ±êÇ© (±ÈÈç ["Happy", "Red"])
+    // å½“ç©å®¶åœ¨ UI ä¸Šç‚¹å‡»æäº¤é¢å…·æ—¶è°ƒç”¨
+    // maskTags: é¢å…·æ‹¥æœ‰çš„æ ‡ç­¾ (æ¯”å¦‚ ["Happy", "Red"])
     // ==========================================
-    public void SubmitOrder(string orderID, List<string> maskTags)
+    public void SubmitOrder(string orderID)
     {
-        // 1. ÕÒµ½´æµµÀïµÄ¶¯Ì¬Êı¾İ
+        //è¿›å…¥é¢å…·é€‰æ‹©æ¨¡å¼ï¼Œåˆ‡æ¢WarehouseItemUIçš„å“åº”æ¨¡å¼
+        maskChooseState = false;
+        currentTargetOrderID = orderID;
+
+        // æ‰“å¼€é®ç½©/æç¤ºå±‚
+        selectionOverlayPanel.SetActive(true);
+
+        Debug.Log($"å¼€å§‹ä¸ºè®¢å• {orderID} é€‰æ‹©é¢å…·...");
+    }
+
+    // ==================================================
+    // 2. ä¸­é—´æµç¨‹ï¼šç©å®¶ç‚¹å‡»äº†ä»“åº“é‡Œçš„æŸä¸ªé¢å…·
+    // ==================================================
+    public void OnMaskSelected(MaskInstance mask)
+    {
+        selectedMask = mask;
+        // æ˜¾ç¤ºç¡®è®¤å¼¹çª—
+        confirmPopupPanel.SetActive(true);
+        if (confirmText != null) confirmText.text = $"ç¡®å®šè¦æäº¤ [{mask.displayName}] å—ï¼Ÿ";
+    }
+
+    // ==================================================
+    // 3. ç¡®è®¤æäº¤ï¼šå¼¹çª—ç‚¹å‡»â€œç¡®å®šâ€
+    // ==================================================
+    public void ConfirmSubmit()
+    {
+        if (selectedMask == null) return;
+
+        // --- A. æ•°æ®è½¬æ¢ (æŠŠé¢å…·å±æ€§è½¬æˆ List<string>) ---
+        List<string> tags = new List<string>();
+        tags.Add(selectedMask.emotionTraitID.ToString());
+        tags.Add(selectedMask.memoryTraitID.ToString());
+        tags.Add(selectedMask.colorTraitID.ToString());
+
+        // --- B. è°ƒç”¨å¯¹æ¯”
+        Submitorder(currentTargetOrderID, selectedMask);
+        Debug.Log("é¢å…·æäº¤æˆåŠŸï¼");
+
+        // --- C. ç»“æŸæµç¨‹ ---
+        CloseAll();
+    }
+    // ==================================================
+    // 4. å–æ¶ˆæäº¤ï¼šå¼¹çª—ç‚¹å‡»â€œå–æ¶ˆâ€
+    // ==================================================
+    public void CancelSubmit()
+    {
+        // å…³é—­å¼¹çª—ï¼Œç©å®¶å¯ä»¥é‡é€‰
+        confirmPopupPanel.SetActive(false);
+        selectedMask = null;
+    }
+
+    // ==================================================
+    // 5. å½»åº•é€€å‡ºé€‰æ‹©æ¨¡å¼:æˆåŠŸé€‰æ‹©é¢å…·å’Œé€€å‡ºé¢å…·é€‰æ‹©æ¨¡å¼æ—¶è§¦å‘
+    // ==================================================
+    public void CloseAll()
+    {
+        maskChooseState = false;
+        selectionOverlayPanel.SetActive(false);
+        confirmPopupPanel.SetActive(false);
+        selectedMask = null;
+        currentTargetOrderID = "";
+    }
+    // ==================================================
+    // 6. å¯¹æ¯”è®¢å•è¦æ±‚å’Œé¢å…·å±æ€§
+    // ==================================================
+    public void Submitorder(string orderID, MaskInstance mask)
+    {
+        // 1. è·å–å½“å‰çš„å­˜æ¡£æ•°æ®å¼•ç”¨
         SaveData data = MorningGameManager.Instance.currentSaveData;
-        OrderData activeOrder = data.activeOrders.Find(o => o.orderID == orderID);
-
-        // 2. ÕÒµ½Êı¾İ¿âÀïµÄ¾²Ì¬Ä£°å (²é±í)
+        
+        // 2. æ‰¾åˆ°å¯¹åº”çš„è®¢å•æ¨¡æ¿å’Œå­˜æ¡£æ•°æ®
         OrderTemplate template = GetTemplateByID(orderID);
+        OrderData activeData = data.activeOrders.Find(o => o.orderID == orderID);
 
-        if (activeOrder == null || template == null) return;
+        if (template == null)
+        {
+            Debug.LogError($"[OrderManager] æ‰¾ä¸åˆ° ID ä¸º {orderID} çš„è®¢å•æ¨¡æ¿ï¼");
+            return;
+        }
 
-        // 3. ÅĞ¶¨Âß¼­£º¼ì²éÃæ¾ßÊÇ·ñ°üº¬ÁËÄ£°åÒªÇóµÄËùÓĞ±êÇ©
-        // (ÕâÀï¼ÙÉèÒªÇóÊÇÈ«Æ¥Åä£¬ÄãÒ²¿ÉÒÔ¸Ä³ÉÆ¥Åä²¿·Ö)
-        bool isSuccess = CheckTagsMatch(template.tags, maskTags);
+        Debug.Log($"[OrderManager] å¼€å§‹åˆ¤å®šè®¢å•: {template.customerName} - {orderID}");
+        Debug.Log($"ç©å®¶æäº¤çš„é¢å…·: {mask.displayName} (æƒ…ç»ª:{mask.emotionTraitID}, è®°å¿†:{mask.memoryTraitID}, é¢œè‰²:{mask.colorTraitID})");
 
-        // 4. ¼ÆËã½±Àø
-        int finalReward = 0;
-        string feedbackText = "";
+        // 3. æ‰§è¡Œæ ¸å¿ƒæ¯”å¯¹é€»è¾‘
+        bool isSuccess = CheckRequirements(template, mask);
 
+        // 4. è®¡ç®—å¥–åŠ±
+        int finalreward = 0;
+        string feedbacktext = "";
         if (isSuccess)
         {
-            activeOrder.daysRemaining = -1; // ÍêÃÀÍê³É (ºÃÆÀ)
-            finalReward = template.baseReward;
-            feedbackText = template.successReviewText;
-            Debug.Log($"[½áËã] ºÃÆÀ£¡»ñµÃ {finalReward}");
-            if (template.ifMemory)
-            {
-                BagManager.Instance.earnMemory(template.id);
-            }
+            Debug.Log($"<color=green>ã€è®¢å•å®Œæˆ - å¥½è¯„ã€‘</color> {template.successReviewText}");
+            activeData.daysRemaining = -1; // å®Œç¾å®Œæˆ (å¥½è¯„)
+            finalreward = template.baseReward;
+            feedbacktext = template.successReviewText;
+            Debug.Log($"[ç»“ç®—] å¥½è¯„ï¼è·å¾— {finalreward}");
         }
         else
         {
-            activeOrder.daysRemaining = -3; // ÃãÇ¿Íê³É (²îÆÀ)
-            finalReward = template.baseReward / 2; // Ê§°Ü»ñµÃÒ»°ëµÍ±£
-            feedbackText = template.failReviewText;
-            Debug.Log($"[½áËã] ²îÆÀ... »ñµÃ {finalReward}");
+            Debug.Log($"<color=green>ã€è®¢å•å®Œæˆ - å·®è¯„ã€‘</color> {template.failReviewText}");
+            activeData.daysRemaining = -3; // å®Œç¾å®Œæˆ (å¥½è¯„)
+            finalreward = template.baseReward/2;
+            feedbacktext = template.failReviewText;
+            Debug.Log($"[ç»“ç®—] å·®è¯„ï¼è·å¾— {finalreward}");
         }
 
-        // 5. ·¢·Å½±Àø (¸üĞÂ±³°ü)
-        data.morningInventory.pigmentAmount += finalReward;
-
-        // 6. ±ê¼Ç¶©µ¥Íê³É (-1 ´ú±íÒÑÍê³É)
-        activeOrder.daysRemaining = -1;
-
-        // 7. ´¥·¢´æµµ
-        MorningGameManager.Instance.SaveGame();
-        FindObjectOfType<OrderUIController>()?.RefreshOrderList();
-        // TODO: ÕâÀï¿ÉÒÔ·¢ËÍÒ»¸öÊÂ¼ş¸ø UI£¬ÏÔÊ¾ feedbackText
+        // 5. (åŸºç¡€ç‰ˆæš‚å®š) æäº¤åï¼Œæ— è®ºæˆåŠŸå¤±è´¥ï¼Œéƒ½è¦æ¶ˆè€—æ‰è¿™ä¸ªé¢å…·
+        // ä»“åº“ç§»é™¤æäº¤çš„é¢å…·ä»¥åŠæ›´æ–°UI
+        MaskInventory.I.maskInstances.Remove(mask);
+        warehouseUI.Refresh();
+        //æäº¤è®¢å•è·å¾—çš„èµ„é‡‘
+        BagManager.Instance.EarnPigment(finalreward);
     }
 
-    // ¸¨Öú£º±È¶Ô±êÇ©
+    // =========================================================
+    // ğŸ” æ¯”å¯¹é€»è¾‘ (Private)
+    // =========================================================
+    private bool CheckRequirements(OrderTemplate template, MaskInstance mask)
+    {
+        // --- A. æ£€æŸ¥ æƒ…ç»ª (Emotion) ---
+        // é€»è¾‘ï¼šå¦‚æœæ¨¡æ¿è¦æ±‚ä¸æ˜¯ Noneï¼Œä¸” é¢å…·ä¸ç¬¦åˆï¼Œå°±æ˜¯å¤±è´¥
+        if (template.emotionTraitID != EmotionTraitID.None &&
+            template.emotionTraitID != mask.emotionTraitID)
+        {
+            Debug.Log($"åˆ¤å®šå¤±è´¥ï¼šæƒ…ç»ªä¸åŒ¹é…ã€‚è¦æ±‚ {template.emotionTraitID}ï¼Œå®é™… {mask.emotionTraitID}");
+            return false;
+        }
+
+        // --- B. æ£€æŸ¥ è®°å¿† (Memory) ---
+        if (template.memoryTraitID != MemoryTraitID.None &&
+            template.memoryTraitID != mask.memoryTraitID)
+        {
+            Debug.Log($"åˆ¤å®šå¤±è´¥ï¼šè®°å¿†ä¸åŒ¹é…ã€‚è¦æ±‚ {template.memoryTraitID}ï¼Œå®é™… {mask.memoryTraitID}");
+            return false;
+        }
+
+        // --- C. æ£€æŸ¥ é¢œè‰² (Color) ---
+        if (template.colorTraitID != ColorTraitID.None &&
+            template.colorTraitID != mask.colorTraitID)
+        {
+            Debug.Log($"åˆ¤å®šå¤±è´¥ï¼šé¢œè‰²ä¸åŒ¹é…ã€‚è¦æ±‚ {template.colorTraitID}ï¼Œå®é™… {mask.colorTraitID}");
+            return false;
+        }
+
+        // å¦‚æœä¸‰ä¸ªæ£€æŸ¥éƒ½é€šè¿‡äº†ï¼ˆæˆ–è€…æ¨¡æ¿å…¨æ˜¯ Noneï¼‰ï¼Œé‚£å°±æ˜¯æˆåŠŸ
+        return true;
+    }
+
+
+    // 7. è§¦å‘å­˜æ¡£
+    //morninggamemanager.instance.savegame();
+    //    findobjectoftype<orderuicontroller>()?.refreshorderlist();
+    // todo: è¿™é‡Œå¯ä»¥å‘é€ä¸€ä¸ªäº‹ä»¶ç»™ uiï¼Œæ˜¾ç¤º feedbacktext
+
+
+    // è¾…åŠ©ï¼šæ¯”å¯¹æ ‡ç­¾
     private bool CheckTagsMatch(List<string> required, List<string> provided)
     {
-        // Èç¹ûÃ»ÓĞÒªÇó£¬Ö±½ÓÍ¨¹ı
+        // å¦‚æœæ²¡æœ‰è¦æ±‚ï¼Œç›´æ¥é€šè¿‡
         if (required == null || required.Count == 0) return true;
 
-        // ¼ì²é required ÀïµÄÃ¿Ò»¸ö±êÇ©£¬ÊÇ·ñ¶¼ÔÚ provided Àï³öÏÖ¹ı
+        // æ£€æŸ¥ required é‡Œçš„æ¯ä¸€ä¸ªæ ‡ç­¾ï¼Œæ˜¯å¦éƒ½åœ¨ provided é‡Œå‡ºç°è¿‡
         foreach (var tag in required)
         {
             if (!provided.Contains(tag))
             {
-                return false; // Ö»ÒªÈ±Ò»¸ö£¬¾ÍËãÊ§°Ü
+                return false; // åªè¦ç¼ºä¸€ä¸ªï¼Œå°±ç®—å¤±è´¥
             }
         }
         return true;
     }
     #endregion
 
-    #region 4. ¹¤¾ß·½·¨£º²é±í (Rehydration)
+    #region 4. å·¥å…·æ–¹æ³•ï¼šæŸ¥è¡¨ (Rehydration)
     // ==========================================
-    // ¸ø UI Ê¹ÓÃ£ºÍ¨¹ı ID ÄÃ»ØÃû×Ö¡¢Í·Ïñ¡¢ÃèÊöµÈĞÅÏ¢
+    // ç»™ UI ä½¿ç”¨ï¼šé€šè¿‡ ID æ‹¿å›åå­—ã€å¤´åƒã€æè¿°ç­‰ä¿¡æ¯
     // ==========================================
     public OrderTemplate GetTemplateByID(string id)
     {
         return allOrderTemplates.Find(t => t.orderID == id);
     }
 
-    // ¸ø UI Ê¹ÓÃ£º»ñÈ¡µ±Ç°ËùÓĞ¡°½øĞĞÖĞ¡±µÄ¶©µ¥
+    // ç»™ UI ä½¿ç”¨ï¼šè·å–å½“å‰æ‰€æœ‰â€œè¿›è¡Œä¸­â€çš„è®¢å•
     public List<OrderData> GetActiveOnlyOrders()
     {
         SaveData data = MorningGameManager.Instance.currentSaveData;
-        // ·µ»ØËùÓĞ daysRemaining > 0 µÄ¶©µ¥
+        // è¿”å›æ‰€æœ‰ daysRemaining > 0 çš„è®¢å•
         return data.activeOrders.FindAll(o => o.daysRemaining > 0);
     }
     #endregion
 }
+

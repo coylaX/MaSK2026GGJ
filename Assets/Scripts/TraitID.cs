@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+<<<<<<< Updated upstream
 public enum EmotionTraitID
 {
+=======
+    public enum EmotionTraitID
+    {
+>>>>>>> Stashed changes
     None,
     XI,
     NU,
     AI,
     LE,
+<<<<<<< Updated upstream
     
 }
+=======
+    }
+>>>>>>> Stashed changes
 
 public enum ColorTraitID
 {
@@ -32,7 +41,11 @@ public enum MemoryTraitID
     C,
     D,
     E,
+<<<<<<< Updated upstream
     F,
     
+=======
+    F
+>>>>>>> Stashed changes
 }
 

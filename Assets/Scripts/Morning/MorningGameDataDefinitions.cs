@@ -2,15 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static TMPro.Examples.ObjectSpin;
 
-// --- 文件名: MorningGameDataDefinitions.cs ---
-[System.Serializable]
-
 
 #region 3. 经营背包数据 (Inventory)
 // ==========================================
 // 包含颜料、情绪、记忆的数据结构
 // ==========================================
-
+[System.Serializable]
 public class MorningInventoryData
 {
     public EmotionTraitID emotionTraitID;
@@ -25,17 +22,19 @@ public class MorningInventoryData
     public int aiCount;
     public int leCount;
 
-    // --- 资源 C: 记忆进度 (只记录进度) ---
+    // --- 资源 C: 记忆进度 (前面是获得的记忆，后面是关卡当前阶段的记忆) ---
     public List<MemoryTraitID> memoryGet;
+    public MemoryTraitID memoryNight;
 
     public MorningInventoryData()
     {
-        pigmentAmount = 0;
-        xiCount = 0;
-        nuCount = 0;
-        aiCount = 0;
-        leCount = 0;
+        pigmentAmount = 10;
+        xiCount = 5;
+        nuCount = 5;
+        aiCount = 5;
+        leCount = 5;
         memoryGet = new List<MemoryTraitID>();
+        memoryNight = MemoryTraitID.A;
     }
 }
 #endregion

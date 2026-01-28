@@ -11,7 +11,7 @@ public class TestOrderSubmitter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) // 按空格提交
         {
             Debug.Log("正在模拟提交订单...");
-            OrderManager.Instance.SubmitOrder(targetOrderID, testTags);
+            //OrderManager.Instance.SubmitOrder(targetOrderID, testTags);
         }
     }
 }
