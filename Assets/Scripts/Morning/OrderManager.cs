@@ -184,7 +184,7 @@ public class OrderManager : MonoBehaviour
     // ==================================================
     public void CloseAll()
     {
-        maskChooseState = false;
+        maskChooseState = true;
         selectionOverlayPanel.SetActive(false);
         confirmPopupPanel.SetActive(false);
         selectedMask = null;
