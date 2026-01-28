@@ -35,6 +35,7 @@ public class MorningGameManager : MonoBehaviour
         // 第一步：加载存档 (如果没有存档，SaveManager会返回一个全新的第1天数据)
         LoadGame();
 
+
         // 第二步：根据当前天数，刷新订单
         // 注意：必须先有 currentSaveData，才能刷新订单
         if (OrderManager.Instance != null)
@@ -86,7 +87,7 @@ public class MorningGameManager : MonoBehaviour
     }
 
     // 辅助方法：订单 UI 刷新
-    private void UpdateUI()
+    public void UpdateUI()
     {
         OrderUIController ui = FindObjectOfType<OrderUIController>();
         if (ui != null)

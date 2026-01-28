@@ -5,9 +5,6 @@ using System.Security.Cryptography.X509Certificates;
 [CreateAssetMenu(fileName = "NewOrderTemplate", menuName = "Game/Order Template")]
 public class OrderTemplate : ScriptableObject
 {
-    
-    
-
     [Header("核心数据")]
     public string orderID;      // 比如 "ORDER_001" (唯一ID)
 

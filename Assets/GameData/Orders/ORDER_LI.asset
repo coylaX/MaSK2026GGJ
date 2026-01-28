@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b5f6a58b8d00e4a8401c6f2e13f2d9, type: 3}
   m_Name: ORDER_LI
   m_EditorClassIdentifier: 
-  orderID: ORDER_LI
-  customerName: "\u674E\u53D4\u53D4"
+  orderID: ORDER_2
+  customerName: 2
   portrait: {fileID: 0}
   requirementText: "\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11\u641E\u7B11"
   daysLimit: 3
   baseReward: 100
   appearOnDay: 2
-  tags:
-  - Sad
+  ifMemory: 0
+  id: 0
+  memoryTraitID: 0
+  colorTraitID: 0
+  emotionTraitID: 0
   successReviewText: Good!
   failReviewText: bad...

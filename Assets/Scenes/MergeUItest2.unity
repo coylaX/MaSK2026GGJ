@@ -1870,7 +1870,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 361066388}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1683010054}
+        m_TargetAssemblyTypeName: OrderManager, Assembly-CSharp
+        m_MethodName: CloseAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &361066388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8831,7 +8843,6 @@ GameObject:
   - component: {fileID: 1683010055}
   - component: {fileID: 1683010054}
   - component: {fileID: 1683010058}
-  - component: {fileID: 1683010057}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -8853,15 +8864,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warehouseUI: {fileID: 253429102}
   maskChooseState: 1
+  orderUICont: {fileID: 1501831373}
   selectedUI: {fileID: 0}
   selectionOverlayPanel: {fileID: 389951375}
   confirmPopupPanel: {fileID: 1309626189}
   confirmText: {fileID: 1352438457}
   allOrderTemplates:
-  - {fileID: 11400000, guid: 28a22444d2cf314418708183e1ce8e42, type: 2}
-  - {fileID: 11400000, guid: 499ddc187f8e80d40966dcd79b76fd52, type: 2}
-  - {fileID: 11400000, guid: da8d58a958251e843941e22ea238ad1d, type: 2}
-  - {fileID: 11400000, guid: da8d58a958251e843941e22ea238ad1d, type: 2}
+  - {fileID: 11400000, guid: 31dcb0866b8cdd3449445e54328881f8, type: 2}
+  - {fileID: 11400000, guid: 8f8df374e1964074babdfbbb31c9e8c6, type: 2}
+  - {fileID: 11400000, guid: 2ce8cac826faba94dae8aea8ff411776, type: 2}
+  - {fileID: 11400000, guid: a601068ac035c5442b70aa8ee924fe0a, type: 2}
+  - {fileID: 11400000, guid: 84ef78133026a8b43948a5202cc7a4d8, type: 2}
+  - {fileID: 11400000, guid: c6168ba6a8f4d0746b14d4b08f699067, type: 2}
 --- !u!114 &1683010055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8886,9 +8900,7 @@ MonoBehaviour:
       leCount: 0
       memoryGet: 
       memoryNight: 0
-    activeOrders:
-    - orderID: Memory_A
-      daysRemaining: -4
+    activeOrders: []
     maskInventoryList: []
     backPackList: []
 --- !u!4 &1683010056
@@ -8906,20 +8918,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1683010057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683010053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78aa9c31d8d0c71499a26f7bc7c5763a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetOrderID: 
-  testTags: []
 --- !u!114 &1683010058
 MonoBehaviour:
   m_ObjectHideFlags: 0
