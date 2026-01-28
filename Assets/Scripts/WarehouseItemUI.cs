@@ -25,8 +25,12 @@ public class WarehouseItemUI : MonoBehaviour
     }
     public void Onclick()
     {
-      //  Debug.Log($"[Update] UIObj={gameObject.name} uiId={GetInstanceID()} mask={(mask == null ? "<null>" : mask.displayName)} ");
-        Debug.Log(mask.displayName);
+        if (OrderManager.Instance.maskChooseState)
+        {
+
+        
+            //  Debug.Log($"[Update] UIObj={gameObject.name} uiId={GetInstanceID()} mask={(mask == null ? "<null>" : mask.displayName)} ");
+            Debug.Log(mask.displayName);
         if (mask.displayName == ""||mask==null)
         {
             //说明这个位置没有面具
@@ -38,6 +42,10 @@ public class WarehouseItemUI : MonoBehaviour
         GetComponent<Image>().color = Color.white;
         warehouseUI.Refresh();
         backPackUI.Refresh();
-        
+        }
+        else
+        {
+            OrderManager.Instance.OnMaskSelected(mask);
+        }
     }
 }

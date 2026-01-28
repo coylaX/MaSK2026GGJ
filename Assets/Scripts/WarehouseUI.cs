@@ -18,6 +18,17 @@ public class WarehouseUI : MonoBehaviour
     public Sprite AI;
     public Sprite LE;
 
+    private void OnEnable()
+    {
+        // 开始监听：只要 SaveManager 喊 "OnLoadComplete"，我就执行 Refresh
+        SaveManager.OnLoadComplete += Refresh;
+    }
+
+    private void OnDisable()
+    {
+        // 记得取消监听，防止报错
+        SaveManager.OnLoadComplete -= Refresh;
+    }
 
     public void Refresh()
     {
