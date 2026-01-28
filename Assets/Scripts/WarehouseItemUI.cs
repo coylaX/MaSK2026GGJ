@@ -11,8 +11,6 @@ public class WarehouseItemUI : MonoBehaviour
     
     public WarehouseUI warehouseUI;
     public BackPackView backPackUI;
-
-    
     void Start()
     {
         
@@ -27,34 +25,19 @@ public class WarehouseItemUI : MonoBehaviour
     }
     public void Onclick()
     {
-        if (OrderManager.Instance.maskChooseState)
-        { //  Debug.Log($"[Update] UIObj={gameObject.name} uiId={GetInstanceID()} mask={(mask == null ? "<null>" : mask.displayName)} ");
-            Debug.Log(mask.displayName);
-            if (mask.displayName == "" || mask == null)
-            {
-                //说明这个位置没有面具
-                return;
-            }
-            MaskInventory.I.maskInstances.Remove(mask);//移出仓库
-            BackPackLogic.I.maskInstances.Add(mask);//加入背包
-            this.mask = null;
-            warehouseUI.Refresh();
-            backPackUI.Refresh();
+      //  Debug.Log($"[Update] UIObj={gameObject.name} uiId={GetInstanceID()} mask={(mask == null ? "<null>" : mask.displayName)} ");
+        Debug.Log(mask.displayName);
+        if (mask.displayName == ""||mask==null)
+        {
+            //说明这个位置没有面具
+            return;
         }
-<<<<<<< Updated upstream
         MaskInventory.I.maskInstances.Remove(mask);//移出仓库
         BackPackLogic.I.maskInstances.Add(mask);//加入背包
         this.mask = null;
         GetComponent<Image>().color = Color.white;
         warehouseUI.Refresh();
         backPackUI.Refresh();
-=======
-        else
-        {
-            OrderManager.Instance.OnMaskSelected(mask);
-        }
-      
->>>>>>> Stashed changes
         
     }
 }
