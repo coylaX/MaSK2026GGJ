@@ -6,11 +6,23 @@ public class MonsterProjectile : MonoBehaviour {
     private Vector2 direction;
     private float lifetime = 5f; // 防止子弹飞出地图后永不销毁
 
+    private DamageSource ds; // 引用伤害组件
+
+    void Awake(){
+        ds = GetComponent<DamageSource>(); // 获取自身挂载的 DamageSource
+    }
+
     public void Setup(Vector2 dir, float projectileSpeed, float projectileDamage) {
         direction = dir.normalized;
         speed = projectileSpeed;
         damage = projectileDamage;
         
+        if (ds != null) {
+            ds.damageAmount = projectileDamage;
+            // 确保子弹撞到玩家后销毁
+            ds.destroyOnHit = true; 
+        }
+
         // 让子弹旋转指向飞行方向 (可选)
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);

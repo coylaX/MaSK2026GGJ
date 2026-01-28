@@ -42,6 +42,10 @@ public class MonsterBase : MonoBehaviour {
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
+    private void Start(){
+        GetComponent<DamageSource>().damageAmount = contactDamage;
+    }
+
     public void TakeDamage(float damage, Vector2 attackerPos) {
         health -= damage;
         
@@ -99,7 +103,7 @@ public class MonsterBase : MonoBehaviour {
     // 修改之前的 ApplyEliteBuff，记录强化状态
     public void ApplyEliteBuff(int type) {
         isElite = true; // 只要施加了增益，就标记为精英
-        
+
         if (sr == null) sr = GetComponentInChildren<SpriteRenderer>();
         switch (type) {
             case 0: // 移速
@@ -115,6 +119,8 @@ public class MonsterBase : MonoBehaviour {
                 SetGlow(Color.red);
                 break;
         }
+        
+        GetComponent<DamageSource>().damageAmount = contactDamage;
     }
 
     // 辅助变色方法（保持简洁）

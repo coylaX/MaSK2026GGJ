@@ -127,6 +127,9 @@ MonoBehaviour:
   maxSleep: 100
   currentSleep: 100
   drainPerSecond: 2
+  flashMaterial: {fileID: 2100000, guid: 5971259309c10e24383babe79ea3d6d7, type: 2}
+  invincibilityDuration: 1
+  flashCount: 6
 --- !u!114 &1079848240
 MonoBehaviour:
   m_ObjectHideFlags: 0
