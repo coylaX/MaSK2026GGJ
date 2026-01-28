@@ -24,9 +24,9 @@ public class BreakMasks : MonoBehaviour
         {
             return;
         }
-        //撕面具掉1/3血量上限
+        //撕面具掉血量上限
         
-        GetComponent<SleepHealth>().maxSleep -= 33;
+        GetComponent<SleepHealth>().maxSleep -= 20;
         Debug.Log(11);
         
         switch (GetComponent<MaskRead>().currentMask.colorTraitID)

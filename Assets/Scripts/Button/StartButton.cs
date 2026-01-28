@@ -8,8 +8,9 @@ public class StartButton : MonoBehaviour
    public GameObject[] shixiaoGOs;
    public GameObject[] dongjieGOs;
     public GameObject PLAYER;
-    public GameObject HPBar;
-   public void onClick()
+    public GameObject HPBar1;
+    public GameObject HPBar2;
+    public void onClick()
     {
         if (BackPackLogic.I.maskInstances.Count < 3)
         {
@@ -27,6 +28,7 @@ public class StartButton : MonoBehaviour
         }
         PLAYER.SetActive(true);
         PLAYER.GetComponent<MaskRead>().onStart();
-        HPBar.SetActive(true);
+        HPBar1.SetActive(true);
+        HPBar2.SetActive(true);
     }
 }
