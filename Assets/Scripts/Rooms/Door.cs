@@ -11,11 +11,33 @@ public class Door : MonoBehaviour {
     public GameObject openVisual; 
 
     [Header("传送配置")]
-    public static float lastTeleportTime = 0f; // 全局静态冷却计时
-    public float teleportCooldown = 1.0f;     // 冷却时长
-    // 【优化】：不再需要 exitPushDist，因为我们在 Prefab 里手动摆放了 SpawnPoint
+    public static float lastTeleportTime = 0f; 
+    public float teleportCooldown = 1.0f;     
 
     private bool isLocked = false;
+
+    private void Start() {
+        // 【新增】：初始化时根据方向调整旋转
+        ApplyRotation();
+    }
+
+    // --- 新增：处理旋转的逻辑 ---
+    public void ApplyRotation() {
+        switch (direction) {
+            case Dir.North:
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;
+            case Dir.South:
+                transform.rotation = Quaternion.Euler(0, 0, 180);
+                break;
+            case Dir.East:
+                transform.rotation = Quaternion.Euler(0, 0, -90); // 向右转
+                break;
+            case Dir.West:
+                transform.rotation = Quaternion.Euler(0, 0, 90);  // 向左转
+                break;
+        }
+    }
 
     public void SetLock(bool locked) {
         isLocked = locked;
@@ -28,7 +50,7 @@ public class Door : MonoBehaviour {
             if (Time.time - lastTeleportTime < teleportCooldown) return;
 
             // 检查：房间清空且未锁
-            if (!isLocked && myRoom.state == RoomController.RoomState.Cleared) {
+            if (!isLocked && myRoom != null && myRoom.state == RoomController.RoomState.Cleared) {
                 HandleTeleport(other.transform);
             }
         }
@@ -37,33 +59,24 @@ public class Door : MonoBehaviour {
     private void HandleTeleport(Transform player) {
         lastTeleportTime = Time.time;
 
-        // 1. 获取对向方位
-        // 如果玩家走出当前房间的北门(North)，他将出现在目标房间的南边(South)
         Dir oppositeDir = GetOppositeDir(direction);
-
-        // 2. 【核心修改】：直接向目标房间索取对应的出生锚点
-        // 这一步取代了原来寻找对面 Door 物体以及计算 pushVector 的过程
         Transform spawnPoint = targetRoom.GetSpawnPoint(oppositeDir);
 
         if (spawnPoint != null) {
-            // 执行传送：位置精确对准我们在 Prefab 里摆好的点
             player.position = spawnPoint.position;
         } else {
-            // 保险逻辑：如果忘记配置锚点，则回退到目标房间中心
             player.position = targetRoom.transform.position;
             Debug.LogWarning($"{targetRoom.name} 缺少 {oppositeDir} 方向的 SpawnPoint 锚点！");
         }
 
-        // 3. 【保留原逻辑】：切换摄像机
-        // 传入目标房间的世界坐标中心，摄像机逻辑完全不受影响
+        // 切换摄像机
+        // 注意：此处引用的是你项目中的 CameraManager
         if (CameraManager.Instance != null) {
             CameraManager.Instance.SwitchToRoom(targetRoom.transform.position);
         }
 
-        // 4. 【保留原逻辑】：激活目标房间
         targetRoom.ActivateRoom();
-        
-        Debug.Log($"<color=green>传送成功：</color> 玩家已进入 {targetRoom.name}，对准了 {oppositeDir} 锚点");
+        Debug.Log($"<color=green>传送成功：</color> 玩家已进入 {targetRoom.name}");
     }
 
     private Dir GetOppositeDir(Dir dir) {

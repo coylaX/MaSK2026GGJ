@@ -6,12 +6,13 @@ public class CollectionManager : MonoBehaviour
 {
     public static CollectionManager Instance;
 
+    // --- 新增：专门通知 UI 刷新的事件 ---
+    public static System.Action OnCollectionUpdated;
+
     [Header("情绪统计")]
-    // 键是情绪种类，值是收集到的数量
     private Dictionary<EmotionTraitID, int> emotionCounts = new Dictionary<EmotionTraitID, int>();
 
     [Header("记忆集合")]
-    // 记录所有已收集到的记忆类型
     private HashSet<MemoryTraitID> collectedMemories = new HashSet<MemoryTraitID>();
 
     void Awake()
@@ -19,7 +20,6 @@ public class CollectionManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // 初始化情绪字典，确保每个枚举值都有初始值 0
         foreach (EmotionTraitID trait in System.Enum.GetValues(typeof(EmotionTraitID)))
         {
             emotionCounts[trait] = 0;
@@ -28,26 +28,23 @@ public class CollectionManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // 订阅事件
         LootEvents.OnEmotionPicked += RecordEmotion;
         LootEvents.OnMemoryPicked += RecordMemory;
     }
 
     private void OnDisable()
     {
-        // 取消订阅
         LootEvents.OnEmotionPicked -= RecordEmotion;
         LootEvents.OnMemoryPicked -= RecordMemory;
     }
 
-    // --- 监听逻辑 ---
-
     private void RecordEmotion(EmotionTraitID trait)
     {
         emotionCounts[trait]++;
-        Debug.Log($"<color=yellow>[收集更新]</color> 情绪 {trait} 数量变为: {emotionCounts[trait]}");
+        Debug.Log($"<color=yellow>[数据更新]</color> {trait} 增加到: {emotionCounts[trait]}");
         
-        // 此处可以触发 UI 更新逻辑
+        // 【关键修复】：确保数据变了之后再通知 UI
+        OnCollectionUpdated?.Invoke();
     }
 
     private void RecordMemory(MemoryTraitID trait)
@@ -55,47 +52,35 @@ public class CollectionManager : MonoBehaviour
         if (!collectedMemories.Contains(trait))
         {
             collectedMemories.Add(trait);
-            Debug.Log($"<color=cyan>[收集更新]</color> 新记忆解锁: {trait}");
-        }
-        else
-        {
-            Debug.Log($"[收集提示] 记忆 {trait} 已经存在于集合中");
+            Debug.Log($"<color=cyan>[数据更新]</color> 解锁新记忆: {trait}");
+            
+            // 【关键修复】：通知 UI 刷新记忆列表
+            OnCollectionUpdated?.Invoke();
         }
     }
 
-    // --- 查询接口 (供 UI 或其它系统调用) ---
-
-    /// <summary>
-    /// 获取特定情绪的收集数量
-    /// </summary>
     public int GetEmotionCount(EmotionTraitID trait)
     {
         return emotionCounts.ContainsKey(trait) ? emotionCounts[trait] : 0;
     }
 
-    /// <summary>
-    /// 检查是否拥有特定类型的记忆
-    /// </summary>
     public bool HasMemory(MemoryTraitID trait)
     {
         return collectedMemories.Contains(trait);
     }
 
-    // 【新功能】：处理死亡损失
     public void HandleDeathLoss()
     {
-        // 损失所有记忆
+        // 1. 清空记忆
         collectedMemories.Clear();
 
-        // 随机损失一半情绪
+        // 2. 损失一半情绪
         int totalEmotions = 0;
         foreach (var count in emotionCounts.Values) totalEmotions += count;
-
         int toRemove = totalEmotions / 2;
 
         for (int i = 0; i < toRemove; i++)
         {
-            // 这里使用了 LINQ 语法，所以需要 System.Linq
             var availableKeys = emotionCounts
                 .Where(kvp => kvp.Value > 0)
                 .Select(kvp => kvp.Key)
@@ -107,5 +92,8 @@ public class CollectionManager : MonoBehaviour
                 emotionCounts[target]--;
             }
         }
+
+        // 【新增】：死亡惩罚执行完后，也要通知 UI 变动（变成剩下的一半）
+        OnCollectionUpdated?.Invoke();
     }
 }

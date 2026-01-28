@@ -174,7 +174,7 @@ public class SettlementUI : MonoBehaviour
         int nu = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.NU);
         int ai = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.AI);
         int le = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.LE);
-        sb.Append($"XI x {xi} | NU x {nu} | AI x {ai} | LE x {le}");
+        sb.Append($"喜 x {xi} | 怒 x {nu} | 哀 x {ai} | 乐 x {le}");
         remainingText.text = sb.ToString();
     }
 

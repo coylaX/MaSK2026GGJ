@@ -151,7 +151,7 @@ MonoBehaviour:
   destroyOnCollision: 1
   ignoreLayers:
     serializedVersion: 2
-    m_Bits: 3489
+    m_Bits: 69025
   damage: 0
 --- !u!114 &1525572756590486406
 MonoBehaviour:

@@ -74,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 1254718477
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: afd619004c2dbdc46a6b11c456647098, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.29, y: 0.99}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -184,8 +184,8 @@ SpriteRenderer:
   m_SortingLayerID: 1254718477
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.14480352, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 7078059cded672045b0a02be093d759c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -247,6 +247,7 @@ MonoBehaviour:
   targetRoom: {fileID: 0}
   wallVisual: {fileID: 7072780336016833356}
   openVisual: {fileID: 7072780336136713816}
+  teleportCooldown: 1
 --- !u!61 &7072780337916407960
 BoxCollider2D:
   m_ObjectHideFlags: 0

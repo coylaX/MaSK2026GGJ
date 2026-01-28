@@ -1,49 +1,46 @@
 using UnityEngine;
-using TMPro; // Required for TextMeshProUGUI
+using TMPro;
 using System.Text;
 using System.Collections.Generic;
 
 public class CollectionUI : MonoBehaviour
 {
     [Header("UI Reference")]
-    public TextMeshProUGUI displayLinesText; // Drag your TMP - Text object here
+    public TextMeshProUGUI displayLinesText;
 
     private void OnEnable()
     {
-        // Subscribe to events
-        LootEvents.OnEmotionPicked += RefreshDisplay;
-        LootEvents.OnMemoryPicked += RefreshDisplay;
+        // 【核心修改】：订阅 Manager 的数据更新信号，而非 LootEvents
+        CollectionManager.OnCollectionUpdated += RefreshDisplay;
     }
 
     private void OnDisable()
     {
-        // Unsubscribe to prevent memory leaks
-        LootEvents.OnEmotionPicked -= RefreshDisplay;
-        LootEvents.OnMemoryPicked -= RefreshDisplay;
+        // 取消订阅
+        CollectionManager.OnCollectionUpdated -= RefreshDisplay;
     }
 
     private void Start()
     {
-        // Initial refresh to show 0s
         RefreshDisplay();
     }
 
-    // Main refresh logic
+    // 现在这个方法不再需要传入 ID 参数，逻辑更纯粹
     private void RefreshDisplay()
     {
         if (displayLinesText == null || CollectionManager.Instance == null) return;
 
         StringBuilder sb = new StringBuilder();
 
-        // 1. Emotions: XI x n | NU x n | AI x n | LE x n
+        // 1. 拼接情绪数据
         int xi = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.XI);
         int nu = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.NU);
         int ai = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.AI);
         int le = CollectionManager.Instance.GetEmotionCount(EmotionTraitID.LE);
 
-        sb.Append($"XI x {xi} | NU x {nu} | AI x {ai} | LE x {le}");
+        sb.Append($"喜 x {xi} | 怒 x {nu} | 哀 x {ai} | 乐 x {le}");
 
-        // 2. Memory: Only shows if at least one is collected
+        // 2. 拼接记忆数据
         List<string> collectedMemoryNames = new List<string>();
         foreach (MemoryTraitID m in System.Enum.GetValues(typeof(MemoryTraitID)))
         {
@@ -59,11 +56,7 @@ public class CollectionUI : MonoBehaviour
             sb.Append($" | Memory: {memories}");
         }
 
-        // 3. Update TMP Text
+        // 3. 更新文字
         displayLinesText.text = sb.ToString();
     }
-
-    // Glue methods to match the Action<T> signature
-    private void RefreshDisplay(EmotionTraitID id) => RefreshDisplay();
-    private void RefreshDisplay(MemoryTraitID id) => RefreshDisplay();
 }
