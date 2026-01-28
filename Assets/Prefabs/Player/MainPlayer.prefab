@@ -16,13 +16,15 @@ GameObject:
   - component: {fileID: 7452973894331019621}
   - component: {fileID: 1086958620750686275}
   - component: {fileID: 4133332378678176837}
+  - component: {fileID: 638475128}
+  - component: {fileID: 638475129}
   m_Layer: 10
   m_Name: MainPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3628372256033154135
 Transform:
   m_ObjectHideFlags: 0
@@ -126,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSleep: 100
   currentSleep: 100
-  drainPerSecond: 2
+  drainPerSecond: 0.2
   flashMaterial: {fileID: 2100000, guid: 5971259309c10e24383babe79ea3d6d7, type: 2}
   invincibilityDuration: 1
   flashCount: 6
@@ -164,21 +166,21 @@ MonoBehaviour:
   MachineGunCD: 0.15
   MachineGunDamage: 20
   isSad: 0
-  projectilePrefab2: {fileID: 0}
-  sadGunCD: 0
-  sadGunDamage: 0
+  projectilePrefab2: {fileID: 4478804263866301503, guid: 212ff343375541d4fb98b9b1074cea91, type: 3}
+  sadGunCD: 1.5
+  sadGunDamage: 50
   isBlade: 0
   projectilePrefab3: {fileID: 4004144186953632292, guid: a72c411b496c7aa4ca87418f9d21fd63, type: 3}
   bladeCD: 1
   bladeDamage: 70
   isHappy: 0
-  projectilePrefab4: {fileID: 0}
-  happyCD: 0
-  happyDamage: 0
+  projectilePrefab4: {fileID: 8715938929230282377, guid: 5e65960f549f08348b84cbe097776c66, type: 3}
+  happyCD: 0.5
+  happyDamage: 15
   spawnDistance: 0.5
   rotateProjectileToDirection: 1
   fireKey: 323
-  fireCooldown: 0
+  fireCooldown: 1.2
   damage: 0
   prefab: {fileID: 0}
 --- !u!50 &1086958620750686275
@@ -228,6 +230,39 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.440798, y: 10.370783}
   m_EdgeRadius: 0
+--- !u!114 &638475128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d1166a12c0020f428ca99f811228a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addspeed: 0
+  addHealth: 0
+--- !u!114 &638475129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773168657498655772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 560a66a35d52fbe43b6dad0bde6b6097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMask:
+    instanceId: 
+    displayName: 
+    emotionTraitID: 0
+    memoryTraitID: 0
+    colorTraitID: 0
+  MaskNum: 0
 --- !u!1 &6333327996232467872
 GameObject:
   m_ObjectHideFlags: 0
