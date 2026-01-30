@@ -87,7 +87,7 @@ public class BackPackView : MonoBehaviour
         for (int i = BackPackLogic.I.maskInstances.Count; i < slotCount; i++)
         {
             slots[i].GetComponent<BackItemUI>().mask = null;
-            slots[i].GetComponent<Image>().color = Color.white;
+            slots[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
         }
 
     }

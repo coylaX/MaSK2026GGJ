@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderID: Memory_A
   customerName: "\u738B\u59B9\u59B9"
-  portrait: {fileID: 0}
-  requirementText: "\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3"
+  portrait: {fileID: 21300000, guid: 4128e7b16db00334f85e0579fe7a47e5, type: 3}
+  requirementText: 'This is the requirement of order, players need to choose suitable
+    msk. After players chose, it will show reviews. You can also click it to expand
+    it '
   daysLimit: -4
   baseReward: 200
   appearOnDay: -4
@@ -24,5 +26,9 @@ MonoBehaviour:
   memoryTraitID: 0
   colorTraitID: 0
   emotionTraitID: 0
-  successReviewText: Good!
-  failReviewText: bad...
+  successReviewText: 'Good And This is the requirement of order, players need to
+    choose suitable msk. After players chose, it will show reviews. You can also
+    click it to expand it '
+  failReviewText: 'Bad And This is the requirement of order, players need to choose
+    suitable msk. After players chose, it will show reviews. You can also click it
+    to expand it '

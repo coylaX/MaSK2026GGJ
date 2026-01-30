@@ -12,6 +12,7 @@ public class OrderManager : MonoBehaviour
     public OrderUIController orderUICont;
     private string currentTargetOrderID;
     private MaskInstance selectedMask;
+    [Header("请保持该项为空")]
     public WarehouseItemUI selectedUI;
     [Header("提交的UI 组件")]
     public GameObject selectionOverlayPanel; // 全屏遮罩

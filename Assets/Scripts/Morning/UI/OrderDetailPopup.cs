@@ -10,7 +10,8 @@ public class OrderDetailPopup : MonoBehaviour
     public GameObject canvasGroup; // 或者直接用 GameObject panelRoot
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI contentText;
-    public Button backgroundButton; // 点击背景也能关闭
+    public Button exitButton; // click exit button to leave
+    public Button backgroundExitButton; // click background to leave
 
     private void Awake()
     {
@@ -22,7 +23,8 @@ public class OrderDetailPopup : MonoBehaviour
         Hide();
 
         // 绑定关闭事件
-        if (backgroundButton) backgroundButton.onClick.AddListener(Hide);
+        if (exitButton) exitButton.onClick.AddListener(Hide);
+        if (backgroundExitButton) backgroundExitButton.onClick.AddListener(Hide);
     }
 
     public void Show(string title, string content)

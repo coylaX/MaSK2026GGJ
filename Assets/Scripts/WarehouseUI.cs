@@ -94,7 +94,7 @@ public class WarehouseUI : MonoBehaviour
         for(int i = MaskInventory.I.maskInstances.Count; i < slotCount; i++)
         {
             slots[i].GetComponent<WarehouseItemUI>().mask = null;
-            slots[i].GetComponent<Image>().color = Color.white;
+            slots[i].GetComponent<Image>().color = slots[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f); ;
         }
         Debug.Log("WarehouseUI已完成刷新，UI理论上已经显示仓库面具");
     }
