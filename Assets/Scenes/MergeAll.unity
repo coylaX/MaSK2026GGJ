@@ -10447,7 +10447,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683010053}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78aa9c31d8d0c71499a26f7bc7c5763a, type: 3}
   m_Name: 
@@ -10466,6 +10466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50f751f671546f49a5c3370125bc846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftPigment: -2
+  craftEmotion: -4
   pigmentText: {fileID: 55877948}
   xiText: {fileID: 1252608123}
   nuText: {fileID: 1817340346}

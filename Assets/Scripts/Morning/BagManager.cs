@@ -8,6 +8,10 @@ using static UnityEngine.GraphicsBuffer;
 public class BagManager : MonoBehaviour
 {
     public static BagManager Instance;
+
+    public int craftPigment;
+    public int craftEmotion;
+
     private void Awake()
     {
         // 意思是：游戏一开始，把自己赋值给 Instance
@@ -233,9 +237,9 @@ public class BagManager : MonoBehaviour
     #region 合成消耗资源（绑定到合成Button上）
     public bool CraftUse(EmotionTraitID id)
     {
-        if (!EarnPigment(-2))
+        if (!EarnPigment(craftPigment))
             return false;
-        if (!EarnEmotion(id, -1))
+        if (!EarnEmotion(id, craftEmotion))
             return false;
         return true;
     }
