@@ -1,5 +1,7 @@
 using UnityEngine;
 using System; // 必须引用 System 命名空间以使用 Action
+using System.Collections;         
+using System.Collections.Generic;
 
 public class UseBomb : MonoBehaviour
 {
@@ -53,19 +55,61 @@ public class UseBomb : MonoBehaviour
 
     private void SpawnBomb()
     {
-        if (bombPrefab == null)
-        {
-            Debug.LogWarning("[UseBomb] bombPrefab is null.");
-            return;
-        }
-        if (bombNum <= 0)
-        {
-            return;
-        }
-        Instantiate(bombPrefab, transform.position, Quaternion.identity);
+        if (bombPrefab == null || bombNum <= 0) return;
+
+        // 1. 生成炸弹
+        GameObject bombObj = Instantiate(bombPrefab, transform.position, Quaternion.identity);
         bombNum--;
-        
-        // --- 发送更新事件 ---
         OnBombCountChanged?.Invoke(bombNum);
+
+        // 2. 【核心优化】：获取玩家及其子物体上所有的碰撞体
+        Collider2D[] playerColliders = GetComponentsInChildren<Collider2D>();
+        Collider2D bombCollider = bombObj.GetComponent<Collider2D>();
+
+        if (bombCollider != null && playerColliders.Length > 0)
+        {
+            // 3. 立即忽略所有碰撞
+            foreach (var pCol in playerColliders)
+            {
+                Physics2D.IgnoreCollision(pCol, bombCollider, true);
+            }
+
+            // 4. 【关键】：强制物理引擎同步变换，防止“第一帧排斥”
+            Physics2D.SyncTransforms();
+
+            // 5. 启动智能恢复协程
+            StartCoroutine(RestoreCollisionWhenClear(playerColliders, bombCollider));
+        }
+    }
+
+    private IEnumerator RestoreCollisionWhenClear(Collider2D[] pCols, Collider2D bCol)
+    {
+        // 只要有一个碰撞体还在接触炸弹，就继续等待
+        bool isStillTouching = true;
+        while (isStillTouching)
+        {
+            if (bCol == null) yield break; // 炸弹炸了就停止
+
+            isStillTouching = false;
+            foreach (var pCol in pCols)
+            {
+                if (pCol != null && pCol.IsTouching(bCol))
+                {
+                    isStillTouching = true;
+                    break;
+                }
+            }
+            yield return null; 
+        }
+
+        // 走开了，全部恢复碰撞
+        if (bCol != null)
+        {
+            foreach (var pCol in pCols)
+            {
+                if (pCol != null) Physics2D.IgnoreCollision(pCol, bCol, false);
+            }
+            // Debug.Log("玩家已离开炸弹，实体化成功！");
+        }
     }
 }

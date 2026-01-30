@@ -10,17 +10,26 @@ public class SleepHealth : MonoBehaviour
     public float drainPerSecond = 2f;
 
     [Header("受击反馈")]
-    public Material flashMaterial;      // 放入刚才创建的 M_FlashWhite
+    public Material flashMaterial;      
     private Material originalMaterial;
-    public float invincibilityDuration = 1.0f;
-    public int flashCount = 6;          // 增加闪烁次数让视觉更明显
+    public float invincibilityDuration = 1.0f; // 受击产生的无敌时长
+    public float flashInterval = 0.1f;         // 闪烁频率（单次闪白的时长）
 
-    private bool isInvincible = false;
+    // 原有变量保持不变
+    private bool isInvincible = false; 
     private SpriteRenderer sr;
-    private Collider2D playerCollider;  // 用于检测持续碰撞
-    private ContactFilter2D damageFilter; // 过滤检测目标
+    private Collider2D playerCollider;  
+    private ContactFilter2D damageFilter; 
+
+    // --- 新增：内部计时器 ---
+    private float hurtInvincibleTimer = 0f;    // 处理受击后的无敌倒计时
+    private Coroutine flashCoroutine;          // 引用当前的闪烁协程
 
     public bool IsDead => currentSleep <= 0f;
+
+    // 综合判断：当前是否处于无敌状态（受击无敌 OR 道具无敌）
+    public bool IsActuallyInvincible => (hurtInvincibleTimer > 0f) || 
+                                         (PlayerBuff.PlayerBuffInstance != null && PlayerBuff.PlayerBuffInstance.isInvinvible);
 
     private void Awake()
     {
@@ -29,8 +38,6 @@ public class SleepHealth : MonoBehaviour
         playerCollider = GetComponent<Collider2D>();
 
         if (sr != null) originalMaterial = sr.material;
-
-        // 设置物理检测过滤器：只检测触发器和碰撞体
         damageFilter.useTriggers = true;
     }
 
@@ -39,20 +46,44 @@ public class SleepHealth : MonoBehaviour
 
     private void Update()
     {
-
-
         if (IsDead) return;
+
+        // 1. 原有功能：自然流失
         if (drainPerSecond > 0f) ChangeSleep(-drainPerSecond * Time.deltaTime);
-        if (PlayerBuff.PlayerBuffInstance.isInvinvible)
+
+        // 2. 处理受击无敌计时器
+        if (hurtInvincibleTimer > 0f)
         {
-            isInvincible = true;
+            hurtInvincibleTimer -= Time.deltaTime;
+        }
+
+        // 3. 处理外部道具无敌逻辑 (保留并同步 PlayerBuff 状态)
+        if (PlayerBuff.PlayerBuffInstance != null && PlayerBuff.PlayerBuffInstance.isInvinvible)
+        {
+            // 外部无敌时，确保内部标志位同步
+            isInvincible = true; 
             PlayerBuff.PlayerBuffInstance.invincibleTime -= Time.deltaTime;
+            
             if (PlayerBuff.PlayerBuffInstance.invincibleTime <= 0f)
             {
-                isInvincible = false;
                 PlayerBuff.PlayerBuffInstance.isInvinvible = false;
+                // 注意：这里不直接设 isInvincible = false，由状态统一控制
             }
-            //补一个五秒timer
+        }
+
+        // 4. 【核心修改】：自适应闪烁驱动
+        // 只要处于任何形式的无敌，且闪烁协程没在运行，就开启它
+        if (IsActuallyInvincible && !IsDead)
+        {
+            isInvincible = true;
+            if (flashCoroutine == null)
+            {
+                flashCoroutine = StartCoroutine(AdaptiveFlashRoutine());
+            }
+        }
+        else
+        {
+            isInvincible = false;
         }
     }
 
@@ -61,7 +92,8 @@ public class SleepHealth : MonoBehaviour
 
     private void HandleCollision(GameObject obj)
     {
-        if (isInvincible || IsDead) return;
+        // 使用综合无敌状态判断
+        if (IsActuallyInvincible || IsDead) return;
 
         DamageSource source = obj.GetComponent<DamageSource>();
         if (source != null)
@@ -70,54 +102,54 @@ public class SleepHealth : MonoBehaviour
         }
     }
 
-    // 将伤害逻辑独立出来，方便重复调用
     private void ApplyDamage(DamageSource source)
     {
         TakeDamage(source.damageAmount);
-        StartCoroutine(InvincibilityRoutine());
+        
+        // 【修改】：不再直接开启协程，而是设置计时器，由 Update 触发闪烁
+        hurtInvincibleTimer = invincibilityDuration;
 
         if (source.destroyOnHit) Destroy(source.gameObject);
     }
 
-    private IEnumerator InvincibilityRoutine()
+    // --- 【核心逻辑】：自适应闪烁协程 ---
+    private IEnumerator AdaptiveFlashRoutine()
     {
-        isInvincible = true;
-
-        for (int i = 0; i < flashCount; i++)
+        // 只要任何一种无敌状态还在，就一直循环
+        while (IsActuallyInvincible && !IsDead)
         {
-            // 切换到闪白材质
             if (sr != null) sr.material = flashMaterial;
-            yield return new WaitForSeconds(invincibilityDuration / (flashCount * 2f));
+            yield return new WaitForSeconds(flashInterval);
 
-            // 切回原材质
             if (sr != null) sr.material = originalMaterial;
-            yield return new WaitForSeconds(invincibilityDuration / (flashCount * 2f));
+            yield return new WaitForSeconds(flashInterval);
         }
 
-        isInvincible = false;
+        // 确保退出时恢复材质
+        if (sr != null) sr.material = originalMaterial;
+        flashCoroutine = null;
 
-        // 【功能 2】：无敌结束后，检查是否仍重叠在伤害源上
+        // 无敌彻底结束后，检查环境伤害（如一直站在地刺上）
         CheckForPersistentDamage();
     }
 
     private void CheckForPersistentDamage()
     {
-        // 扫描所有与玩家重叠的碰撞体
         List<Collider2D> results = new List<Collider2D>();
         playerCollider.OverlapCollider(damageFilter, results);
 
         foreach (var col in results)
         {
             DamageSource source = col.GetComponent<DamageSource>();
-            // 如果还在碰着怪物（且怪物没死），再次触发受击
             if (source != null && !source.destroyOnHit)
             {
                 ApplyDamage(source);
-                break; // 触发一次即可，进入下一轮无敌
+                break; 
             }
         }
     }
 
+    // --- 原有功能函数全部保留 ---
     public void TakeDamage(float amount) { if (!IsDead) ChangeSleep(-amount); }
     public void Heal(float amount) { if (!IsDead) ChangeSleep(amount); }
 
@@ -127,50 +159,40 @@ public class SleepHealth : MonoBehaviour
         if (currentSleep <= 0f) Die();
     }
 
-    // 【新增功能】：提供给外部程序设置生命值
     public void SetSleep(float value)
     {
-        // 即使是直接设置，也要确保不超出 0 到 maxSleep 的范围
         currentSleep = Mathf.Clamp(value, 0f, maxSleep);
-        
-        // 如果设置为 0，依然触发死亡逻辑
         if (currentSleep <= 0f) Die();
     }
 
-    // 增加一个彻底的清理方法
     public void ResetVisuals()
     {
         StopAllCoroutines();
+        flashCoroutine = null;
+        hurtInvincibleTimer = 0f;
         isInvincible = false;
         
-        // 恢复材质
         if (sr != null && originalMaterial != null) 
         {
             sr.material = originalMaterial;
-            sr.color = Color.white; // 确保颜色也没有偏移
+            sr.color = Color.white;
         }
         
-        // 恢复动画机
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null) anim.enabled = true; 
     }
 
-    // 【新增功能】：提供一个一键回满的快捷方法
     public void RestoreFullSleep()
     {
-        ResetVisuals(); // 复活时第一步先清理视觉
+        ResetVisuals();
         SetSleep(maxSleep);
-        Debug.Log("<color=green>[系统]</color> 玩家生命值（精神值）已恢复至满格。");
     }
 
     private void Die() 
     { 
-        ResetVisuals(); // 死亡时第一步先清理视觉
-        
-        // 额外保险：如果是由于受击死掉的，关掉动画机防止它锁死材质
+        ResetVisuals();
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null) anim.enabled = false;
-
         PlayerEvents.OnPlayerDeath?.Invoke(); 
     }
 }

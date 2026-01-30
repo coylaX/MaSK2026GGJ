@@ -505,7 +505,7 @@ MonoBehaviour:
   bulletPenetrate: 0
   breakEnemyBullet: 0
   isInvinvible: 0
-  invincibleTime: 5
+  invincibleTime: 10
   baoxue: 0
   baoxueBeilv: 2
 --- !u!114 &1899134185925431973

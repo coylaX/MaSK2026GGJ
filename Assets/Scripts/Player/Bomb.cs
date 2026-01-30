@@ -6,25 +6,19 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     [Header("Explosion")]
-    public float fuseSeconds = 2f;                 // ÑÓÊ±¶à¾Ã±¬Õ¨
-    public GameObject explosionVfxPrefab;          // ±¬Õ¨ÌØĞ§Ô¤ÖÆÌå£¨Éú³ÉÔÚÔ­µØ£©
+    public float fuseSeconds = 2f;                // å®šæ—¶ç‚¸å¼¹çˆ†ç‚¸æ—¶é—´
+    public float explosionRadius = 3f;            // ã€æ–°å¢ã€‘çˆ†ç‚¸åŠå¾„
+    public GameObject explosionVfxPrefab;         // çˆ†ç‚¸ç‰¹æ•ˆé¢„åˆ¶ä½“
     public bool destroyBombOnExplode = true;
+    public float explosionDamage = 100;
+
+    [Header("Screen Shake")]
+    public float shakeDuration = 0.1f;            // ã€æ–°å¢ã€‘æŠ–åŠ¨æ—¶é•¿
+    public float shakeIntensity = 0.005f;           // ã€æ–°å¢ã€‘æŠ–åŠ¨å¼ºåº¦
 
     [Header("Detection")]
-    public LayerMask ignoreLayers;                 // ºöÂÔµÄ²ã
+    public LayerMask detectionLayers;             // ã€ä¿®æ”¹ã€‘æ£€æµ‹å“ªäº›å±‚çº§çš„ç‰©ä½“
     public bool debugLogTargets = false;
-
-    private Collider2D _triggerCol;
-    public List<GameObject> _inside = new List<GameObject>();
-
-    private void Awake()
-    {
-        _triggerCol = GetComponent<Collider2D>();
-
-        // ÄãËµ¡°¼ì²â×ÔÉíÅö×²ÌåtriggerÀïÃæÓĞÄÄĞ©ÎïÌå¡±£¬ËùÒÔÈ·±£ÊÇ Trigger
-        if (!_triggerCol.isTrigger)
-            _triggerCol.isTrigger = true;
-    }
 
     private void Start()
     {
@@ -37,69 +31,61 @@ public class Bomb : MonoBehaviour
         Explode();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other == null) return;
-        if (other == _triggerCol) return;
-
-        // ºöÂÔ²ã
-        if (IsIgnored(other.gameObject.layer)) return;
-
-        _inside.Add(other.gameObject);
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other == null) return;
-        _inside.Remove(other.gameObject);
-    }
-
-    private bool IsIgnored(int layer)
-    {
-        return (ignoreLayers.value & (1 << layer)) != 0;
-    }
-
     private void Explode()
     {
-        // 1) Éú³É±¬Õ¨ÌØĞ§
+        // 1) æ’­æ”¾çˆ†ç‚¸ç‰¹æ•ˆ
         if (explosionVfxPrefab != null)
             Instantiate(explosionVfxPrefab, transform.position, Quaternion.identity);
 
-     
-        // 3) ½»¸øºóĞø·ÖÀà´¦Àí
-        HandleTargets(_inside);
+        // 2) ã€æ ¸å¿ƒå˜æ›´ã€‘ï¼šä½¿ç”¨ç‰©ç†åœ†åŸŸæ£€æµ‹è·å–èŒƒå›´å†…æ‰€æœ‰ç¢°æ’ä½“
+        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, explosionRadius, detectionLayers);
+        
+        // 3) å¤„ç†ä¼¤å®³
+        HandleTargets(targets);
 
-        // 4) Ïú»ÙÕ¨µ¯
+        // 4) æ‰§è¡Œå±å¹•æŠ–åŠ¨
+        if (CameraManager.Instance != null)
+        {
+            CameraManager.Instance.Shake(shakeDuration, shakeIntensity);
+        }
+
+        // 5) é”€æ¯ç‚¸å¼¹
         if (destroyBombOnExplode)
             Destroy(gameObject);
     }
 
-    /// <summary>
-    /// ÄãºóÃæÒª¶Ô¼ì²âµ½µÄÎïÌå½øĞĞ·ÖÀà´¦Àí£¬¾ÍÔÚÕâÀïĞ´¡£
-    /// </summary>
-    private void HandleTargets(List<GameObject> _inside)
+    private void HandleTargets(Collider2D[] targets)
     {
-        if (_inside == null) return;
+        if (targets == null) return;
 
-        for (int i = 0; i < _inside.Count; i++)
+        foreach (Collider2D col in targets)
         {
-            GameObject target = _inside[i];
+            GameObject target = col.gameObject;
             if (target == null) continue;
 
-           //player²»ÓÃ´¦Àí£¬ÒòÎª×Ô¼º»á¿ÛÑª
-            // 1) Èç¹û°üº¬ MonsterBase£º¿ÛÑª 50
+            // 1) æ€ªç‰©ä¼¤å®³
             if (target.TryGetComponent<MonsterBase>(out var monster))
             {
-                monster.health -= 50;
+                monster.TakeDamage(explosionDamage, transform.position);
+                if (debugLogTargets) Debug.Log($"ç‚¸å¼¹ä¼¤å®³äº†æ€ªç‰©: {target.name}");
             }
-            if(target.TryGetComponent<Obstacle>(out var obstacle))
+            
+            // 2) éšœç¢ç‰©ç ´å
+            if (target.TryGetComponent<Obstacle>(out var obstacle))
             {
                 if (obstacle.isDestructible)
                 {
                     Destroy(obstacle.gameObject);
+                    if (debugLogTargets) Debug.Log($"ç‚¸å¼¹æ‘§æ¯äº†éšœç¢ç‰©: {target.name}");
                 }
             }
-            
         }
+    }
+
+    // åœ¨ç¼–è¾‘å™¨é‡Œç”»å‡ºçˆ†ç‚¸èŒƒå›´ï¼Œæ–¹ä¾¿è°ƒè¯•
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
