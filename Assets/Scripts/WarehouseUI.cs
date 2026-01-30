@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,36 +7,28 @@ public class WarehouseUI : MonoBehaviour
 {
     [Header("Logic data")]
     
-     // ÄãµÄÂß¼­²Ö¿â£¨Ò²¿ÉÒÔ¸Ä³É PlayerInventory.I.warehouse£©
+     // ä½ çš„é€»è¾‘ä»“åº“ï¼ˆä¹Ÿå¯ä»¥æ”¹æˆ PlayerInventory.I.warehouseï¼‰
 
     [Header("UI slots (pre-placed in scene, in order)")]
-    public GameObject[] slots;   // ÔÚInspector°´Ë³ĞòÍÏÈë£ºSlot0, Slot1, Slot2...
+    public GameObject[] slots;   // åœ¨InspectoræŒ‰é¡ºåºæ‹–å…¥ï¼šSlot0, Slot1, Slot2...
 
     [Header("Placeholder")]
-    public Sprite XI;     // Ã»ÃÀÊõ¾ÍÁô¿Õ£¬»òÕßÓÃÒ»¸öÄ¬ÈÏÍ¼
+    public Sprite XI;     // æ²¡ç¾æœ¯å°±ç•™ç©ºï¼Œæˆ–è€…ç”¨ä¸€ä¸ªé»˜è®¤å›¾
     public Sprite NU;
     public Sprite AI;
     public Sprite LE;
 
-    //private void OnEnable()
-    //{
-    //    // ¿ªÊ¼¼àÌı£ºÖ»Òª SaveManager º° "OnLoadComplete"£¬ÎÒ¾ÍÖ´ĞĞ Refresh
-    //    SaveManager.OnLoadComplete += Refresh;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    // ¼ÇµÃÈ¡Ïû¼àÌı£¬·ÀÖ¹±¨´í
-    //    SaveManager.OnLoadComplete -= Refresh;
-    //}
-
     public void Refresh()
     {
-        
+        Debug.Log("WarehouseUIå·²å¼€å§‹åˆ·æ–°");
+        //111
+        // æ‰“å°å‡ºå½“å‰æ­£åœ¨æ‰§è¡Œåˆ·æ–°çš„ç‰©ä½“åå­—å’Œ ID
+        Debug.Log($"[è°åœ¨è·‘?] æˆ‘æ˜¯: {gameObject.name}, ID: {gameObject.GetInstanceID()}");
+
         int slotCount = slots.Length;
         int maskCount = MaskInventory.I.maskInstances.Count;
 
-        // 1) ÏÈ°ÑËùÓĞslotÇå¿Õ
+        // 1) å…ˆæŠŠæ‰€æœ‰slotæ¸…ç©º
         for (int i = 0; i < slotCount; i++)
         {
             slots[i].GetComponent<Image>().sprite = null;
@@ -47,10 +39,11 @@ public class WarehouseUI : MonoBehaviour
             Debug.Log($"[WarehouseUI] Overflow: {maskCount} masks, but only {slotCount} slots shown.");
             return;
         }
-        // 2) ÔÙ°Ñ²Ö¿âÀïµÄÃæ¾ß°´Ë³ĞòÌî½øÈ¥£¨×î¶àÌîÂúslots£©
+        // 2) å†æŠŠä»“åº“é‡Œçš„é¢å…·æŒ‰é¡ºåºå¡«è¿›å»ï¼ˆæœ€å¤šå¡«æ»¡slotsï¼‰
         int showCount = Mathf.Min(maskCount, slotCount);
         for (int i = 0; i < MaskInventory.I.maskInstances.Count; i++)
         {
+            Debug.Log($"å¡«å…¥ç¬¬ {i} ä¸ªé¢å…·æ ¼å­");
             MaskInstance mask = MaskInventory.I.maskInstances[i];
             switch (mask.emotionTraitID)
             {
@@ -93,16 +86,17 @@ public class WarehouseUI : MonoBehaviour
                     slots[i].GetComponent<Image>().color = Color.white;
                     break;
             }
+            //Error:è¿™ä¸€æ­¥æŠ¥é”™ç©ºå¼•ç”¨
             slots[i].GetComponent<WarehouseItemUI>().mask = mask;
         }
 
-        // Çå¿ÕºóÃæµÄ¸ñ×Ó
+        // æ¸…ç©ºåé¢çš„æ ¼å­
         for(int i = MaskInventory.I.maskInstances.Count; i < slotCount; i++)
         {
             slots[i].GetComponent<WarehouseItemUI>().mask = null;
             slots[i].GetComponent<Image>().color = Color.white;
         }
-
+        Debug.Log("WarehouseUIå·²å®Œæˆåˆ·æ–°ï¼ŒUIç†è®ºä¸Šå·²ç»æ˜¾ç¤ºä»“åº“é¢å…·");
     }
 }
 

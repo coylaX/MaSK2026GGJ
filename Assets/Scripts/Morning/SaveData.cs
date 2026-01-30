@@ -21,6 +21,7 @@ public class SaveData
     // ==========================================
     public List<OrderData> activeOrders;
 
+    [Header("此处仅显示存档不实时同步，实时状态需查看gm")]
     // 4. 面具仓库数据 ---
     // 对应 MaskInventory 中的数据
     public List<MaskInstance> maskInventoryList;

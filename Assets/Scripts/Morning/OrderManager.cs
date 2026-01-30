@@ -6,9 +6,7 @@ using UnityEngine.UI; // 用于简化列表查询代码
 
 public class OrderManager : MonoBehaviour
 {
-    public static OrderManager Instance;
-
-    public WarehouseUI warehouseUI;
+    public static OrderManager Instance { get; private set; }
 
     public bool maskChooseState = true;
     public OrderUIController orderUICont;
@@ -258,7 +256,7 @@ public class OrderManager : MonoBehaviour
             feedbacktext = template.failReviewText;
             Debug.Log($"[结算] 差评！获得 {finalreward}");
         }
-        //刷新下一个记忆订单
+        //特殊：刷新下一个记忆订单
         if (template.ifMemory)
         {
             nextMemoeyOrder();
@@ -266,14 +264,14 @@ public class OrderManager : MonoBehaviour
         //更新订单状态
         orderUICont.RefreshOrderList();
         //更新订单列表状态
-        MorningGameManager.Instance.UpdateUI();
+        MorningGameManager.Instance.UpdateOrderUI();
 
         // 5. (基础版暂定) 提交后，无论成功失败，都要消耗掉这个面具
         // 仓库移除提交的面具以及更新UI
         MaskInventory.I.maskInstances.Remove(mask);
         selectedUI.mask = null;
         selectedUI.GetComponent<Image>().color = Color.white;
-        warehouseUI.Refresh();
+        MorningGameManager.Instance.Refresh();
         //提交订单获得的资金
         BagManager.Instance.EarnPigment(finalreward);
     }

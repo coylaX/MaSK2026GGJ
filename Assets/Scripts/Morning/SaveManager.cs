@@ -75,14 +75,16 @@ public static class SaveManager
             // 3. 反序列化：把文本变回对象
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            // 把存档里的面具数据，还原给单例仓库，并且刷新UI。注意，只读取仓库的面具，没有背包的面具！
+            // 把存档里的面具数据，还原给单例仓库，并且刷新UI。仓库和背包的面具都读取了
             MaskInventory.I.maskInstances = new List<MaskInstance>(data.maskInventoryList);
+            BackPackLogic.I.maskInstances = new List<MaskInstance>(data.backPackList);
+            Debug.Log("[SaveManager] 存档数据已插入MaskInventory，请检查仓库数据");
 
             // 读档最后，发出广播通知刷新面具UI
-            // ?.Invoke 的意思是：如果有人在听，就喊一声；没人听就不喊
-            //OnLoadComplete?.Invoke();
+            //Test0130
+            OnLoadComplete?.Invoke();
 
-            Debug.Log("[SaveManager] 读档成功!");
+            Debug.Log("[SaveManager] 读档成功且刷新UI!");
             return data;
         }
         catch (System.Exception e)

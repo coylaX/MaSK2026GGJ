@@ -7050,6 +7050,7 @@ MonoBehaviour:
   - {fileID: 417371876}
   - {fileID: 1237257787}
   - {fileID: 708921925}
+  generator: {fileID: 0}
 --- !u!114 &1342719156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8862,7 +8863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03391fe978bd9224a9e46f126c5536bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warehouseUI: {fileID: 253429102}
   maskChooseState: 1
   orderUICont: {fileID: 1501831373}
   selectedUI: {fileID: 0}
@@ -8903,6 +8903,8 @@ MonoBehaviour:
     activeOrders: []
     maskInventoryList: []
     backPackList: []
+  warehouseUI: {fileID: 253429102}
+  backPackUI: {fileID: 1516724784}
 --- !u!4 &1683010056
 Transform:
   m_ObjectHideFlags: 0
@@ -8930,6 +8932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50f751f671546f49a5c3370125bc846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftPigment: -50
+  craftEmotion: -10
   pigmentText: {fileID: 55877948}
   xiText: {fileID: 1252608123}
   nuText: {fileID: 1817340346}

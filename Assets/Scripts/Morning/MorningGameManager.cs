@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MorningGameManager : MonoBehaviour
@@ -6,7 +7,7 @@ public class MorningGameManager : MonoBehaviour
     // 1. 单例设置 (Singleton)
     // 方便其他脚本通过 MorningGameManager.Instance 访问
     // ==========================================
-    public static MorningGameManager Instance;
+    public static MorningGameManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -25,7 +26,30 @@ public class MorningGameManager : MonoBehaviour
     // 游戏运行时唯一的内存数据源，所有修改都发生在这里
     // ==========================================
     [Header("游戏运行时数据")]
+    [Tooltip("请注意：仓库和背包List不实时同步，请前往gm查看")]
     public SaveData currentSaveData;
+
+    [Header("显示仓库")]
+    public WarehouseUI warehouseUI;
+    public BackPackView backPackUI;
+
+    private void OnEnable()
+    {
+        // 开始监听：只要 SaveManager 喊 "OnLoadComplete"，我就执行 Refresh
+        SaveManager.OnLoadComplete += Refresh;
+    }
+
+    private void OnDisable()
+    {
+        // 记得取消监听，防止报错
+        SaveManager.OnLoadComplete -= Refresh;
+    }
+
+    public void Refresh()
+    {
+        warehouseUI.Refresh();
+        backPackUI.Refresh();
+    }
 
     // ==========================================
     // 3. 初始化流程 (Initialization)
@@ -41,7 +65,7 @@ public class MorningGameManager : MonoBehaviour
         if (OrderManager.Instance != null)
         {
             OrderManager.Instance.RefreshDailyOrders(currentSaveData.currentDay);
-            UpdateUI();
+            UpdateOrderUI();
         }
         else
         {
@@ -78,16 +102,20 @@ public class MorningGameManager : MonoBehaviour
         // (这也处理了旧订单的倒计时和过期逻辑)
         OrderManager.Instance.RefreshDailyOrders(currentSaveData.currentDay);
 
-        // 3. 强制保存 (防止玩家刷初始)
+        //3.清空背包数据并更新UI
+        BackPackLogic.I.maskInstances = new List<MaskInstance>();
+        Refresh();
+
+        // 4. 强制保存 (防止玩家刷初始)
         SaveGame();
 
         Debug.Log($"[新的一天] 战斗结束，进入下一天！现在是第 {currentSaveData.currentDay} 天。");
-        UpdateUI();
+        UpdateOrderUI();
         // TODO: 这里通常会播放转场动画，或者重新加载场景
     }
 
     // 辅助方法：订单 UI 刷新
-    public void UpdateUI()
+    public void UpdateOrderUI()
     {
         OrderUIController ui = FindObjectOfType<OrderUIController>();
         if (ui != null)
@@ -130,6 +158,12 @@ public class MorningGameManager : MonoBehaviour
     {
         AdvanceDay();
         Debug.LogWarning("test已进入下一天。");
+    }
+
+    [ContextMenu("存档")]
+    public void Save()
+    {
+        SaveGame();
     }
 
     [ContextMenu("删除存档 (重置游戏)")]

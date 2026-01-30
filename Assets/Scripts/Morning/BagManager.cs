@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BagManager : MonoBehaviour
 {
-    public static BagManager Instance;
+    public static BagManager Instance { get; private set; }
 
     public int craftPigment;
     public int craftEmotion;
@@ -190,7 +190,7 @@ public class BagManager : MonoBehaviour
     }
 
     ///<summary>
-    ///得到记忆=，战斗结算时调用，memoryGet新增，并且MemoryNight推进
+    ///得到记忆=，战斗结算时调用，memoryGet新增，MemoryNight由Order提交更新
     /// </summary>
     public void EarnMemory(MemoryTraitID id)
     {
