@@ -10386,6 +10386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warehouseUI: {fileID: 253429102}
   maskChooseState: 1
+  orderUICont: {fileID: 1501831373}
   selectedUI: {fileID: 0}
   selectionOverlayPanel: {fileID: 389951375}
   confirmPopupPanel: {fileID: 1309626189}
