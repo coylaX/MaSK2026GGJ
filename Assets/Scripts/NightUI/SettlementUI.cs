@@ -4,7 +4,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using System.Linq; // <--- 补充这一行
+using System.Linq; 
 
 public class SettlementUI : MonoBehaviour
 {
@@ -15,8 +15,18 @@ public class SettlementUI : MonoBehaviour
     public float fadeDuration = 1.0f;     
     public float buttonDelay = 1.5f;      
 
-    [Header("UI 联动")]
+    [Header("UI 联动 (仅用于结算显示时隐藏)")]
     public List<GameObject> combatUIs; 
+
+    [Header("重置 - UI 显隐配置")]
+    [Tooltip("该根节点的所有深层子物体都将被设为 Active (不影响根节点本身)")]
+    public GameObject uiRootToActivate;    
+    
+    [Tooltip("该根节点的所有深层子物体都将被设为 Inactive (不影响根节点本身)")]
+    public GameObject uiRootToDeactivate;  
+    
+    [Tooltip("列表中的这些特定 GameObject 将被单独设为 Inactive")]
+    public List<GameObject> specificUIsToInActivate;
 
     [Header("文案配置 - 失败 (沉睡)")]
     [TextArea(1, 2)] public string failTitle = "迷失梦中";
@@ -42,7 +52,6 @@ public class SettlementUI : MonoBehaviour
     public Image continueBtnImage;        
     public TextMeshProUGUI continueBtnText; 
 
-    // 在 SettlementUI.cs 中增加一个变量记录当前结算状态
     private bool currentSettlementIsSuccess;
 
     private void Awake() { Instance = this; }
@@ -71,7 +80,7 @@ public class SettlementUI : MonoBehaviour
 
     public void ShowSettlement(bool isSuccess)
     {
-        currentSettlementIsSuccess = isSuccess; // 记录状态
+        currentSettlementIsSuccess = isSuccess; 
 
         // 1. 隐藏战斗 UI 和撤离小字
         foreach (GameObject ui in combatUIs) if (ui != null) ui.SetActive(false);
@@ -81,7 +90,6 @@ public class SettlementUI : MonoBehaviour
         if (!isSuccess)
         {
             if (CollectionManager.Instance != null) CollectionManager.Instance.HandleDeathLoss();
-            // 死亡时不需要白光滤镜，直接关闭
             if (evacWhiteFilter != null) evacWhiteFilter.gameObject.SetActive(false);
         }
 
@@ -93,18 +101,16 @@ public class SettlementUI : MonoBehaviour
         
         if (isSuccess && canvasGroup != null)
         {
-            // 【核心修改】：成功撤离，Alpha 直接拉满，实现背景瞬间变白
             canvasGroup.alpha = 1;
         }
         else if (canvasGroup != null)
         {
-            // 失败：初始透明度为 0
             canvasGroup.alpha = 0;
         }
         
         UpdateRemainingItemsDisplay();
 
-        // 5. 开启计时逻辑 (传入成功/失败状态以区分是否跳过渐变)
+        // 5. 开启计时逻辑
         StopAllCoroutines(); 
         StartCoroutine(FadeAndEnableButtonRoutine(isSuccess));
 
@@ -116,11 +122,10 @@ public class SettlementUI : MonoBehaviour
         titleText.text = isSuccess ? successTitle : failTitle;
         descriptionText.text = isSuccess ? successDesc : failDesc;
 
-        // 背景颜色反转逻辑
         if (backgroundDim != null) 
         {
             Color bgColor = isSuccess ? Color.white : Color.black;
-            bgColor.a = 1f; // 确保不透明度为 100%
+            bgColor.a = 1f; 
             backgroundDim.color = bgColor;
         }
 
@@ -143,7 +148,6 @@ public class SettlementUI : MonoBehaviour
 
     private IEnumerator FadeAndEnableButtonRoutine(bool isSuccess)
     {
-        // 只有失败（死亡）时才执行 Alpha 的 Lerp 渐变
         if (!isSuccess)
         {
             float timer = 0;
@@ -156,12 +160,8 @@ public class SettlementUI : MonoBehaviour
             }
         }
         
-        // 确保最终 Alpha 是 1
         if (canvasGroup != null) canvasGroup.alpha = 1;
 
-        // 处理按钮点击延迟
-        // 成功撤离瞬间出现，所以直接等待 full buttonDelay
-        // 死亡时由于经历了渐变，只需补足差值即可
         float waitTime = isSuccess ? buttonDelay : Mathf.Max(0, buttonDelay - fadeDuration);
         
         if (waitTime > 0)
@@ -184,29 +184,29 @@ public class SettlementUI : MonoBehaviour
         remainingText.text = sb.ToString();
     }
 
-    // 在 SettlementUI 类中修改或添加
     private void OnContinuePressed()
     {
+        MorningGameManager.Instance.AdvanceDay();
+
         continueButton.interactable = false;
 
-        // 1. 发送结算广播 (存档/成就系统)
+        // 【修改点】：直接调用 CollectionManager 的结算方法
         if (CollectionManager.Instance != null)
         {
-            var report = CollectionManager.Instance.GetCurrentReport(currentSettlementIsSuccess);
-            CollectionManager.OnNightEndSummary?.Invoke(report);
+            // 这一个方法包含了：广播报告 -> 写入库存 -> 清空临时背包
+            CollectionManager.Instance.FinalizeNightCollection(currentSettlementIsSuccess);
         }
 
-        // 执行自定义重置功能
+        // 执行场景软重置 (删除怪物、房间等)
         PerformSoftReset();
 
-        // 恢复时间流速
         Time.timeScale = 1;
-        Debug.Log("<color=green>[系统]</color> 场景软重置完成，已回到起始状态。");
+        Debug.Log("<color=green>[系统]</color> 场景软重置完成。");
     }
 
     private void PerformSoftReset()
     {
-        // --- 任务 1: 删除 LootContainer 下的所有子物体 ---
+        // --- 任务 1: 删除掉落物 ---
         if (LevelManager.Instance != null && LevelManager.Instance.lootContainer != null)
         {
             foreach (Transform child in LevelManager.Instance.lootContainer)
@@ -215,12 +215,11 @@ public class SettlementUI : MonoBehaviour
             }
         }
 
-        // --- 任务 2: 删除 LevelManager 下的所有子物体 (即删除关卡房间和怪物) ---
+        // --- 任务 2: 删除关卡房间和怪物 ---
         if (LevelManager.Instance != null)
         {
             foreach (Transform child in LevelManager.Instance.transform)
             {
-                // 注意：不要把 LootContainer 自己删了，如果它是 LevelManager 的子物体的话
                 if (child != LevelManager.Instance.lootContainer)
                 {
                     Destroy(child.gameObject);
@@ -228,27 +227,24 @@ public class SettlementUI : MonoBehaviour
             }
         }
 
-        // --- 任务 3: 把 Canvas 下的所有子物体及其深层子物体都设为 Active ---
-        // 假设你的脚本挂在 Canvas 的某个物体上，或者直接找场景中的 Canvas
-        Canvas mainCanvas = GetComponentInParent<Canvas>();
-        if (mainCanvas != null)
-        {
-            // GetComponentsInChildren(true) 会包含隐藏的物体
-            Transform[] allUITransforms = mainCanvas.GetComponentsInChildren<Transform>(true);
-            foreach (Transform t in allUITransforms)
-            {
-                // 排除 Canvas 自身，只激活子物体
-                if (t != mainCanvas.transform)
-                {
-                    t.gameObject.SetActive(true);
-                }
-            }
-            
-            // 额外提醒：结算面板 settlementPanel 应该在激活后立即手动隐藏，否则第二天早上会挡住屏幕
-            if (settlementPanel != null) settlementPanel.SetActive(false);
+        // --- 【关键修改】：彻底清空小地图旧数据，准备迎接第二天的新房间 ---
+        if (MiniMapManager.Instance != null) {
+            MiniMapManager.Instance.ResetMap();
         }
 
-        // --- 任务 4: 把 MainPlayer 和 MainCamera 重新移回 (0,0) ---
+        // --- 任务 3: UI 显隐状态重置 ---
+        
+        SetRecursiveActive(uiRootToActivate, true);
+        SetRecursiveActive(uiRootToDeactivate, false);
+
+        foreach (GameObject ui in specificUIsToInActivate)
+        {
+            if (ui != null) ui.SetActive(false);
+        }
+
+        if (settlementPanel != null) settlementPanel.SetActive(false);
+
+        // --- 任务 4: 玩家与摄像机复位 ---
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -257,19 +253,25 @@ public class SettlementUI : MonoBehaviour
 
         if (Camera.main != null)
         {
-            // 2D 场景中摄像机的 Z 轴通常保持为 -10
             Camera.main.transform.position = new Vector3(0, 0, -10f);
-            
-            // 如果你有 CameraManager，建议调用它的复位方法
             if (CameraManager.Instance != null)
             {
                 CameraManager.Instance.SwitchToRoom(Vector3.zero);
             }
         }
 
-        // 特别清理：隐藏撤离过程中的白光和字幕
         if (evacWhiteFilter != null) evacWhiteFilter.gameObject.SetActive(false);
         if (evacSubtitle != null) evacSubtitle.gameObject.SetActive(false);
-        if (settlementPanel != null) settlementPanel.gameObject.SetActive(false);
+    }
+
+    private void SetRecursiveActive(GameObject root, bool active)
+    {
+        if (root == null) return;
+        Transform[] allTransforms = root.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in allTransforms)
+        {
+            if (t.gameObject == root) continue;
+            t.gameObject.SetActive(active);
+        }
     }
 }

@@ -31,6 +31,17 @@ public class MiniMapManager : MonoBehaviour {
         iconContainer.anchoredPosition = Vector2.Lerp(iconContainer.anchoredPosition, targetContainerPos, Time.deltaTime * scrollSpeed);
     }
 
+    // --- 【新增刷新逻辑】：重置 UI 和内部数据 ---
+    public void ResetMap() {
+        if (iconContainer != null) {
+            foreach (Transform child in iconContainer) Destroy(child.gameObject);
+            iconContainer.anchoredPosition = Vector2.zero;
+        }
+        roomToIconMap.Clear();
+        currentRoom = null;
+        targetContainerPos = Vector2.zero;
+    }
+
     public void GenerateMiniMap(List<RoomController> allRooms) {
         foreach (Transform child in iconContainer) Destroy(child.gameObject);
         roomToIconMap.Clear();
@@ -61,6 +72,7 @@ public class MiniMapManager : MonoBehaviour {
 
     // 【关键函数】：由 RoomController 在 ActivateRoom 或传送成功后调用
     public void UpdateCurrentRoom(RoomController room) {
+        if (room == null || !roomToIconMap.ContainsKey(room)) return;
         currentRoom = room; // 更新当前坐标
 
         // 1. 计算居中位置
@@ -74,6 +86,7 @@ public class MiniMapManager : MonoBehaviour {
         foreach (var kvp in roomToIconMap) {
             RoomController room = kvp.Key;
             Image icon = kvp.Value;
+            if (room == null || icon == null) continue;
 
             // --- 优先级颜色逻辑 ---
             
@@ -97,6 +110,9 @@ public class MiniMapManager : MonoBehaviour {
     }
 
     private bool IsRoomDiscovered(RoomController room) {
+        // 【核心修复】：如果是当前所在的房间，强制显示
+        if (room == currentRoom) return true;
+
         // 自己进入过，显示
         if (room.state != RoomController.RoomState.Inactive) return true;
         // 玩家当前在隔壁，显示（显示邻居）
@@ -113,12 +129,14 @@ public class MiniMapManager : MonoBehaviour {
         if (coords.Count == 0) return distinct;
         distinct.Add(coords[0]);
         for (int i = 1; i < coords.Count; i++) {
+            // 使用 Mathf.Abs 修复报错 
             if (Mathf.Abs(coords[i] - distinct[distinct.Count - 1]) > 1.0f) distinct.Add(coords[i]);
         }
         return distinct;
     }
     private int FindCoordIndex(List<float> sortedList, float value) {
         for (int i = 0; i < sortedList.Count; i++) {
+            // 使用 Mathf.Abs 修复报错
             if (Mathf.Abs(sortedList[i] - value) < 1.0f) return i;
         }
         return 0;

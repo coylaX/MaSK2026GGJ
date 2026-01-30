@@ -127,5 +127,50 @@ public class SleepHealth : MonoBehaviour
         if (currentSleep <= 0f) Die();
     }
 
-    private void Die() { PlayerEvents.OnPlayerDeath?.Invoke(); }
+    // 【新增功能】：提供给外部程序设置生命值
+    public void SetSleep(float value)
+    {
+        // 即使是直接设置，也要确保不超出 0 到 maxSleep 的范围
+        currentSleep = Mathf.Clamp(value, 0f, maxSleep);
+        
+        // 如果设置为 0，依然触发死亡逻辑
+        if (currentSleep <= 0f) Die();
+    }
+
+    // 增加一个彻底的清理方法
+    public void ResetVisuals()
+    {
+        StopAllCoroutines();
+        isInvincible = false;
+        
+        // 恢复材质
+        if (sr != null && originalMaterial != null) 
+        {
+            sr.material = originalMaterial;
+            sr.color = Color.white; // 确保颜色也没有偏移
+        }
+        
+        // 恢复动画机
+        Animator anim = GetComponentInChildren<Animator>();
+        if (anim != null) anim.enabled = true; 
+    }
+
+    // 【新增功能】：提供一个一键回满的快捷方法
+    public void RestoreFullSleep()
+    {
+        ResetVisuals(); // 复活时第一步先清理视觉
+        SetSleep(maxSleep);
+        Debug.Log("<color=green>[系统]</color> 玩家生命值（精神值）已恢复至满格。");
+    }
+
+    private void Die() 
+    { 
+        ResetVisuals(); // 死亡时第一步先清理视觉
+        
+        // 额外保险：如果是由于受击死掉的，关掉动画机防止它锁死材质
+        Animator anim = GetComponentInChildren<Animator>();
+        if (anim != null) anim.enabled = false;
+
+        PlayerEvents.OnPlayerDeath?.Invoke(); 
+    }
 }

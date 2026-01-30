@@ -6828,6 +6828,17 @@ MonoBehaviour:
   combatUIs:
   - {fileID: 1877139986}
   - {fileID: 1604589348}
+  uiRootToActivate: {fileID: 152816728}
+  uiRootToDeactivate: {fileID: 194386241}
+  specificUIsToInActivate:
+  - {fileID: 1026988554}
+  - {fileID: 2106307080}
+  - {fileID: 1309626189}
+  - {fileID: 389951375}
+  - {fileID: 1279269590}
+  - {fileID: 1304158311}
+  - {fileID: 417371876}
+  - {fileID: 1237257787}
   failTitle: "\u8FF7\u5931\u68A6\u4E2D"
   failDesc: "\u5FD8\u8BB0\u4E86\u68A6\u4E2D\u7684\u4E00\u4E9B\u4E8B\u7269\u3002\u90A3\u79CD\u611F\u89C9\u5F88\u719F\u6089\uFF0C\u5374\u8BB0\u4E0D\u6E05\u4E86..."
   successTitle: "\u9192\u6765\u4E86"
@@ -10386,6 +10397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   warehouseUI: {fileID: 253429102}
   maskChooseState: 1
+  orderUICont: {fileID: 0}
   selectedUI: {fileID: 0}
   selectionOverlayPanel: {fileID: 389951375}
   confirmPopupPanel: {fileID: 1309626189}
@@ -10465,6 +10477,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50f751f671546f49a5c3370125bc846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftPigment: 0
+  craftEmotion: 0
   pigmentText: {fileID: 55877948}
   xiText: {fileID: 1252608123}
   nuText: {fileID: 1817340346}

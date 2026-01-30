@@ -35,10 +35,8 @@ public class LevelGenerator : MonoBehaviour {
         
         // 1. 放置初始房间（Starter Room）
         Vector2Int startCoord = Vector2Int.zero;
-        GameObject startRoom = PlaceRoom(startRoomPrefab, startCoord);
-        startRoom.name = "== START_ROOM ==";
-        // 给初始房间一个特殊颜色或标记以便调试
-        // startRoom.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+        GameObject startObj = PlaceRoom(startRoomPrefab, startCoord); 
+        startObj.name = "== START_ROOM ==";
 
         // 2. 确定本次生成的总数 (10-12)
         int targetCount = additionalRoomCount; 
@@ -52,6 +50,21 @@ public class LevelGenerator : MonoBehaviour {
             PlaceRoom(randomPrefab, nextCoord);
         }
         LevelManager.Instance.InitializeDungeon();
+
+        // --- 【新增刷新逻辑】：生成完成后，强制让小地图与新起点房间绑定并刷新界面 ---
+        if (MiniMapManager.Instance != null) {
+            List<RoomController> controllers = new List<RoomController>();
+            foreach (var go in spawnedRooms) {
+                RoomController rc = go.GetComponent<RoomController>();
+                if (rc != null) controllers.Add(rc);
+            }
+            // A. 生成图标
+            MiniMapManager.Instance.GenerateMiniMap(controllers);
+            // B. 立即将当前房间设为起点，解决“第二天不显示”和“第一天显示慢”的问题
+            if (startRoom != null) {
+                MiniMapManager.Instance.UpdateCurrentRoom(startRoom);
+            }
+        }
     }
 
     private Vector2Int GetRandomNeighborCoord() {

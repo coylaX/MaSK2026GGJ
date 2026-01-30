@@ -56,6 +56,12 @@ TagManager:
   - name: loots
     uniqueID: 968492413
     locked: 0
+  - name: Battle
+    uniqueID: 2724649755
+    locked: 0
+  - name: Danmu
+    uniqueID: 4181771617
+    locked: 0
   - name: player
     uniqueID: 2322780659
     locked: 0

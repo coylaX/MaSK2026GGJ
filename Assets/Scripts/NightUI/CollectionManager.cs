@@ -1,5 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 // 广播每晚收获用的数据结构
@@ -21,6 +25,9 @@ public class CollectionManager : MonoBehaviour
 
     [Header("记忆集合")]
     private HashSet<MemoryTraitID> collectedMemories = new HashSet<MemoryTraitID>();
+
+    // 定义广播事件
+    public static System.Action<NightSummaryReport> OnNightEndSummary;
 
     void Awake()
     {
@@ -104,10 +111,6 @@ public class CollectionManager : MonoBehaviour
         OnCollectionUpdated?.Invoke();
     }
 
-
-    // 定义广播事件
-    public static System.Action<NightSummaryReport> OnNightEndSummary;
-
     // 获取当前所有数据的快照
     public NightSummaryReport GetCurrentReport(bool success) {
         return new NightSummaryReport {
@@ -116,5 +119,62 @@ public class CollectionManager : MonoBehaviour
             finalMemories = collectedMemories.ToList(),
             isSuccess = success
         };
+    }
+
+    // --- 【关键新增】：执行最终结算并转化到永久库存 ---
+    /// <summary>
+    /// 处理夜晚结束的最终结算：广播 -> 写入库存 -> 清空临时背包
+    /// </summary>
+    public void FinalizeNightCollection(bool isSuccess)
+    {
+        // 1. 执行广播 (告知其他系统如 Achievement 或 UI 最终收获情况)
+        NightSummaryReport report = GetCurrentReport(isSuccess);
+        OnNightEndSummary?.Invoke(report);
+
+        // 2. 计入库存 (通过 BagManager 持久化)
+        if (BagManager.Instance != null)
+        {
+            // 存入情绪及其对应数量
+            foreach (var kvp in emotionCounts)
+            {
+                if (kvp.Value > 0)
+                {
+                    BagManager.Instance.EarnEmotion(kvp.Key, kvp.Value);
+                }
+            }
+
+            // 存入记忆
+            foreach (var memory in collectedMemories)
+            {
+                BagManager.Instance.EarnMemory(memory);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("CollectionManager: 找不到 BagManager 实例，收获无法存入库存！");
+        }
+
+        // 3. 将临时背包清零 (数据重置)
+        ClearTemporaryCollection();
+    }
+
+    /// <summary>
+    /// 清空当晚收集的临时数据
+    /// </summary>
+    private void ClearTemporaryCollection()
+    {
+        // 清空情绪字典 (将所有 Value 设为 0)
+        List<EmotionTraitID> keys = emotionCounts.Keys.ToList();
+        foreach (var key in keys)
+        {
+            emotionCounts[key] = 0;
+        }
+
+        // 清空记忆集合
+        collectedMemories.Clear();
+
+        // 再次通知 UI (此时显示应全为 0)
+        OnCollectionUpdated?.Invoke();
+        Debug.Log("<color=green>[系统]</color> 夜晚临时背包已清空。");
     }
 }

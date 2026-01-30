@@ -1,14 +1,18 @@
 using UnityEngine;
+using System; // 必须引用 System 命名空间以使用 Action
 
 public class UseBomb : MonoBehaviour
 {
+    // --- 新增：炸弹数量改变的事件 ---
+    public static Action<int> OnBombCountChanged;
+
     public int bombNum;
    
     [Header("Prefab")]
     public GameObject bombPrefab;
 
     [Header("Input")]
-    public KeyCode bombKey = KeyCode.Mouse1; // ����Ҽ�
+    public KeyCode bombKey = KeyCode.Mouse1; 
 
     [Header("Optional")]
     public float cooldown = 0.3f;
@@ -19,10 +23,23 @@ public class UseBomb : MonoBehaviour
         LootEvents.OnBombPicked += StoreBomb;
     }
 
+    private void OnDisable()
+    {
+        // 良好的习惯：在 Disable 时取消订阅
+        LootEvents.OnBombPicked -= StoreBomb;
+    }
+
+    // 可以在 Start 中发送一次初始数量，确保 UI 初始化正确
+    private void Start()
+    {
+        OnBombCountChanged?.Invoke(bombNum);
+    }
+
     public void StoreBomb()
     {
         bombNum++;
-   
+        // --- 发送更新事件 ---
+        OnBombCountChanged?.Invoke(bombNum);
     }
 
     private void Update()
@@ -47,5 +64,8 @@ public class UseBomb : MonoBehaviour
         }
         Instantiate(bombPrefab, transform.position, Quaternion.identity);
         bombNum--;
+        
+        // --- 发送更新事件 ---
+        OnBombCountChanged?.Invoke(bombNum);
     }
 }
