@@ -13,26 +13,29 @@ public class LootManager : MonoBehaviour {
     public List<LootEntry> randomLootPool = new List<LootEntry>();
     public List<GuaranteedLootEntry> guaranteedLoots = new List<GuaranteedLootEntry>();
 
+    [Header("精英房特殊视觉")]
+    public Sprite eliteRoomBackground; // 【新增】在这里拖入你想替换的精英房背景图
+
     void Awake() { Instance = this; }
 
     public void DistributeLoot(List<RoomController> allRooms, RoomController startRoom) {
-        // 1. 过滤掉初始房间，获取待分配房间列表
         List<RoomController> availableRooms = allRooms.Where(r => r != startRoom).ToList();
-        
-        // 随机打乱房间顺序
         Shuffle(availableRooms);
 
         int currentRoomIdx = 0;
 
-        // 2. 先分配“必定生成”的战利品
+        // 2. 分配“必定生成”的战利品（精英房）
         foreach (var entry in guaranteedLoots) {
             for (int i = 0; i < entry.count; i++) {
                 if (currentRoomIdx >= availableRooms.Count) break;
                 
-                availableRooms[currentRoomIdx].assignedLootPrefab = entry.prefab;
-                // 【关键】：标记为精英房间
-                availableRooms[currentRoomIdx].isGuaranteedRoom = true; 
+                RoomController room = availableRooms[currentRoomIdx];
+                room.assignedLootPrefab = entry.prefab;
+                room.isGuaranteedRoom = true; 
                 
+                // 【核心修改】：在这里触发背景替换
+                room.UpdateEliteVisuals(eliteRoomBackground);
+
                 currentRoomIdx++;
             }
         }
@@ -49,7 +52,7 @@ public class LootManager : MonoBehaviour {
             }
         }
 
-        Debug.Log($"战利品分配完成！总共分配了 {currentRoomIdx} 个房间。");
+        Debug.Log($"战利品分配完成！精英房背景已同步更新。");
     }
 
     // 根据权重选择随机战利品

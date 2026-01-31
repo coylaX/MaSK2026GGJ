@@ -112,4 +112,14 @@ public class UseBomb : MonoBehaviour
             // Debug.Log("玩家已离开炸弹，实体化成功！");
         }
     }
+
+    // 在 UseBomb.cs 中添加
+    public void AddBombs(int amount)
+    {
+        bombNum += amount;
+        // 触发事件通知 UI 更新
+        OnBombCountChanged?.Invoke(bombNum);
+        Debug.Log($"<color=yellow>[炸弹]</color> 增加了 {amount} 个，当前总量: {bombNum}");
+    }
+    
 }

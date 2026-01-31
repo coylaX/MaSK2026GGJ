@@ -4,32 +4,33 @@ using UnityEngine;
 
 public class PlayerBuff : MonoBehaviour
 {
-    [Header("Ô¶¾àÀë¹¥»÷buff")]
-    public bool attackFarEnemy;//Êµ¼ÊÉÏÊÇ×Óµ¯µÄbuff£¬ÈÃ×Óµ¯¶ÁÈ¡playerbuffµÄ×´Ì¬£¬Èç¹ûÊÇtrue£¬ÄÇÃ´×Óµ¯¾ÍÔÚ´òµ½µĞÈËµÄÊ±ºò¼ÆËãÍæ¼ÒºÍµĞÈËµÄ¾àÀë£¬Âú×ã¾àÀëÌõ¼ş¾ÍÈÃdamage*2£¬ÔÙ½«²ÎÊı´«¸ø¹ÖÎïµÄtakedamage\
+    [Header("Ô¶ï¿½ï¿½ï¿½ë¹¥ï¿½ï¿½buff")]
+    public bool attackFarEnemy;//Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½buffï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½È¡playerbuffï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½trueï¿½ï¿½ï¿½ï¿½Ã´ï¿½Óµï¿½ï¿½ï¿½ï¿½Ú´òµ½µï¿½ï¿½Ëµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒºÍµï¿½ï¿½ËµÄ¾ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½damage*2ï¿½ï¿½ï¿½Ù½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½takedamage\
     public float farDis;
     public float AttackBeilvfar;
 
-    [Header("½ü¾àÀë¹¥»÷buff")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ë¹¥ï¿½ï¿½buff")]
     public bool attackCloseEnemy;
     public float closeDis;
     public float AttackBeilvclose;
 
-    [Header("×Óµ¯´©Í¸Ğ§¹û")]
+    [Header("ï¿½Óµï¿½ï¿½ï¿½Í¸Ğ§ï¿½ï¿½")]
     public bool bulletPenetrate;
 
-    [Header("×Óµ¯µÖÏûµ¯Ä»")]
+    [Header("ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»")]
     public bool breakEnemyBullet;
 
-    [Header("ÎŞµĞbuff")]
+    [Header("ï¿½Şµï¿½buff")]
     public bool isInvinvible;
     public float invincibleTime;
 
-    [Header("ÉËº¦·­±¶¿Û³ıÑªÁ¿buff")]
+    [Header("ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û³ï¿½Ñªï¿½ï¿½buff")]
     public bool baoxue;
     public float baoxueBeilv;
 
     public static PlayerBuff PlayerBuffInstance;
     // Start is called before the first frame update
+
     void Awake()
     {
         PlayerBuffInstance = this;
@@ -41,5 +42,36 @@ public class PlayerBuff : MonoBehaviour
         
             
        
+    }
+
+    // ã€æ ¸å¿ƒæ–°å¢ã€‘ï¼šé‡ç½®æ‰€æœ‰Buffå’Œè§†è§‰æ•ˆæœ
+    public void ResetAllBuffs()
+    {
+        // 1. é‡ç½®æ‰€æœ‰åŸºç¡€å¸ƒå°”å¼€å…³
+        attackFarEnemy = false;
+        attackCloseEnemy = false;
+        bulletPenetrate = false;
+        breakEnemyBullet = false;
+        isInvinvible = false;
+        baoxue = false;
+        invincibleTime = 0;
+
+        // 2. é‡ç½® MaskRead ä¸­çš„è®¡æ•°å™¨å’Œæ”»å‡»çŠ¶æ€
+        MaskRead mr = GetComponent<MaskRead>();
+        if (mr != null) mr.ResetAllState();
+
+        // 3. é‡ç½® BreakMasks ä¸­çš„ä¸´æ—¶ä¿®æ”¹ï¼ˆé€Ÿåº¦å’Œæ®‹å½±ï¼‰
+        BreakMasks bm = GetComponent<BreakMasks>();
+        if (bm != null) bm.ResetTemporaryEffects();
+        
+        //é‡ç½®ç‚¸å¼¹æ•°é‡
+        UseBomb ub = GetComponent<UseBomb>();
+        if (ub != null)
+        {
+            ub.bombNum = 0; // æˆ–è€…ä½ æƒ³è¦çš„åˆå§‹å€¼
+            UseBomb.OnBombCountChanged?.Invoke(ub.bombNum); // é€šçŸ¥UIå½’é›¶
+        }
+
+        Debug.Log("<color=red>[ç³»ç»Ÿ]</color> æ‰€æœ‰ç©å®¶BuffåŠè§†è§‰æ•ˆæœå·²åˆå§‹åŒ–é‡ç½®ã€‚");
     }
 }

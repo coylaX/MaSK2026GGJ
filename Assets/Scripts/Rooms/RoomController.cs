@@ -18,6 +18,9 @@ public class RoomController : MonoBehaviour {
     public bool isGuaranteedRoom = false; // 是否为必定生成战利品的房间
     private bool buffApplied = false;
 
+    [Header("视觉表现")]
+    public SpriteRenderer backgroundSR; // 【新增】拖入房间 Prefab 里的背景物体
+
     [Header("位置锚点")]
     public Transform doorTop;
     public Transform doorBottom;
@@ -62,33 +65,34 @@ public class RoomController : MonoBehaviour {
         }
     }
 
+    // 【新增方法】：由 LootManager 调用，在初始化时就改变外观
+    public void UpdateEliteVisuals(Sprite eliteBG) {
+        if (isGuaranteedRoom && backgroundSR != null && eliteBG != null) {
+            backgroundSR.sprite = eliteBG;
+            // 如果你想让精英房背景稍微亮一点或变个色，也可以在这里改颜色
+            // backgroundSR.color = new Color(0.8f, 0.8f, 1f); 
+        }
+    }
+
     public void ActivateRoom() {
-        // 1. 更新小地图
         if (MiniMapManager.Instance != null) {
             MiniMapManager.Instance.UpdateCurrentRoom(this);
         }
 
-        if (state == RoomState.Cleared || state == RoomState.Active) {
-            return; 
-        }
+        if (state == RoomState.Cleared || state == RoomState.Active) return; 
 
-        // 2. 激活房间状态
         state = RoomState.Active;
 
-        // 3. 激活所有怪物
         foreach (var m in monsters) {
             if (m != null) m.gameObject.SetActive(true);
         }
 
-        // 【修改后】：遍历房间内所有怪物进行强化
         if (isGuaranteedRoom && !buffApplied && monsters.Count > 0) {
             foreach (var m in monsters) {
-                if (m != null) {
-                    ApplyRandomBuffToMonster(m);
-                }
+                if (m != null) ApplyRandomBuffToMonster(m);
             }
-            buffApplied = true; // 标记已强化，防止重复
-            Debug.Log($"{gameObject.name} 是精英房间，已强化该房间内所有怪物（共 {monsters.Count} 个）");
+            buffApplied = true; 
+            Debug.Log($"{gameObject.name} 是精英房间，背景已替换且怪物已强化");
         }
 
         if (navGraph != null) navGraph.BakeWaypoints();

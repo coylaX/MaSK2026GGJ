@@ -59,6 +59,9 @@ TagManager:
   - name: Battle
     uniqueID: 2724649755
     locked: 0
+  - name: Effects
+    uniqueID: 1802054445
+    locked: 0
   - name: Danmu
     uniqueID: 4181771617
     locked: 0

@@ -100,6 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestructible: 1
   health: 10
+  brokenSprite: {fileID: 21300000, guid: 733dca8af548ed845801ff2d086cf816, type: 3}
+  shatterVfxPrefab: {fileID: 4504003973300199264, guid: cf40ef1957749ed47b20957bcbd7b4d0, type: 3}
 --- !u!61 &8631285022992448889
 BoxCollider2D:
   m_ObjectHideFlags: 0

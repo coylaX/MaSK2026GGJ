@@ -4,29 +4,76 @@ using UnityEngine;
 public class BulletHitDestroy2D : MonoBehaviour
 {
     [Header("Optional")]
-    public bool destroyOnTrigger = true;   // ¹´ÉÏ£º´¥·¢Æ÷Åö×²Ò²Ïú»Ù
-    public bool destroyOnCollision = true; // ¹´ÉÏ£ºÆÕÍ¨Åö×²Ò²Ïú»Ù
-    public LayerMask ignoreLayers;         // ¿ÉÑ¡£ººöÂÔÄÄĞ©²ã£¨±ÈÈç Player£©
+    public bool destroyOnTrigger = true;   
+    public bool destroyOnCollision = true; 
+    public LayerMask ignoreLayers;         
 
     private Collider2D _col;
+    private SpriteRenderer _spriteRenderer; // ç”¨äºæ§åˆ¶å­å¼¹æœ¬èº«é€æ˜åº¦
 
-    [Header("×Óµ¯ÉËº¦")]
+    [Header("å­å¼¹ä¼¤å®³")]
     public float damage;
+
+    [Header("å‘½ä¸­ç‰¹æ•ˆ")]
+    [Tooltip("å­å¼¹å‘½ä¸­æ•Œäººæ—¶äº§ç”Ÿçš„ Prefab")]
+    public GameObject hitEffectPrefab; 
+
+    [Header("Buff è§†è§‰åé¦ˆ")]
+    [Tooltip("å½“ PlayerBuff.baoxue ä¸º true æ—¶æ˜¾ç¤º")]
+    public GameObject redHalo;    // æ‹–å…¥å­ç‰©ä½“ RedHalo
+    [Tooltip("å½“ PlayerBuff.breakEnemyBullet ä¸º true æ—¶æ˜¾ç¤º")]
+    public GameObject yellowHalo; // æ‹–å…¥å­ç‰©ä½“ YellowHalo
+
     private void Awake()
     {
         _col = GetComponent<Collider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>(); 
+
         if (_col == null)
         {
             Debug.LogError("[BulletHitDestroy2D] Missing Collider2D!");
         }
     }
+
     private void Start()
     {
-        damage = GameObject.Find("MainPlayer").GetComponent<PlayerAttack1>().damage;
+        // å»ºè®®ï¼šå¦‚æœ MainPlayer æ‰¾ä¸åˆ°ï¼Œå…ˆåšä¸ªç©ºå¼•ç”¨ä¿æŠ¤
+        GameObject player = GameObject.Find("MainPlayer");
+        if (player != null)
+        {
+            damage = player.GetComponent<PlayerAttack1>().damage;
+        }
+
+        // --- åº”ç”¨æ‰€æœ‰ Buff è§†è§‰æ•ˆæœ ---
+        ApplyBuffVisuals();
     }
+
+    private void ApplyBuffVisuals()
+    {
+        if (PlayerBuff.PlayerBuffInstance == null) return;
+
+        // 1. ç©¿é€å­å¼¹åŠé€æ˜æ•ˆæœ (æ£€æµ‹ bulletPenetrate)
+        if (PlayerBuff.PlayerBuffInstance.bulletPenetrate && _spriteRenderer != null)
+        {
+            Color c = _spriteRenderer.color;
+            _spriteRenderer.color = new Color(c.r, c.g, c.b, 0.5f);
+        }
+
+        // 2. çº¢è‰²å…‰åœˆæ•ˆæœ (æ£€æµ‹ baoxue - ä¼¤å®³ç¿»å€/æ‰£è¡€Buff)
+        if (PlayerBuff.PlayerBuffInstance.baoxue && redHalo != null)
+        {
+            redHalo.SetActive(true);
+        }
+
+        // 3. é»„è‰²å…‰åœˆæ•ˆæœ (æ£€æµ‹ breakEnemyBullet - æŠµæ¶ˆå¼¹å¹•)
+        if (PlayerBuff.PlayerBuffInstance.breakEnemyBullet && yellowHalo != null)
+        {
+            yellowHalo.SetActive(true);
+        }
+    }
+
     private bool IsIgnored(GameObject other)
     {
-        // Èç¹û other µÄ layer ÔÚ ignoreLayers Àï£¬¾ÍºöÂÔ
         return (ignoreLayers.value & (1 << other.layer)) != 0;
     }
 
@@ -34,84 +81,70 @@ public class BulletHitDestroy2D : MonoBehaviour
     {
         if (IsIgnored(other.gameObject)) return;
 
-        //¾àÀëÏà¹Øbuff¾ßÌåÊµÏÖ¹¦ÄÜ
+        // --- ä¼¤å®³åŠ æˆé€»è¾‘ä¿ç•™ ---
         if (PlayerBuff.PlayerBuffInstance.attackFarEnemy)
         {
             GameObject playerGO = GameObject.Find("MainPlayer");
-            if (playerGO == null)
+            if (playerGO != null)
             {
-                Debug.LogWarning("[Bullet] Cannot find MainPlayer in scene.");
-                return;
-            }
-
-            // 3) »ñÈ¡Åö×²µã£¨Trigger Ã»ÓĞ contacts£¬ÓÃ ClosestPoint ½üËÆ£©
-            Vector2 hitPoint = other.ClosestPoint(transform.position);
-
-            // 4) ¼ÆËãÅö×²µãµ½Íæ¼ÒµÄ¾àÀë
-            float dist = Vector2.Distance(hitPoint, (Vector2)playerGO.transform.position);
-            if (dist >= PlayerBuff.PlayerBuffInstance.farDis)
-            {
-                damage *= PlayerBuff.PlayerBuffInstance.AttackBeilvfar;
+                Vector2 hitPoint = other.ClosestPoint(transform.position);
+                float dist = Vector2.Distance(hitPoint, (Vector2)playerGO.transform.position);
+                if (dist >= PlayerBuff.PlayerBuffInstance.farDis)
+                {
+                    damage *= PlayerBuff.PlayerBuffInstance.AttackBeilvfar;
+                }
             }
         }
         if (PlayerBuff.PlayerBuffInstance.attackCloseEnemy)
         {
             GameObject playerGO = GameObject.Find("MainPlayer");
-            if (playerGO == null)
+            if (playerGO != null)
             {
-                Debug.LogWarning("[Bullet] Cannot find MainPlayer in scene.");
-                return;
-            }
-
-            // 3) »ñÈ¡Åö×²µã£¨Trigger Ã»ÓĞ contacts£¬ÓÃ ClosestPoint ½üËÆ£©
-            Vector2 hitPoint = other.ClosestPoint(transform.position);
-
-            // 4) ¼ÆËãÅö×²µãµ½Íæ¼ÒµÄ¾àÀë
-            float dist = Vector2.Distance(hitPoint, (Vector2)playerGO.transform.position);
-            if (dist <= PlayerBuff.PlayerBuffInstance.closeDis)
-            {
-                damage *= PlayerBuff.PlayerBuffInstance.AttackBeilvclose;
+                Vector2 hitPoint = other.ClosestPoint(transform.position);
+                float dist = Vector2.Distance(hitPoint, (Vector2)playerGO.transform.position);
+                if (dist <= PlayerBuff.PlayerBuffInstance.closeDis)
+                {
+                    damage *= PlayerBuff.PlayerBuffInstance.AttackBeilvclose;
+                }
             }
         }
 
-        Debug.Log("Ô­³õ"+damage);
-        Debug.Log(other.gameObject);
         if (PlayerBuff.PlayerBuffInstance.baoxue)
         {
             damage *= PlayerBuff.PlayerBuffInstance.baoxueBeilv;
-            Debug.Log(11);
-            Debug.Log("±ä»¯" + damage);
-            
         }
 
         if (!destroyOnTrigger) return;
         if (other == null) return;
         if (other.gameObject == gameObject) return;
-       
-        //Èç¹ûÅöµ½¹ÖÎï¾ÍµôÑª
+
+        // --- ã€æ ¸å¿ƒä¿®æ”¹ã€‘ï¼šå‘½ä¸­æ€ªç‰©å¤„ç† ---
         if (other.GetComponent<MonsterBase>())
         {
             Vector2 hitPoint = other.ClosestPoint(transform.position);
-            Debug.Log("ÉËº¦Ö®Ç°" + damage);
-            other.GetComponent<MonsterBase>().TakeDamage(damage,hitPoint);
+            if (hitEffectPrefab != null)
+            {
+                Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
+            }
+            other.GetComponent<MonsterBase>().TakeDamage(damage, hitPoint);
         }
-        //ÓĞ´©Í¸buff²»Ïú»Ù
+
+        // ç©¿é€é€»è¾‘ä¿ç•™
         if (PlayerBuff.PlayerBuffInstance.bulletPenetrate)
         {
             return;
         }
-        //Èç¹ûÅöµ½µÄÊÇ×Óµ¯¾Í²»Ïú»Ù
+
+        // æ¶ˆå¼¹é€»è¾‘ä¿ç•™
         if (other.gameObject.layer == LayerMask.NameToLayer("enemyBullet"))
         {
             if (PlayerBuff.PlayerBuffInstance.breakEnemyBullet)
             {
-                //Èç¹ûÓĞbuff¾ÍÏú»ÙµĞ·½×Óµ¯
                 Destroy(other.gameObject);
             }
             return;
         }
+
         Destroy(gameObject);
     }
-
-    
 }

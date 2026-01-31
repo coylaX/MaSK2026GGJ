@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1003802063683678847}
   - component: {fileID: 5251366591117259436}
   - component: {fileID: 302495853565119507}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 7904385999511706426}
   - component: {fileID: 7676322839314608237}
   - component: {fileID: 8067711017978063906}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 4498092594030195500}
   - component: {fileID: 8609274034021752000}
   - component: {fileID: 7392161525184794896}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 7259419850201687343}
   - component: {fileID: 2547115361035471718}
   - component: {fileID: 7884679230546812476}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 2443076997898332867}
   - component: {fileID: 7793059708046654180}
   - component: {fileID: 5048833306419174231}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,7 +785,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1410446213
-  m_SortingLayer: 6
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
@@ -809,7 +809,7 @@ GameObject:
   - component: {fileID: 3140052613503342062}
   - component: {fileID: 4287760478314678185}
   - component: {fileID: 5290585449042185097}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1066,7 @@ GameObject:
   - component: {fileID: 2911138521854677765}
   - component: {fileID: 719111525931305997}
   - component: {fileID: 7670656198502941147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1221,6 +1221,8 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 128
+  gizmoColor: {r: 0, g: 1, b: 1, a: 0.3}
+  showGridAlways: 0
 --- !u!114 &5971865427054172010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1342,6 +1344,7 @@ MonoBehaviour:
   doors: []
   assignedLootPrefab: {fileID: 0}
   isGuaranteedRoom: 0
+  backgroundSR: {fileID: 129917085445621286}
   doorTop: {fileID: 1633137163205145519}
   doorBottom: {fileID: 5805121939046018410}
   doorLeft: {fileID: 4436926249329786282}
@@ -1361,7 +1364,7 @@ GameObject:
   - component: {fileID: 7788083207861995062}
   - component: {fileID: 8185786710047575850}
   - component: {fileID: 5261027534719823499}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1472,7 +1475,7 @@ GameObject:
   - component: {fileID: 8936020550850925324}
   - component: {fileID: 7921612083367596527}
   - component: {fileID: 4687248695353073604}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1583,7 +1586,7 @@ GameObject:
   - component: {fileID: 581925689034552846}
   - component: {fileID: 2531475766161405784}
   - component: {fileID: 1503635163930991844}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1791,7 +1794,7 @@ GameObject:
   - component: {fileID: 279910737039909739}
   - component: {fileID: 3243052752995125714}
   - component: {fileID: 8239375213568102017}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1902,7 +1905,7 @@ GameObject:
   - component: {fileID: 8455704223726631609}
   - component: {fileID: 8032943545840655155}
   - component: {fileID: 495579450848096181}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2011,7 +2014,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3778375449715180533}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

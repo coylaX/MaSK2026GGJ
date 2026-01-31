@@ -6,23 +6,75 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     [Header("Explosion")]
-    public float fuseSeconds = 2f;                // 定时炸弹爆炸时间
-    public float explosionRadius = 3f;            // 【新增】爆炸半径
-    public GameObject explosionVfxPrefab;         // 爆炸特效预制体
+    public float fuseSeconds = 2f;                
+    public float explosionRadius = 3f;            
+    public GameObject explosionVfxPrefab;         
     public bool destroyBombOnExplode = true;
     public float explosionDamage = 100;
 
     [Header("Screen Shake")]
-    public float shakeDuration = 0.1f;            // 【新增】抖动时长
-    public float shakeIntensity = 0.005f;           // 【新增】抖动强度
+    public float shakeDuration = 0.1f;            
+    public float shakeIntensity = 0.005f;           
 
     [Header("Detection")]
-    public LayerMask detectionLayers;             // 【修改】检测哪些层级的物体
+    public LayerMask detectionLayers;             
     public bool debugLogTargets = false;
+
+    private Collider2D _myCol;
+    
+
+    private void Awake()
+    {
+        _myCol = GetComponent<Collider2D>();
+        
+        // --- 【新增】：防止生成时挤开玩家 ---
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Collider2D[] playerCols = player.GetComponentsInChildren<Collider2D>();
+            foreach (var pCol in playerCols)
+            {
+                // 告诉物理引擎：这个炸弹暂时忽略与玩家碰撞体的碰撞
+                Physics2D.IgnoreCollision(_myCol, pCol, true);
+            }
+            
+            // 启动协程：等玩家走开了再恢复碰撞
+            StartCoroutine(RestoreCollisionWithPlayer(playerCols));
+        }
+    }
 
     private void Start()
     {
         StartCoroutine(ExplodeAfterDelay());
+    }
+
+    // --- 【新增】：智能恢复碰撞逻辑 ---
+    private IEnumerator RestoreCollisionWithPlayer(Collider2D[] playerCols)
+    {
+        bool stillTouching = true;
+        while (stillTouching)
+        {
+            stillTouching = false;
+            foreach (var pCol in playerCols)
+            {
+                // 检查玩家是否还在踩着炸弹
+                if (pCol != null && _myCol != null && pCol.IsTouching(_myCol))
+                {
+                    stillTouching = true;
+                    break;
+                }
+            }
+            yield return new WaitForSeconds(0.1f); // 每0.1秒检查一次，节省性能
+        }
+
+        // 玩家已走开，恢复碰撞（现在玩家可以推炸弹了）
+        if (_myCol != null)
+        {
+            foreach (var pCol in playerCols)
+            {
+                if (pCol != null) Physics2D.IgnoreCollision(_myCol, pCol, false);
+            }
+        }
     }
 
     private IEnumerator ExplodeAfterDelay()
@@ -33,23 +85,18 @@ public class Bomb : MonoBehaviour
 
     private void Explode()
     {
-        // 1) 播放爆炸特效
         if (explosionVfxPrefab != null)
             Instantiate(explosionVfxPrefab, transform.position, Quaternion.identity);
 
-        // 2) 【核心变更】：使用物理圆域检测获取范围内所有碰撞体
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, explosionRadius, detectionLayers);
         
-        // 3) 处理伤害
         HandleTargets(targets);
 
-        // 4) 执行屏幕抖动
         if (CameraManager.Instance != null)
         {
             CameraManager.Instance.Shake(shakeDuration, shakeIntensity);
         }
 
-        // 5) 销毁炸弹
         if (destroyBombOnExplode)
             Destroy(gameObject);
     }
@@ -63,26 +110,19 @@ public class Bomb : MonoBehaviour
             GameObject target = col.gameObject;
             if (target == null) continue;
 
-            // 1) 怪物伤害
             if (target.TryGetComponent<MonsterBase>(out var monster))
             {
                 monster.TakeDamage(explosionDamage, transform.position);
-                if (debugLogTargets) Debug.Log($"炸弹伤害了怪物: {target.name}");
             }
             
-            // 2) 障碍物破坏
+            // 使用 TakeDamage 而不是 Destroy，触发你新写的破碎逻辑
             if (target.TryGetComponent<Obstacle>(out var obstacle))
             {
-                if (obstacle.isDestructible)
-                {
-                    Destroy(obstacle.gameObject);
-                    if (debugLogTargets) Debug.Log($"炸弹摧毁了障碍物: {target.name}");
-                }
+                obstacle.TakeDamage(explosionDamage);
             }
         }
     }
 
-    // 在编辑器里画出爆炸范围，方便调试
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

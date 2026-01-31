@@ -202,6 +202,9 @@ public class SettlementUI : MonoBehaviour
 
         Time.timeScale = 1;
         Debug.Log("<color=green>[系统]</color> 场景软重置完成。");
+
+        // 重置所有效果和面具buff
+        PlayerBuff.PlayerBuffInstance.ResetAllBuffs();
     }
 
     private void PerformSoftReset()

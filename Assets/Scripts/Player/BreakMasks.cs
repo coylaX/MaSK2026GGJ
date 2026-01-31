@@ -4,12 +4,31 @@ using UnityEngine;
 
 public class BreakMasks : MonoBehaviour
 {
-    [Header("ÍöÓïÔö¼ÓµÄµ¥Î»ËÙ¶È")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄµï¿½Î»ï¿½Ù¶ï¿½")]
     public float addspeed;
-    [Header("ÍöÓïÔö¼ÓµÄµ¥Î»ÉúÃü")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÓµÄµï¿½Î»ï¿½ï¿½ï¿½ï¿½")]
     public float addHealth;
-    [Header("Ãæ¾ßUI")]
+    [Header("ï¿½ï¿½ï¿½UI")]
     public GameObject MaskUI;
+
+    // --- ã€æ–°å¢ 1ã€‘ ---
+    [Header("ç‰¹æ•ˆé¢„åˆ¶ä½“")]
+    [Tooltip("æ’•ç¢ç™½é¢å…·å›è¡€æ—¶æ’­æ”¾çš„ç²’å­ç‰¹æ•ˆ")]
+    public GameObject healVfxPrefab; 
+    // ------------------
+
+    private float _initialMaxSpeed; // ã€æ–°å¢ã€‘ç”¨äºè®°å½•åˆå§‹é€Ÿåº¦
+
+    private void Start()
+    {
+        // è®°å½•æ¸¸æˆå¼€å§‹æ—¶çš„åˆå§‹é€Ÿåº¦
+        var moveScript = GetComponent<PlayerMoveAndFlip>();
+        if (moveScript != null)
+        {
+            _initialMaxSpeed = moveScript.maxSpeed;
+        }
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -18,18 +37,18 @@ public class BreakMasks : MonoBehaviour
         }
     }
 
-    // Ëº»ÙÃæ¾ß·½·¨
+    // Ëºï¿½ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½
     private void TearMask()
     {
         GetComponent<MaskRead>().invincibleNum = 0;
         GetComponent<MaskRead>().baoxuenum = 0;
         GetComponent<MaskRead>().bombAddNum = 0;
-        //µ÷ÓÃÍöÓïĞ§¹û
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½
         if (GetComponent<MaskRead>().currentMask == null)
         {
             return;
         }
-        //ËºÃæ¾ßµôÑªÁ¿ÉÏÏŞ
+        //Ëºï¿½ï¿½ßµï¿½Ñªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         
         GetComponent<SleepHealth>().maxSleep -= 20;
         Debug.Log(11);
@@ -37,32 +56,32 @@ public class BreakMasks : MonoBehaviour
         switch (GetComponent<MaskRead>().currentMask.colorTraitID)
         {
             case ColorTraitID.RED:
-                //¶Ô·¶Î§Ğ¡ÓÚ5µÄµĞÈË´ó·ùÌá¸ß¹¥»÷Á¦
+                //ï¿½Ô·ï¿½Î§Ğ¡ï¿½ï¿½5ï¿½Äµï¿½ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ß¹ï¿½ï¿½ï¿½ï¿½ï¿½
                 PlayerBuff.PlayerBuffInstance.attackCloseEnemy = true;
                 break;
             case ColorTraitID.YELLOW:
-                //ºóĞøÎäÆ÷¹¥»÷¿ÉÒÔµÖÏûµĞÈËµ¯Ä»
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½Ä»
                 PlayerBuff.PlayerBuffInstance.breakEnemyBullet = true;
                 break;
             case ColorTraitID.BLUE:
-                //×Óµ¯´©Í¸ÍöÓï
+                //ï¿½Óµï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
                 PlayerBuff.PlayerBuffInstance.bulletPenetrate = true;
                 break;
             case ColorTraitID.GREEN:
-                //ºóĞøÎäÆ÷¶ÔÔ½Ô¶µÄµĞÈËÔì³ÉÉËº¦¸ü¸ß
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½Ô¶ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½
                 PlayerBuff.PlayerBuffInstance.attackFarEnemy = true;
                 break;
             case ColorTraitID.BLACK:
-                //¼ÓÒÆËÙÍöÓï
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 AddSpeed();
                 break;
             case ColorTraitID.WHITE:
-                //¼ÓÉúÃüÍöÓï
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 AddHealth();
                 break;
         }
 
-        //ÒÆ³öÃæ¾ß£¬UIÍ¬²½¸ü¸Ä
+        //ï¿½Æ³ï¿½ï¿½ï¿½ß£ï¿½UIÍ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         BackPackLogic.I.maskInstances.Remove(GetComponent<MaskRead>().currentMask);
         MaskUI.GetComponent<MaskUI>().Refresh();
 
@@ -72,10 +91,44 @@ public class BreakMasks : MonoBehaviour
     public void AddSpeed()
     {
         GetComponent<PlayerMoveAndFlip>().maxSpeed += addspeed;
+
+        // ã€æ ¸å¿ƒæ–°å¢ã€‘
+        GhostEffect ghost = GetComponent<GhostEffect>();
+        if (ghost != null) {
+            ghost.isVisible = true; // å¼€å¯æ®‹å½±
+        }
     }
     public void AddHealth()
     {
         GetComponent<SleepHealth>().Heal(addHealth);
+
+        // --- ã€æ–°å¢ 2ã€‘ ---
+        // ç”Ÿæˆå›è¡€ç‰¹æ•ˆ
+        if (healVfxPrefab != null)
+        {
+            // åœ¨ç©å®¶å½“å‰è„šä¸‹ä½ç½®ç”Ÿæˆï¼Œä¸è·Ÿéšæ—‹è½¬
+            Instantiate(healVfxPrefab, transform.position, Quaternion.identity);
+            Debug.Log("<color=green>[è§†è§‰]</color> æ’­æ”¾å›è¡€ç²’å­ç‰¹æ•ˆã€‚");
+        }
+        // ------------------
     }
 
+
+    // ã€æ ¸å¿ƒæ–°å¢ã€‘ï¼šé‡ç½®é‚£äº›â€œç›´æ¥æ”¹å†™â€çš„æ•ˆæœ
+    public void ResetTemporaryEffects()
+    {
+        // 1. æ¢å¤é€Ÿåº¦
+        var moveScript = GetComponent<PlayerMoveAndFlip>();
+        if (moveScript != null)
+        {
+            moveScript.maxSpeed = _initialMaxSpeed;
+        }
+
+        // 2. å…³é—­æ®‹å½±è§†è§‰æ•ˆæœ
+        GhostEffect ghost = GetComponent<GhostEffect>();
+        if (ghost != null)
+        {
+            ghost.isVisible = false;
+        }
+    }
 }

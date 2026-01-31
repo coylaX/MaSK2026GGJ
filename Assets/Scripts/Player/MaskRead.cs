@@ -109,10 +109,38 @@ public class MaskRead : MonoBehaviour
             case MemoryTraitID.C:
                 if (bombAddNum == 0)
                 {
-                    GetComponent<UseBomb>().bombNum += 3;
+                    // 获取 UseBomb 组件并调用方法
+                    UseBomb bombScript = GetComponent<UseBomb>();
+                    if (bombScript != null)
+                    {
+                        bombScript.AddBombs(3); // 增加 3 个
+                    }
                     bombAddNum += 1;
                 }
                 break;
         }
+    }
+
+    // 【核心新增】：重置面具相关的逻辑状态
+    public void ResetAllState()
+    {
+        // 重置计数器
+        baoxuenum = 0;
+        invincibleNum = 0;
+        bombAddNum = 0;
+
+        // 重置攻击模式（XI, NU, AI, LE）
+        var attack = GetComponent<PlayerAttack1>();
+        if (attack != null)
+        {
+            attack.isHappy = false;
+            attack.isBlade = false;
+            attack.isSad = false;
+            attack.isMachineGun = false;
+        }
+
+        // 清除当前引用
+        currentMask = null;
+        lastMaskInstance = null;
     }
 }
