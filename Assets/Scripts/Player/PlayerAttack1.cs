@@ -6,40 +6,40 @@ public class PlayerAttack1 : MonoBehaviour
     
     [Header("References")]
     public Camera mainCamera;
-    public Transform firePoint;              // ¿ÉÑ¡£ºÇ¹¿Ú/·¢Éäµã£¨Îª¿Õ¾ÍÓÃÍæ¼ÒÎ»ÖÃ£©
+    public Transform firePoint;              // ï¿½ï¿½Ñ¡ï¿½ï¿½Ç¹ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ã£¨Îªï¿½Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½
 
-    [Header("³å·æÇ¹Íæ·¨")]
+    [Header("ï¿½ï¿½ï¿½Ç¹ï¿½æ·¨")]
     public bool isMachineGun;
-    public GameObject projectilePrefab1;      // ÒªÉú³ÉµÄÎïÌå£¨×Óµ¯prefab£©
+    public GameObject projectilePrefab1;      // Òªï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½å£¨ï¿½Óµï¿½prefabï¿½ï¿½
     public float MachineGunCD;
     public float MachineGunDamage;
 
 
-    [Header("±¯ÉËÅÝÅÝÍæ·¨")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·¨")]
     public bool isSad;
-    public GameObject projectilePrefab2;      // ÒªÉú³ÉµÄÎïÌå£¨×Óµ¯prefab£©
+    public GameObject projectilePrefab2;      // Òªï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½å£¨ï¿½Óµï¿½prefabï¿½ï¿½
     public float sadGunCD;
     public float sadGunDamage;
 
-    [Header("µ¶Íæ·¨")]
+    [Header("ï¿½ï¿½ï¿½æ·¨")]
     public bool isBlade;
-    public GameObject projectilePrefab3;      // ÒªÉú³ÉµÄÎïÌå£¨×Óµ¯prefab£©
+    public GameObject projectilePrefab3;      // Òªï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½å£¨ï¿½Óµï¿½prefabï¿½ï¿½
     public float bladeCD;
     public float bladeDamage;
 
-    [Header("¿ªÐÄ²¨Íæ·¨")]
+    [Header("ï¿½ï¿½ï¿½Ä²ï¿½ï¿½æ·¨")]
     public bool isHappy;
-    public GameObject projectilePrefab4;      // ÒªÉú³ÉµÄÎïÌå£¨×Óµ¯prefab£©
+    public GameObject projectilePrefab4;      // Òªï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½å£¨ï¿½Óµï¿½prefabï¿½ï¿½
     public float happyCD;
     public float happyDamage;
 
     [Header("Spawn")]
-    public float spawnDistance = 0.5f;       // ´ÓÍæ¼Ò/Ç¹¿ÚÍùÍâÆ«ÒÆ¶àÉÙÉú³É
-    public bool rotateProjectileToDirection = true; // ÈÃ×Óµ¯³¯Ïò¸ú·½ÏòÒ»ÖÂ
+    public float spawnDistance = 0.5f;       // ï¿½ï¿½ï¿½ï¿½ï¿½/Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public bool rotateProjectileToDirection = true; // ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 
     [Header("Fire")]
-    public KeyCode fireKey = KeyCode.Mouse0; // Êó±ê×ó¼ü
-    public float fireCooldown = 0.15f;       // ·¢Éä¼ä¸ô£¨Ãë£©
+    public KeyCode fireKey = KeyCode.Mouse0; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float fireCooldown = 0.15f;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£©
     public float damage;
     public GameObject prefab;
     private float _nextFireTime;
@@ -48,7 +48,7 @@ public class PlayerAttack1 : MonoBehaviour
     
     
 
-    // µ÷ÓÃÕâ¸ö·½·¨¾Í»á»·ÐÎ·¢Éä6¿Å
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»á»·ï¿½Î·ï¿½ï¿½ï¿½6ï¿½ï¿½
     public void FireRadial6()
     {
        
@@ -63,23 +63,23 @@ public class PlayerAttack1 : MonoBehaviour
             float angleDeg = i * step;
             float angleRad = angleDeg * Mathf.Deg2Rad;
 
-            // ·½ÏòÏòÁ¿£¨µ¥Î»ÏòÁ¿£©
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 dir = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
 
-            // Éú³ÉÎ»ÖÃ£ºÖÐÐÄÍùÍâÆ«ÒÆÒ»µã£¬±ÜÃâºÍÍæ¼ÒÖØµþ
+            // ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½Ò»ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½
             Vector3 spawnPos = origin + (Vector3)(dir * spawnDistance);
 
-            // ÈÃ×Óµ¯³¯Ïò¶ÔÆë£¨¿ÉÑ¡£©
+            // ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¨ï¿½ï¿½Ñ¡ï¿½ï¿½
             Quaternion rot = Quaternion.identity;
             if (rotateProjectileToDirection)
             {
-                // ¼ÙÉè×Óµ¯prefabµÄ¡°ÓÒ·½Ïò(+X)¡±ÊÇÇ°½ø·½Ïò
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½prefabï¿½Ä¡ï¿½ï¿½Ò·ï¿½ï¿½ï¿½(+X)ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 rot = Quaternion.Euler(0f, 0f, angleDeg);
             }
 
             GameObject go = Instantiate(prefab, spawnPos, rot);
 
-            // °Ñ·½Ïò´«¸ø·ÉÐÐ½Å±¾
+            // ï¿½Ñ·ï¿½ï¿½ò´«¸ï¿½ï¿½ï¿½ï¿½Ð½Å±ï¿½
             var proj = go.GetComponent<ProjectileSimple2D>();
             if (proj != null)
             {
@@ -128,6 +128,24 @@ public class PlayerAttack1 : MonoBehaviour
     private void Fire()
     {
         if (prefab == null || mainCamera == null) return;
+
+        if(isMachineGun){
+            if( AudioManager.Instance != null )
+                AudioManager.Instance.PlayRemoteShoot2();
+        }
+        else if(isSad){
+            if( AudioManager.Instance != null )
+                AudioManager.Instance.PlayRemoteShoot3();
+        }
+        else if(isBlade){
+            if( AudioManager.Instance != null )
+                AudioManager.Instance.PlayMeleeSwing();
+        }
+        else if(isHappy){
+            if( AudioManager.Instance != null )
+                AudioManager.Instance.PlayRemoteShoot1();
+        }
+
         if (isHappy)
         {
             FireRadial6();
@@ -135,12 +153,12 @@ public class PlayerAttack1 : MonoBehaviour
         }
         Vector3 origin = (firePoint != null) ? firePoint.position : transform.position;
 
-        // 2D£ºÊó±êÆÁÄ»×ø±ê -> ÊÀ½ç×ø±ê
+        // 2Dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorld.z = origin.z; // ±£³ÖÍ¬Ò»Æ½Ãæ£¨2D£©
+        mouseWorld.z = origin.z; // ï¿½ï¿½ï¿½ï¿½Í¬Ò»Æ½ï¿½æ£¨2Dï¿½ï¿½
 
         Vector2 dir = (mouseWorld - origin);
-        if (dir.sqrMagnitude < 0.0001f) return; // ·ÀÖ¹·½ÏòÎª0
+        if (dir.sqrMagnitude < 0.0001f) return; // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½Îª0
         dir.Normalize();
 
         Vector3 spawnPos = origin + (Vector3)(dir * spawnDistance);
@@ -148,14 +166,14 @@ public class PlayerAttack1 : MonoBehaviour
         Quaternion rot = Quaternion.identity;
         if (rotateProjectileToDirection)
         {
-            // ¼ÙÉè×Óµ¯ prefab µÄ¡°ÓÒ·½Ïò£¨+X£©¡±ÊÇÇ°½ø·½Ïò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ prefab ï¿½Ä¡ï¿½ï¿½Ò·ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             rot = Quaternion.Euler(0f, 0f, angle);
         }
 
         GameObject go = Instantiate(prefab, spawnPos, rot);
 
-        // Èç¹û×Óµ¯ÉÏÓÐ ProjectileSimple2D£¬¾Í°Ñ·½Ïò´«¹ýÈ¥
+        // ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ ProjectileSimple2Dï¿½ï¿½ï¿½Í°Ñ·ï¿½ï¿½ò´«¹ï¿½È¥
         var proj = go.GetComponent<ProjectileSimple2D>();
         if (proj != null)
         {

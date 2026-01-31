@@ -80,6 +80,13 @@ public class BulletHitDestroy2D : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (IsIgnored(other.gameObject)) return;
+        
+        // --- 修改点：只有碰到 Enemy 图层的物体才播放远程命中音效 ---
+        if (other.gameObject.layer == LayerMask.NameToLayer("enemy"))
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayRemoteHit();
+        }
 
         // --- 伤害加成逻辑保留 ---
         if (PlayerBuff.PlayerBuffInstance.attackFarEnemy)

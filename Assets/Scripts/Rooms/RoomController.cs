@@ -106,12 +106,15 @@ public class RoomController : MonoBehaviour {
     }
 
     public void OnMonsterKilled(MonsterBase m) {
+
         if (monsters.Contains(m)) monsters.Remove(m);
         if (navGraph != null) navGraph.BakeWaypoints();
 
         if (monsters.Count <= 0) {
             state = RoomState.Cleared;
-            
+            //在这里顺便播放清理房间后开门的声音
+            if(AudioManager.Instance != null)
+                AudioManager.Instance.PlayDoorOpen();
             // 【核心变更】：怪物清空后尝试生成战利品
             SpawnLoot();
             
@@ -121,6 +124,8 @@ public class RoomController : MonoBehaviour {
     }
 
     private void SpawnLoot() {
+        
+
         if (assignedLootPrefab != null && !lootSpawned) {
             // 获取全局掉落物容器
             Transform parent = LevelManager.Instance != null ? LevelManager.Instance.lootContainer : null;

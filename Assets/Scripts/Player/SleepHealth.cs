@@ -190,6 +190,9 @@ public class SleepHealth : MonoBehaviour
 
     private void Die() 
     { 
+        if(AudioManager.Instance != null)
+            AudioManager.Instance.PlayerDie();
+
         ResetVisuals();
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null) anim.enabled = false;

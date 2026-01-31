@@ -80,6 +80,8 @@ public class EvacuationPoint : MonoBehaviour
 
             if (timer >= requiredTime)
             {
+                if(AudioManager.Instance != null)
+                    AudioManager.Instance.PlayerDie();
                 CompleteEvacuation();
             }
         }

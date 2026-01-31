@@ -33,6 +33,14 @@ public class LevelGenerator : MonoBehaviour {
     public void GenerateLevel() {
         ClearLevel();
         
+        // 调用音效管理，2秒内丝滑切到深夜
+        if(AudioManager.Instance != null)
+            AudioManager.Instance.SwitchToNight(2.0f);
+        else
+        {
+            Debug.Log("未能成功切换背景音乐至深夜");
+        }
+
         // 1. 放置初始房间（Starter Room）
         Vector2Int startCoord = Vector2Int.zero;
         GameObject startObj = PlaceRoom(startRoomPrefab, startCoord); 

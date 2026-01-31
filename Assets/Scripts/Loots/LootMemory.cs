@@ -4,6 +4,8 @@ public class LootMemory : LootBase
 {
     protected override void OnPickedUp()
     {
+        if(AudioManager.Instance != null)
+            AudioManager.Instance.OnBookPickUp();
         // 从BagManager中获取今日的记忆
         MemoryTraitID memory = BagManager.Instance.GetMemoryNight();
         

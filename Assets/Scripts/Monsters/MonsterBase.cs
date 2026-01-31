@@ -82,6 +82,10 @@ public class MonsterBase : MonoBehaviour {
     public bool IsInKnockback() => isKnockingBack;
 
     public void Die() {
+        //播放怪物死亡音效
+        if( AudioManager.Instance != null )
+            AudioManager.Instance.PlayMeleeHit(); 
+
         // 掉落逻辑：精英怪 80%，普通怪 30%
         float dropChance = isElite ? 0.8f : 0.3f; 
         

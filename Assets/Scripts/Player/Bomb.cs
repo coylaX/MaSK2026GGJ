@@ -85,6 +85,8 @@ public class Bomb : MonoBehaviour
 
     private void Explode()
     {
+        if(AudioManager.Instance != null)
+            AudioManager.Instance.BombExplode();
         if (explosionVfxPrefab != null)
             Instantiate(explosionVfxPrefab, transform.position, Quaternion.identity);
 

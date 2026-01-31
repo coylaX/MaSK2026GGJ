@@ -186,6 +186,10 @@ public class SettlementUI : MonoBehaviour
 
     private void OnContinuePressed()
     {
+        //背景音乐过渡回白天
+        if(AudioManager.Instance != null)
+        AudioManager.Instance.SwitchToDay(2.0f);
+
         MorningGameManager.Instance.AdvanceDay();
 
         continueButton.interactable = false;
