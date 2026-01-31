@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b5f6a58b8d00e4a8401c6f2e13f2d9, type: 3}
-  m_Name: Memory_E
+  m_Name: s_3
   m_EditorClassIdentifier: 
-  orderID: Memory_E
+  orderID: Memory_C
   customerName: "\u738B\u59B9\u59B9"
   portrait: {fileID: 0}
   requirementText: "\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3\u5F00\u5FC3"
-  daysLimit: 2
+  daysLimit: -4
   baseReward: 200
   appearOnDay: -4
   ifMemory: 1
-  id: 5
+  id: 3
   memoryTraitID: 0
   colorTraitID: 0
   emotionTraitID: 0

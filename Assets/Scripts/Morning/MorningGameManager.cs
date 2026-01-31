@@ -66,6 +66,7 @@ public class MorningGameManager : MonoBehaviour
         {
             OrderManager.Instance.RefreshDailyOrders(currentSaveData.currentDay);
             UpdateOrderUI();
+            Refresh();
         }
         else
         {
@@ -115,11 +116,15 @@ public class MorningGameManager : MonoBehaviour
     }
 
     // 辅助方法：订单 UI 刷新
+    /// <summary>
+    /// 刷新订单UI，凡是order更新都调用此方法
+    /// </summary>
     public void UpdateOrderUI()
     {
         OrderUIController ui = FindObjectOfType<OrderUIController>();
         if (ui != null)
         {
+            Debug.Log("order refresh1");
             ui.RefreshOrderList();
         }
         else
@@ -185,7 +190,7 @@ public class MorningGameManager : MonoBehaviour
     {
         currentSaveData.morningInventory.memoryNight = MemoryTraitID.A;
         BagManager.Instance.EarnMemory(MemoryTraitID.A);
-        OrderManager.Instance.nextMemoeyOrder();
+        OrderManager.Instance.NextMemoeyOrder();
         Debug.Log("作弊成功：获取记忆A");
     }
 
@@ -194,7 +199,7 @@ public class MorningGameManager : MonoBehaviour
     {
         currentSaveData.morningInventory.memoryNight = MemoryTraitID.B;
         BagManager.Instance.EarnMemory(MemoryTraitID.B);
-        OrderManager.Instance.nextMemoeyOrder();
+        OrderManager.Instance.NextMemoeyOrder();
         Debug.Log("作弊成功：获取记忆B");
     }
 
@@ -203,7 +208,7 @@ public class MorningGameManager : MonoBehaviour
     {
         currentSaveData.morningInventory.memoryNight = MemoryTraitID.C;
         BagManager.Instance.EarnMemory(MemoryTraitID.C);
-        OrderManager.Instance.nextMemoeyOrder();
+        OrderManager.Instance.NextMemoeyOrder();
         Debug.Log("作弊成功：获取记忆C");
     }
 
@@ -212,7 +217,7 @@ public class MorningGameManager : MonoBehaviour
     {
         currentSaveData.morningInventory.memoryNight = MemoryTraitID.D;
         BagManager.Instance.EarnMemory(MemoryTraitID.D);
-        OrderManager.Instance.nextMemoeyOrder();
+        OrderManager.Instance.NextMemoeyOrder();
         Debug.Log("作弊成功：获取记忆D");
     }
 
@@ -221,7 +226,7 @@ public class MorningGameManager : MonoBehaviour
     {
         currentSaveData.morningInventory.memoryNight = MemoryTraitID.E;
         BagManager.Instance.EarnMemory(MemoryTraitID.E);
-        OrderManager.Instance.nextMemoeyOrder();
+        OrderManager.Instance.NextMemoeyOrder();
         Debug.Log("作弊成功：获取记忆E");
     }
 
@@ -230,7 +235,7 @@ public class MorningGameManager : MonoBehaviour
     {
         currentSaveData.morningInventory.memoryNight = MemoryTraitID.F;
         BagManager.Instance.EarnMemory(MemoryTraitID.F);
-        OrderManager.Instance.nextMemoeyOrder();
+        OrderManager.Instance.NextMemoeyOrder();
         Debug.Log("作弊成功：获取记忆F");
     }
 

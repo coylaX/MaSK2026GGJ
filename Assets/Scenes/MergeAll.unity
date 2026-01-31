@@ -1988,8 +1988,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u63D0\u793A\u6807\u9898"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4166,8 +4166,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The corresponding effect of emotions is described here.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6004,7 +6004,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Plese click the color to show effect here
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6068,7 +6068,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1043041540
@@ -8801,8 +8801,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Reminder of Mask
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11024,18 +11024,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maskChooseState: 1
-  orderUICont: {fileID: 1501831373}
   selectedUI: {fileID: 0}
   selectionOverlayPanel: {fileID: 389951375}
   confirmPopupPanel: {fileID: 1309626189}
   confirmText: {fileID: 1352438457}
   allOrderTemplates:
-  - {fileID: 11400000, guid: 28a22444d2cf314418708183e1ce8e42, type: 2}
-  - {fileID: 11400000, guid: 499ddc187f8e80d40966dcd79b76fd52, type: 2}
-  - {fileID: 11400000, guid: da8d58a958251e843941e22ea238ad1d, type: 2}
   - {fileID: 11400000, guid: 31dcb0866b8cdd3449445e54328881f8, type: 2}
-  - {fileID: 11400000, guid: 8f8df374e1964074babdfbbb31c9e8c6, type: 2}
-  - {fileID: 11400000, guid: 2ce8cac826faba94dae8aea8ff411776, type: 2}
 --- !u!114 &1683010055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11059,7 +11053,7 @@ MonoBehaviour:
       aiCount: 0
       leCount: 0
       memoryGet: 
-      memoryNight: 0
+      memoryNight: 1
     activeOrders:
     - orderID: Memory_A
       daysRemaining: -4
@@ -11648,8 +11642,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The corresponding effect of memorys is described here.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12502,8 +12496,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8FD9\u91CC\u662F\u63D0\u793A\u6846\u91CC\u7684\u5B8C\u6574\u6587\u672C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

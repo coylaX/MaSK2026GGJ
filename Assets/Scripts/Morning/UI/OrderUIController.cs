@@ -15,6 +15,9 @@ public class OrderUIController : MonoBehaviour
     }
 
     #region 刷新订单列表和订单状态
+    /// <summary>
+    /// 刷新订单UI，凡是订单数据改变都调用。先给所有ActiveOrders排序，然后依次生成所有订单UI
+    /// </summary>
     public void RefreshOrderList()
     {
         Debug.Log("订单UI刷新了");
@@ -66,6 +69,10 @@ public class OrderUIController : MonoBehaviour
     #endregion
 
     #region 辅助方法（被使用的）
+    /// <summary>
+    /// 生成订单UI
+    /// </summary>
+    /// <param name="data"></param>
     private void CreateOrderCard(OrderData data)
     {
         OrderTemplate template = OrderManager.Instance.GetTemplateByID(data.orderID);
