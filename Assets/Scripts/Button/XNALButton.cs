@@ -19,7 +19,7 @@ public class XNALButton : MonoBehaviour
     public Sprite LE;
 
     public TextMeshProUGUI effectText;   // Ğ§¹ûÃèÊö
-    [TextArea] public string effectContent = "";
+    [TextArea] public string effectContent = "1";
 
     public void OnClick()
     {

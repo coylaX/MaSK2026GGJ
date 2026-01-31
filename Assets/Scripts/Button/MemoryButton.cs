@@ -16,7 +16,7 @@ public class MemoryButton : MonoBehaviour
     public GameObject emotionSource;
 
     public TextMeshProUGUI effectText;   // Ð§¹ûÃèÊö
-    [TextArea] public string effectContent = "";
+    [TextArea] public string effectContent = "1";
 
     public void OnClick()
     {
