@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +18,12 @@ public class XNALButton : MonoBehaviour
     public Sprite AI;
     public Sprite LE;
 
+    public TextMeshProUGUI effectText;   // Ð§¹ûÃèÊö
+    [TextArea] public string effectContent = "";
+
     public void OnClick()
     {
+        effectText.text = effectContent;
         if (isXI)
         {
             emotionSource.GetComponent<Image>().sprite = XI;

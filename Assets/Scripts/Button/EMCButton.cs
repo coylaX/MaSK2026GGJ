@@ -13,6 +13,7 @@ public class EMCButton : MonoBehaviour
     public GameObject colorP;
     public void OnClick()
     {
+        Debug.Log($"{gameObject.name}被按下了");
         if (isEmotionButton)
         {
             emotionP.SetActive(true);

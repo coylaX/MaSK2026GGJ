@@ -180,6 +180,72 @@ public class MorningGameManager : MonoBehaviour
         Debug.Log("作弊成功：颜料 +100");
     }
 
+    [ContextMenu("获取记忆A")]
+    public void CheatGetMemoryA()
+    {
+        currentSaveData.morningInventory.memoryNight = MemoryTraitID.A;
+        BagManager.Instance.EarnMemory(MemoryTraitID.A);
+        OrderManager.Instance.nextMemoeyOrder();
+        Debug.Log("作弊成功：获取记忆A");
+    }
+
+    [ContextMenu("获取记忆B")]
+    public void CheatGetMemoryB()
+    {
+        currentSaveData.morningInventory.memoryNight = MemoryTraitID.B;
+        BagManager.Instance.EarnMemory(MemoryTraitID.B);
+        OrderManager.Instance.nextMemoeyOrder();
+        Debug.Log("作弊成功：获取记忆B");
+    }
+
+    [ContextMenu("获取记忆C")]
+    public void CheatGetMemoryC()
+    {
+        currentSaveData.morningInventory.memoryNight = MemoryTraitID.C;
+        BagManager.Instance.EarnMemory(MemoryTraitID.C);
+        OrderManager.Instance.nextMemoeyOrder();
+        Debug.Log("作弊成功：获取记忆C");
+    }
+
+    [ContextMenu("获取记忆D")]
+    public void CheatGetMemoryD()
+    {
+        currentSaveData.morningInventory.memoryNight = MemoryTraitID.D;
+        BagManager.Instance.EarnMemory(MemoryTraitID.D);
+        OrderManager.Instance.nextMemoeyOrder();
+        Debug.Log("作弊成功：获取记忆D");
+    }
+
+    [ContextMenu("获取记忆E")]
+    public void CheatGetMemoryE()
+    {
+        currentSaveData.morningInventory.memoryNight = MemoryTraitID.E;
+        BagManager.Instance.EarnMemory(MemoryTraitID.E);
+        OrderManager.Instance.nextMemoeyOrder();
+        Debug.Log("作弊成功：获取记忆E");
+    }
+
+    [ContextMenu("获取记忆F")]
+    public void CheatGetMemoryF()
+    {
+        currentSaveData.morningInventory.memoryNight = MemoryTraitID.F;
+        BagManager.Instance.EarnMemory(MemoryTraitID.F);
+        OrderManager.Instance.nextMemoeyOrder();
+        Debug.Log("作弊成功：获取记忆F");
+    }
+
+    [ContextMenu("获取所有记忆")]
+    public void CheatGetMemoryAll()
+    {
+        CheatGetMemoryA();
+        CheatGetMemoryB();
+        CheatGetMemoryC();
+        CheatGetMemoryD();
+        CheatGetMemoryE();
+        CheatGetMemoryF();
+        Debug.Log("作弊成功：获取所有记忆");
+    }
+
     #region 辅助功能，调节数量
 
     #endregion

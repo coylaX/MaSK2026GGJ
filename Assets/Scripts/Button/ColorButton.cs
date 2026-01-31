@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,10 +16,12 @@ public class ColorButton : MonoBehaviour
 
     public GameObject emotionSource;
 
-    
+    public TextMeshProUGUI effectText;   // Ð§¹ûÃèÊö
+    [TextArea]public string effectContent="";
 
     public void OnClick()
     {
+        effectText.text = effectContent;
         if (red)
         {
             emotionSource.GetComponent<Image>().color = Color.red;

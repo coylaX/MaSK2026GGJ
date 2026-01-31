@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -55,6 +56,19 @@ public class BagManager : MonoBehaviour
     public Sprite imageD;
     public Sprite imageE;
     public Sprite imageF;
+    //改变合成按钮的图标
+    public GameObject emotionSource;
+
+    private void Start()
+    {
+        SaveData data = MorningGameManager.Instance.currentSaveData;
+        List<MemoryTraitID> memoryGet = data.morningInventory.memoryGet;
+
+        foreach (MemoryTraitID memory in memoryGet)
+        {
+            SetMemoryButton(memory);        
+        }
+    }
 
     #region 颜料、情绪、记忆消耗和更新
     /// <summary>
@@ -91,6 +105,48 @@ public class BagManager : MonoBehaviour
         SaveData data = MorningGameManager.Instance.currentSaveData;
         return data.morningInventory.pigmentAmount;
     }
+
+    #region 通过读取Memory获取情况控制memoryUI是否可用、显示
+    ///<summary>
+    ///刷新Memory按钮使用情况和对应UI
+    /// </summary>
+    public void SetMemoryButton(MemoryTraitID id)
+    {
+        switch (id)
+        {
+            case MemoryTraitID.A: buttonA.interactable =true; break;
+            case MemoryTraitID.B: buttonB.interactable = true; break;
+            case MemoryTraitID.C: buttonC.interactable = true; break;
+            case MemoryTraitID.D: buttonD.interactable = true; break;
+            case MemoryTraitID.E: buttonE.interactable = true; break;
+            case MemoryTraitID.F: buttonF.interactable = true; break;
+        }
+        if (id == MemoryTraitID.A)
+        {
+            buttonA.GetComponent<Image>().sprite = imageA;
+        }
+        else if (id == MemoryTraitID.B)
+        {
+            buttonB.GetComponent<Image>().sprite = imageB;
+        }
+        else if (id == MemoryTraitID.C)
+        {
+            buttonC.GetComponent<Image>().sprite = imageC;
+        }
+        else if (id == MemoryTraitID.D)
+        {
+            buttonD.GetComponent<Image>().sprite = imageD;
+        }
+        else if (id == MemoryTraitID.E)
+        {
+            buttonE.GetComponent<Image>().sprite = imageE;
+        }
+        else if (id == MemoryTraitID.F)
+        {
+            buttonF.GetComponent<Image>().sprite = imageF;
+        }
+    }
+    #endregion
 
     ///<summary>
     ///消耗情绪并更新UI
@@ -205,26 +261,16 @@ public class BagManager : MonoBehaviour
 
             Debug.Log($"获取记忆 {id} ，并从关卡移除了");
 
-            //解锁合成台的对应memory
-
-            // 更新memoryUI
-            switch (id)
-            {
-                case MemoryTraitID.A: buttonA.GetComponent<Image>().sprite = imageA;break;
-                case MemoryTraitID.B: buttonB.GetComponent<Image>().sprite = imageB; break;
-                case MemoryTraitID.C: buttonC.GetComponent<Image>().sprite = imageC; break;
-                case MemoryTraitID.D: buttonD.GetComponent<Image>().sprite = imageD; break;
-                case MemoryTraitID.E: buttonE.GetComponent<Image>().sprite = imageE; break;
-                case MemoryTraitID.F: buttonF.GetComponent<Image>().sprite = imageF; break;
-            }
+            SetMemoryButton(id);
         }
         else
         {
             Debug.LogWarning("操作失败：关卡中不存在这个记忆！");
         }
     }
-    /// <summary>
-    /// 
+    
+    ///<summary>
+    ///获取晚上关卡刷新的记忆
     /// </summary>
     public MemoryTraitID GetMemoryNight()
     {
@@ -244,6 +290,7 @@ public class BagManager : MonoBehaviour
         return true;
     }
     #endregion
+
     #region 更新资源数量UI
     public void RefreshBagUI()
     {
