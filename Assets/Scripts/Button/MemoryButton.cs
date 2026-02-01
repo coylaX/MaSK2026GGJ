@@ -6,14 +6,9 @@ using UnityEngine.UI;
 
 public class MemoryButton : MonoBehaviour
 {
-    public bool red;
-    public bool yellow;
-    public bool blue;
-    public bool green;
-    public bool black;
-    public bool white;
+    public MemoryTraitID memoryID;
 
-    public GameObject emotionSource;
+    public MemorySource memorySource;
 
     public TextMeshProUGUI effectText;   // Ð§¹ûÃèÊö
     [TextArea] public string effectContent = "1";
@@ -21,6 +16,7 @@ public class MemoryButton : MonoBehaviour
     public void OnClick()
     {
         effectText.text= effectContent;
-        emotionSource.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
+        memorySource.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
+        memorySource.memoryTraitID = memoryID;
     }
 }
