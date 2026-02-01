@@ -271,7 +271,7 @@ public class OrderManager : MonoBehaviour
         }
         else if(emotionMatch != EmotionResult.Right)
         {
-            finalreward = template.baseReward / 2;
+            finalreward = template.loseReward;
             if (AudioManager.Instance != null)
                 AudioManager.Instance.RequestFail();
         }

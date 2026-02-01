@@ -13,7 +13,8 @@ public class OrderTemplate : ScriptableObject
     public string customerName; // 比如 "王奶奶"
     public Sprite portrait; //导入头像
     public int daysLimit=5;       // 期限
-    public int baseReward=100;      // 报酬
+    public int baseReward=100;      // 成功报酬
+    public int loseReward = 50;      // 失败报酬
 
     [Header("需求描述")]
     [TextArea] public string requirementText;
