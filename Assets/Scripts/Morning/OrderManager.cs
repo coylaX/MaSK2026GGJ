@@ -266,10 +266,14 @@ public class OrderManager : MonoBehaviour
         if(emotionMatch == EmotionResult.Right)
         {
             finalreward = template.baseReward;
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.RequestSuccess();
         }
         else if(emotionMatch != EmotionResult.Right)
         {
             finalreward = template.baseReward / 2;
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.RequestFail();
         }
 
         // 4. 计算评价

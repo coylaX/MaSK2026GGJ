@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 155.9, y: 55.8}
-  m_SizeDelta: {x: 98.1879, y: 21.3758}
+  m_AnchoredPosition: {x: 217.30002, y: 55.8}
+  m_SizeDelta: {x: 220.99, y: 21.3758}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &71070600079343162
 CanvasRenderer:
@@ -320,6 +320,7 @@ MonoBehaviour:
   rewardText: {fileID: 4281721905389499688}
   submitButton: {fileID: 2704282732800029325}
   expandButton: {fileID: 7077560606501949134}
+  isFinish: 0
   activeBtnColor: {r: 1, g: 1, b: 1, a: 1}
   completedBtnColor: {r: 0.8, g: 1, b: 0.8, a: 1}
   expiredBtnColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -472,8 +473,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 193.88, y: 23.6}
-  m_SizeDelta: {x: 174.1536, y: 23.159}
+  m_AnchoredPosition: {x: 155.9, y: 23.6}
+  m_SizeDelta: {x: 98.191, y: 23.159}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5068244494340011950
 CanvasRenderer:
@@ -530,8 +531,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -821,7 +822,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 279.80002, y: 55.8}
+  m_AnchoredPosition: {x: 278.7, y: 24.492}
   m_SizeDelta: {x: 98.1879, y: 21.3758}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4363340430953406272
@@ -852,7 +853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u540D\u5B57"
+  m_text: "\u65F6\u95F4\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
@@ -879,8 +880,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -11253,7 +11253,34 @@ MonoBehaviour:
   confirmPopupPanel: {fileID: 1309626189}
   confirmText: {fileID: 1352438457}
   allOrderTemplates:
+  - {fileID: 11400000, guid: cfc7ced60e292c4418403d37e4386928, type: 2}
+  - {fileID: 11400000, guid: a835cd279a4f52242961f974eb511f40, type: 2}
+  - {fileID: 11400000, guid: 83ab672b95fe39448ba82b9859f8b264, type: 2}
+  - {fileID: 11400000, guid: 5bde6741bdde2d7428e26b9438ba0263, type: 2}
+  - {fileID: 11400000, guid: b3e4a174e30740f4d8a70f6b41d0a089, type: 2}
+  - {fileID: 11400000, guid: a679168275263b34e940950fc99224d2, type: 2}
+  - {fileID: 11400000, guid: 4a6eafdceac529c41adc606f392a33da, type: 2}
+  - {fileID: 11400000, guid: 0a10eef42d67a70428cf6149ca696aa4, type: 2}
+  - {fileID: 11400000, guid: 9858d48e2cbff444cb61fa60e98ed143, type: 2}
+  - {fileID: 11400000, guid: e90103a8323803c46b3e75388245e621, type: 2}
+  - {fileID: 11400000, guid: 914d9101982503d41bbf678ea203e71d, type: 2}
+  - {fileID: 11400000, guid: 48dda42a6936e9f4eb369be62146619e, type: 2}
+  - {fileID: 11400000, guid: 5f684c94006b13a46b79e7b52bb595ee, type: 2}
+  - {fileID: 11400000, guid: 7b2fa7440c550324482b428272af8f5e, type: 2}
+  - {fileID: 11400000, guid: 8384c30cbb3ee8249b6703ac17532019, type: 2}
+  - {fileID: 11400000, guid: a843686db02f95c45947ca6cf2735eba, type: 2}
+  - {fileID: 11400000, guid: 2cac8d116a4bd1c42b91d48073953c46, type: 2}
+  - {fileID: 11400000, guid: 1c79e10da6b0b374099281df99570d0e, type: 2}
+  - {fileID: 11400000, guid: 0e1341f22db4f3742804b111640e834e, type: 2}
+  - {fileID: 11400000, guid: ab0d1eb16385fa941bc370157c373836, type: 2}
+  - {fileID: 11400000, guid: f28ffc9dc4602ab48ba308c75a4d6be6, type: 2}
+  - {fileID: 11400000, guid: 8c103070ca6df834e8130b3cbaa37e2e, type: 2}
+  - {fileID: 11400000, guid: 0b139a4553051d44d830395b5e256c4b, type: 2}
   - {fileID: 11400000, guid: 31dcb0866b8cdd3449445e54328881f8, type: 2}
+  - {fileID: 11400000, guid: 8f8df374e1964074babdfbbb31c9e8c6, type: 2}
+  - {fileID: 11400000, guid: 2ce8cac826faba94dae8aea8ff411776, type: 2}
+  - {fileID: 11400000, guid: a601068ac035c5442b70aa8ee924fe0a, type: 2}
+  - {fileID: 11400000, guid: 84ef78133026a8b43948a5202cc7a4d8, type: 2}
 --- !u!114 &1683010055
 MonoBehaviour:
   m_ObjectHideFlags: 0

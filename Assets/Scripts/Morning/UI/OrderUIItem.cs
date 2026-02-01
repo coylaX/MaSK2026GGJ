@@ -46,7 +46,7 @@ public class OrderUIItem : MonoBehaviour
         {
             Debug.Log("[OrderUIItem]这是一个未完成的记忆订单");
             //处理记忆订单
-            timeText.text = "Memory Order";
+            timeText.text = "记忆订单";
             reviewText.text = template.requirementText;
             rewardText.text = $"Reward: {template.baseReward}";
 
@@ -82,7 +82,7 @@ public class OrderUIItem : MonoBehaviour
         else if (data.daysRemaining == -2)
         {
             Debug.Log("[OrderUIItem]这是一个过期的记忆订单");
-            timeText.text = "<color=grey>Outdate</color>";
+            timeText.text = "<color=grey>已过期</color>";
             reviewText.text = template.requirementText; // 或者显示 "任务失效"
             rewardText.text = "Reward: 0";
 
@@ -95,7 +95,7 @@ public class OrderUIItem : MonoBehaviour
         {
             Debug.Log("[OrderUIItem]这是一个完成的订单");
             isFinish = true;
-            timeText.text = "<color=green>Finish</color>";
+            
 
             // 判断是 -1(好评) 还是 -3(差评)
             // 根据 daysRemaining 的值选择对应的字符串
@@ -128,9 +128,17 @@ public class OrderUIItem : MonoBehaviour
 
             Debug.Log("orderUI已经更新了");
             // 最后赋值给 UI
-            timeText.text = "<color=grey>Finishe</color>";
+            timeText.text = "<color=green>已完成</color>";
             reviewText.text = content;
-            rewardText.text = ""; // 完成后隐藏报酬显示
+            if (data.daysRemaining==-1|| data.daysRemaining == -3|| data.daysRemaining == -14)
+            {
+                rewardText.text = $"Reward: {template.baseReward}"; // 成功的报酬显示
+            }
+            else
+            {
+                rewardText.text = $"Reward: {template.baseReward/2}"; // 不成功的报酬显示
+            }
+            
 
             //buttonText.text = isGood ? "完美完成" : "勉强完成";
             submitButton.interactable = false;
