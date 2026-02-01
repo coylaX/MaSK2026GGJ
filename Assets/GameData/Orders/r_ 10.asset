@@ -12,22 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b5f6a58b8d00e4a8401c6f2e13f2d9, type: 3}
   m_Name: r_ 10
   m_EditorClassIdentifier: 
-  orderID: 
-  customerName: 
-  portrait: {fileID: 0}
+  orderID: r_10
+  customerName: "\u60C5\u7EEA\u5DF2\u53D7\u7406"
+  portrait: {fileID: 21300000, guid: b66212c97f81e3d4886386a14ee417dd, type: 3}
   daysLimit: 5
   baseReward: 100
-  requirementText: 
-  appearOnDay: 0
+  requirementText: "\u6211\u6BCF\u5929\u8981\u5224\u65AD\u522B\u4EBA\u6709\u6CA1\u6709\u201C\u771F\u8BDA\u5730\u5F00\u5FC3\u201D\u3002\r\n\u7CFB\u7EDF\u6559\u6211\u600E\u4E48\u5224\u3002\r\n\u53EF\u7CFB\u7EDF\u6CA1\u8BF4\uFF0C**\u6211\u4EC0\u4E48\u65F6\u5019\u53EF\u4EE5\u771F\u7684\u5F00\u5FC3\u4E00\u4E0B\uFF1F**\r\n\u6240\u4EE5\u6211\u60F3\u8981\u4E00\u70B9**\u559C**\u3002\r\n\u4E0D\u9700\u8981\u592A\u591A\uFF01\u516C\u53F8\u4E0D\u62A5\u9500\u7684\u90A3\u79CD\u5C31\u597D\u3002"
+  appearOnDay: 5
   ifMemory: 0
   memoryTraitID: 0
-  colorTraitIDs: 
-  emotionTraitID: 0
-  bestReviewText: 
-  successReviewText: 
-  aFailReviewText: 
-  bFailReviewText: 
-  cFailReviewText: 
+  colorTraitIDs: 0200000006000000
+  emotionTraitID: 1
+  bestReviewText: "\u6211\u7B11\u4E86\u3002\r\n\u4E0D\u662F\u804C\u4E1A\u5FAE\u7B11\u3002\r\n\u662F\u90A3\u79CD\u201C\u7CFB\u7EDF\u6682\u65F6\u5B95\u673A\u201D\u7684\u7B11\u3002\r\n\u7EE9\u6548\u6CA1\u53D8\u3002\r\n\u4F46\u4ECA\u5929\u4E0B\u73ED\u7684\u65F6\u5019\uFF0C\u6211\u5173\u6389\u4E86\u63D0\u793A\u97F3\u3002"
+  successReviewText: "\u6211\u5F00\u59CB\u5728\u4E0D\u8BE5\u7B11\u7684\u65F6\u5019\u7B11\u3002\r\n\u5BA2\u6237\u6295\u8BC9\u6211\u201C\u6001\u5EA6\u8FC7\u4E8E\u4EBA\u6027\u5316\u201D\u3002\r\n\u6211\u7B2C\u4E00\u6B21\u610F\u8BC6\u5230\u2014\u2014\r\n\u539F\u6765**\u559C**\u4E5F\u662F\u4E00\u79CD\u8FDD\u89C4\u884C\u4E3A\uFF01"
+  aFailReviewText: "\u6211\u5BF9\u7CFB\u7EDF\u53D1\u706B\u3002\r\n  \u7CFB\u7EDF\u7ED9\u4E86\u6211\u4E00\u6761\u6E29\u99A8\u63D0\u793A\u3002"
+  bFailReviewText: " \u6211\u5F00\u59CB\u66FF\u6240\u6709\u5BA2\u6237\u96BE\u8FC7\u3002\r\n 
+    \u6548\u7387\u4E0B\u964D\u4E86 23%\u3002"
+  cFailReviewText: "\u6211\u53D8\u5F97\u975E\u5E38\u4E13\u4E1A\u3002\r\n  \u4E13\u4E1A\u5230\u6CA1\u4EBA\u8BB0\u5F97\u6211\u662F\u8C01\u3002"
   aMRFailReviewText: 
   bMRFailReviewText: 
   cMRFailReviewText: 

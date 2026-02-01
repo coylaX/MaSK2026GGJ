@@ -11340,13 +11340,13 @@ MonoBehaviour:
   buttonE: {fileID: 1530670611}
   buttonF: {fileID: 886244119}
   imageLock: {fileID: 21300000, guid: 680c3d3a65c521c47b4db960e53bd6d3, type: 3}
-  imageA: {fileID: 0}
-  imageB: {fileID: 0}
-  imageC: {fileID: 0}
-  imageD: {fileID: 0}
-  imageE: {fileID: 0}
+  imageA: {fileID: 21300000, guid: 3fb543c9e8cc4ae4d8825221ba6b69f2, type: 3}
+  imageB: {fileID: 21300000, guid: aa31d5fe1a42d9b42bf1960a519f2864, type: 3}
+  imageC: {fileID: 21300000, guid: 6a1b0f89d30d614448b199be87ad99d4, type: 3}
+  imageD: {fileID: 21300000, guid: 5d217ec27726bbb4cbba08485ebbcdf2, type: 3}
+  imageE: {fileID: 21300000, guid: f149c651a830995419e193b804f41179, type: 3}
   imageF: {fileID: 0}
-  emotionSource: {fileID: 0}
+  emotionSource: {fileID: 1844656634}
 --- !u!114 &1683010059
 MonoBehaviour:
   m_ObjectHideFlags: 0
