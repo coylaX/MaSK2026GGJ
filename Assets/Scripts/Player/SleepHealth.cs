@@ -106,6 +106,9 @@ public class SleepHealth : MonoBehaviour
     {
         TakeDamage(source.damageAmount);
         
+        if(AudioManager.Instance != null)
+            AudioManager.Instance.PlayerHurt();
+
         // 【修改】：不再直接开启协程，而是设置计时器，由 Update 触发闪烁
         hurtInvincibleTimer = invincibilityDuration;
 

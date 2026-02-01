@@ -36,6 +36,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip playerDie;
     public AudioClip pickBook;
     public AudioClip pickWater;
+    public AudioClip maskMade;
+    public AudioClip memoryWrong;
+    public AudioClip playerHurt;
 
     private AudioSource sfxSource;
 
@@ -100,6 +103,11 @@ public class AudioManager : MonoBehaviour
 
     //死亡/成功撤离
     public void PlayerDie()        => PlaySFX(playerDie);
+
+    public void MaskMade()         => PlaySFX(maskMade);
+    public void MemoryWrong()      => PlaySFX(memoryWrong);
+    public void PlayerHurt()       => PlaySFX(playerHurt);
+
 
     // --- 原有功能保持 ---
 

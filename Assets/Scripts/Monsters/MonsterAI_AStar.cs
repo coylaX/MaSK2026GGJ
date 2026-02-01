@@ -17,6 +17,10 @@ public class MonsterAI_AStar : MonoBehaviour {
     public float steeringSmooth = 12f;
     public float backPenalty = 20f; 
 
+    // --- 新增防卡死变量 ---
+    private float stuckTimer = 0f;
+    private const float STUCK_THRESHOLD = 3.0f; // 3秒阈值
+
     void Start() {
         stats = GetComponent<MonsterBase>();
         rb = GetComponent<Rigidbody2D>();
@@ -30,7 +34,8 @@ public class MonsterAI_AStar : MonoBehaviour {
         if (!player || !navGraph || stats.IsInKnockback()) return;
 
         int mask = LayerMask.GetMask("block");
-        bool canSee = !Physics2D.Linecast(transform.position, player.position, mask);
+        // bool canSee = !Physics2D.Linecast(transform.position, player.position, mask);
+        bool canSee = false; // 保持你关闭直线逻辑的状态
 
         if (canSee) {
             currentTargetWorldPos = player.position;
@@ -46,13 +51,25 @@ public class MonsterAI_AStar : MonoBehaviour {
         
         Debug.DrawLine(transform.position, currentTargetWorldPos, Color.red);
 
-        if (!isDirectlyChasing && Vector2.Distance(transform.position, currentTargetWorldPos) < arrivalDist) {
-            lastReachedLocalWp = navGraph.transform.InverseTransformPoint(currentTargetWorldPos);
-            SearchNextTarget();
+        // --- 核心逻辑修改：判定到达或超时卡死 ---
+        if (!isDirectlyChasing) {
+            stuckTimer += Time.fixedDeltaTime; // 开始计时
+
+            // 逻辑 A: 正常到达目标格子
+            if (Vector2.Distance(transform.position, currentTargetWorldPos) < arrivalDist) {
+                lastReachedLocalWp = navGraph.transform.InverseTransformPoint(currentTargetWorldPos);
+                SearchNextTarget();
+            } 
+            // 逻辑 B: 防卡死 - 3s未到达则强制重新寻路
+            else if (stuckTimer >= STUCK_THRESHOLD) {
+                SearchNextTarget();
+            }
         }
     }
 
     void SearchNextTarget() {
+        stuckTimer = 0f; // 只要开始新的寻路，计时器就清零
+
         int mask = LayerMask.GetMask("block");
         Vector3 lStart = navGraph.transform.InverseTransformPoint(transform.position);
         Vector3 lTarget = navGraph.transform.InverseTransformPoint(player.position);
@@ -65,6 +82,7 @@ public class MonsterAI_AStar : MonoBehaviour {
         }
     }
 
+    // --- 以下为原封不动的功能函数 ---
     private List<Vector3> FindLocalPath(Vector3 s, Vector3 t, int mask) {
         var wps = navGraph.localWaypoints;
         int sIdx = -1, eIdx = -1;
