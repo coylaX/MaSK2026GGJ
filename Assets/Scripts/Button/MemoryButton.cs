@@ -21,17 +21,6 @@ public class MemoryButton : MonoBehaviour
     public void OnClick()
     {
         effectText.text= effectContent;
-        if (red)
-        {
-            emotionSource.GetComponent<Image>().color = Color.red;
-        }
-        if (yellow)
-        {
-            emotionSource.GetComponent<Image>().color = Color.yellow;
-        }
-        if (blue)
-        {
-            emotionSource.GetComponent<Image>().color = Color.blue;
-        }
+        emotionSource.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
     }
 }

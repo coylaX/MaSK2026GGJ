@@ -1859,7 +1859,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: 
+  effectContent: "\u732E\u796D\u7684\u6B22\u6109"
 --- !u!114 &324888773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1904,9 +1904,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WarehouseItemUI, Assembly-CSharp
-        m_MethodName: Onclick
+      - m_Target: {fileID: 324888772}
+        m_TargetAssemblyTypeName: MemoryButton, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6504,7 +6504,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: 
+  effectContent: "\u6C38\u6052\u6D9F\u6F2A"
 --- !u!114 &1060766241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6574,7 +6574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.40378952, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8078,7 +8078,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: 
+  effectContent: "\u590F\u65E5\u6A58\u5B50\u6C7D\u6C34\u7684\u5473\u9053"
 --- !u!114 &1274200301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8148,7 +8148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.80092657, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10003,8 +10003,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0010375977, y: -623.578}
-  m_SizeDelta: {x: 449.43, y: 1247.1556}
+  m_AnchoredPosition: {x: -0.0010375977, y: -3679.3535}
+  m_SizeDelta: {x: 449.43, y: 7358.706}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1501831373
 MonoBehaviour:
@@ -10208,7 +10208,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: 
+  effectContent: "\u65AD\u6865\u7684\u680F\u6746\u94C1\u9508"
 --- !u!114 &1530670611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10253,9 +10253,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WarehouseItemUI, Assembly-CSharp
-        m_MethodName: Onclick
+      - m_Target: {fileID: 1530670610}
+        m_TargetAssemblyTypeName: MemoryButton, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11893,8 +11893,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The corresponding effect of memorys is described here.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13188,7 +13188,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: 
+  effectContent: "\u635F\u574F\u7684\u5F55\u97F3"
 --- !u!114 &1904487213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13258,7 +13258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
