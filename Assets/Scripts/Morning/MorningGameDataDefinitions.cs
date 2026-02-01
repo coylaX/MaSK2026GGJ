@@ -3,9 +3,9 @@ using UnityEngine;
 using static TMPro.Examples.ObjectSpin;
 
 
-#region 3. ¾­Óª±³°üÊý¾Ý (Inventory)
+#region 3. ï¿½ï¿½Óªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Inventory)
 // ==========================================
-// °üº¬ÑÕÁÏ¡¢ÇéÐ÷¡¢¼ÇÒäµÄÊý¾Ý½á¹¹
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý½á¹¹
 // ==========================================
 [System.Serializable]
 public class MorningInventoryData
@@ -13,38 +13,38 @@ public class MorningInventoryData
     public EmotionTraitID emotionTraitID;
     public MemoryTraitID memoryTraitID;
 
-    // --- ×ÊÔ´ A: ÑÕÁÏ ---
+    // --- ï¿½ï¿½Ô´ A: ï¿½ï¿½ï¿½ï¿½ ---
     public int pigmentAmount;
 
-    // --- ×ÊÔ´ B: ÇéÐ÷ (ÒýÓÃÉÏÃæµÄÀà) ---
+    // --- ï¿½ï¿½Ô´ B: ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ---
     public int xiCount;
     public int nuCount;
     public int aiCount;
     public int leCount;
 
-    // --- ×ÊÔ´ C: ¼ÇÒä½ø¶È (Ç°ÃæÊÇ»ñµÃµÄ¼ÇÒä£¬ºóÃæÊÇ¹Ø¿¨µ±Ç°½×¶ÎµÄ¼ÇÒä) ---
+    // --- ï¿½ï¿½Ô´ C: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Ç°ï¿½ï¿½ï¿½Ç»ï¿½ÃµÄ¼ï¿½ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹Ø¿ï¿½ï¿½ï¿½Ç°ï¿½×¶ÎµÄ¼ï¿½ï¿½ï¿½) ---
     public List<MemoryTraitID> memoryGet;
     public MemoryTraitID memoryNight;
 
     public MorningInventoryData()
     {
-        pigmentAmount = 999;
-        xiCount = 999;
-        nuCount = 999;
-        aiCount = 999;
-        leCount = 999;
+        pigmentAmount = 500;
+        xiCount = 2;
+        nuCount = 2;
+        aiCount = 2;
+        leCount = 2;
         memoryGet = new List<MemoryTraitID>();
         memoryNight = MemoryTraitID.A;
     }
 }
 #endregion
 
-#region 4. ¶©µ¥Êý¾ÝÀà (OrderData) - ¾«¼ò°æ
+#region 4. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (OrderData) - ï¿½ï¿½ï¿½ï¿½ï¿½
 [System.Serializable]
 public class OrderData
 {
-    public string orderID;      // ¶ÔÓ¦ OrderTemplate µÄÎ¨Ò» ID
-    public int daysRemaining;   // ×´Ì¬±êÊ¶£º>0 Ê£ÓàÌìÊý, -1 ÒÑÍê³ÉºÃÆÀ, -2 ÒÑ¹ýÆÚ¡£-3ÒÑÍê³É²îÆÀ
+    public string orderID;      // ï¿½ï¿½Ó¦ OrderTemplate ï¿½ï¿½Î¨Ò» ID
+    public int daysRemaining;   // ×´Ì¬ï¿½ï¿½Ê¶ï¿½ï¿½>0 Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, -1 ï¿½ï¿½ï¿½ï¿½Éºï¿½ï¿½ï¿½, -2 ï¿½Ñ¹ï¿½ï¿½Ú¡ï¿½-3ï¿½ï¿½ï¿½ï¿½É²ï¿½ï¿½ï¿½
 
     public OrderData(string id, int days)
     {

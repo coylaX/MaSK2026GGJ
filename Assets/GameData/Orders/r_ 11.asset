@@ -16,7 +16,8 @@ MonoBehaviour:
   customerName: "\u7EC8\u4E8E\u6574\u6D01\u4E86"
   portrait: {fileID: 21300000, guid: a4d108d96f885144ebca03ae99b82567, type: 3}
   daysLimit: 5
-  baseReward: 100
+  baseReward: 300
+  loseReward: 100
   requirementText: "\u6211\u4E70\u4E86\u5F88\u591A\u76D2\u5B50\u3002\r\n\u5927\u7684\u88C5\u5C0F\u7684\uFF0C\u5C0F\u7684\u88C5\u66F4\u5C0F\u7684\u3002\r\n\u73B0\u5728\u5BB6\u91CC\u5F88\u6574\u9F50\u3002\r\n\u6211\u4E5F\u4E0D\u77E5\u9053\u4E3A\u4EC0\u4E48\u5F00\u59CB\u8BA8\u538C\u8FD9\u4E00\u5207\u3002\r\n\u4E5F\u8BB8\u6211\u9700\u8981\u4E00\u70B9**\u6012**\uFF1F\r\n\u628A\u67D0\u4E2A\u76D2\u5B50\u6380\u7FFB\u7684\u90A3\u79CD\u3002"
   appearOnDay: 6
   ifMemory: 0

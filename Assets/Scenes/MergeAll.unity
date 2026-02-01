@@ -186,7 +186,7 @@ MonoBehaviour:
   AI: {fileID: 21300000, guid: f95596bf5a03dcb429f7086450b4f130, type: 3}
   LE: {fileID: 21300000, guid: b9a4a63df4e5018478faa8de208bd2cc, type: 3}
   effectText: {fileID: 686732076}
-  effectContent: 
+  effectContent: "\u6012\u4E4B\u9762\u5177\n\u6218\u6597\u4E2D\u4F69\u6234\u5C06\u4F7F\u7528\u6124\u6012\u4E4B\u5203\u653B\u51FB\u654C\u4EBA"
 --- !u!114 &40851841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,7 +412,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &51733412
@@ -1859,7 +1859,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: "\u732E\u796D\u7684\u6B22\u6109"
+  effectContent: "\u732E\u796D\u7684\u6B22\u6109\n\u6682\u65E0\u7279\u6B8A\u4F69\u6234\u6548\u679C"
 --- !u!114 &324888773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2014,7 +2014,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u63D0\u793A\u6807\u9898"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2078,7 +2078,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &327050573
@@ -2615,7 +2615,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 990574302}
   effectText: {fileID: 1043041539}
-  effectContent: Red
+  effectContent: "\u7EA2\u8272\u989C\u6599\n\u7EA2\u8272\u9762\u5177\u88AB\u6495\u6389\u540E\uFF0C\u5C06\u964D\u4F4E\u653B\u901F\uFF0C\u4F46\u5BF9\u8FD1\u8DDD\u79BB\u7684\u654C\u4EBA\u5927\u5E45\u63D0\u9AD8\u4F24\u5BB3"
 --- !u!114 &393489171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3083,8 +3083,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3893,7 +3893,7 @@ MonoBehaviour:
   AI: {fileID: 21300000, guid: f95596bf5a03dcb429f7086450b4f130, type: 3}
   LE: {fileID: 21300000, guid: b9a4a63df4e5018478faa8de208bd2cc, type: 3}
   effectText: {fileID: 686732076}
-  effectContent: 
+  effectContent: "\u54C0\u4E4B\u9762\u5177\n\u6218\u6597\u4E2D\u4F69\u6234\u5C06\u4F7F\u7528\u60B2\u4F24\u6CE1\u6CE1\u653B\u51FB\u654C\u4EBA"
 --- !u!114 &584361185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4190,9 +4190,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The corresponding effect of emotions is described here.
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4256,7 +4256,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &686732077
@@ -4420,7 +4420,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 990574302}
   effectText: {fileID: 1043041539}
-  effectContent: Blue
+  effectContent: "\u84DD\u8272\u989C\u6599\n\u84DD\u8272\u9762\u5177\u88AB\u6495\u6389\u540E\uFF0C\u4F1A\u4F7F\u540E\u7EED\u7684\u653B\u51FB\u53EF\u4EE5\u7A7F\u900F\u654C\u4EBA\u4E0E\u969C\u788D\u7269"
 --- !u!114 &718111646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4907,8 +4907,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5686,7 +5686,7 @@ MonoBehaviour:
   AI: {fileID: 21300000, guid: f95596bf5a03dcb429f7086450b4f130, type: 3}
   LE: {fileID: 21300000, guid: b9a4a63df4e5018478faa8de208bd2cc, type: 3}
   effectText: {fileID: 686732076}
-  effectContent: 
+  effectContent: "\u4E50\u4E4B\u9762\u5177\n\u6218\u6597\u4E2D\u4F69\u6234\u5C06\u4F7F\u7528\u5F00\u5FC3\u6CE2\u653B\u51FB\u654C\u4EBA"
 --- !u!114 &991700860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6156,9 +6156,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Plese click the color to show effect here
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6293,8 +6293,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u6211\u662F\u4E2D\u56FD\u4EBA"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6504,7 +6504,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: "\u6C38\u6052\u6D9F\u6F2A"
+  effectContent: "\u6C38\u6052\u6D9F\u6F2A\n\u4F69\u6234\u4E0A\u7531\u8BE5\u8BB0\u5FC6\u94F8\u6210\u7684\u9762\u5177\u65F6\uFF0C\u7ACB\u523B\u83B7\u5F973\u4E2A\u70B8\u5F39"
 --- !u!114 &1060766241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7417,7 +7417,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 990574302}
   effectText: {fileID: 1043041539}
-  effectContent: Yellow
+  effectContent: "\u9EC4\u8272\u989C\u6599\n\u9EC4\u8272\u9762\u5177\u88AB\u6495\u6389\u540E\uFF0C\u4F1A\u4F7F\u540E\u7EED\u7684\u653B\u51FB\u53EF\u4EE5\u963B\u6321\u654C\u4EBA\u7684\u5F39\u5E55"
 --- !u!114 &1176321053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8078,7 +8078,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: "\u590F\u65E5\u6A58\u5B50\u6C7D\u6C34\u7684\u5473\u9053"
+  effectContent: "\u590F\u65E5\u6A58\u5B50\u6C7D\u6C34\u7684\u5473\u9053\n\u4F69\u6234\u4E0A\u7531\u8BE5\u8BB0\u5FC6\u94F8\u6210\u7684\u9762\u5177\u65F6\uFF0C\u5C06\u635F\u593150%\u5F53\u524D\u6E05\u9192\u503C\uFF08\u751F\u547D\u503C\uFF09\uFF0C\u4F46\u9020\u6210\u7684\u4F24\u5BB3\u5927\u5E45\u63D0\u5347"
 --- !u!114 &1274200301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8314,8 +8314,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8955,7 +8955,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Reminder of Mask
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -9019,7 +9019,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1352438458
@@ -9564,7 +9564,7 @@ MonoBehaviour:
   AI: {fileID: 21300000, guid: f95596bf5a03dcb429f7086450b4f130, type: 3}
   LE: {fileID: 21300000, guid: b9a4a63df4e5018478faa8de208bd2cc, type: 3}
   effectText: {fileID: 686732076}
-  effectContent: 
+  effectContent: "\u559C\u4E4B\u9762\u5177\n\u6218\u6597\u4E2D\u4F69\u6234\u5C06\u4F7F\u7528\u559C\u4E4B\u6B65\u67AA\u653B\u51FB\u654C\u4EBA"
 --- !u!114 &1477611944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9719,7 +9719,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 990574302}
   effectText: {fileID: 1043041539}
-  effectContent: Green
+  effectContent: "\u7EFF\u8272\u989C\u6599\n\u7EFF\u8272\u9762\u5177\u88AB\u6495\u6389\u540E\uFF0C\u4F1A\u5BF9\u8FDC\u8DDD\u79BB\u7684\u654C\u4EBA\u5927\u5E45\u63D0\u9AD8\u4F24\u5BB3"
 --- !u!114 &1483099771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10208,7 +10208,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: "\u65AD\u6865\u7684\u680F\u6746\u94C1\u9508"
+  effectContent: "\u65AD\u6865\u7684\u680F\u6746\u94C1\u9508\n\u6682\u65E0\u7279\u6B8A\u4F69\u6234\u6548\u679C"
 --- !u!114 &1530670611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10859,7 +10859,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -10923,7 +10923,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1604589350
@@ -11353,8 +11353,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e50f751f671546f49a5c3370125bc846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  craftPigment: -2
-  craftEmotion: -4
+  craftPigment: -100
+  craftEmotion: -1
   pigmentText: {fileID: 55877948}
   xiText: {fileID: 1252608123}
   nuText: {fileID: 1817340346}
@@ -11584,7 +11584,7 @@ MonoBehaviour:
   white: 1
   emotionSource: {fileID: 990574302}
   effectText: {fileID: 1043041539}
-  effectContent: White
+  effectContent: "\u767D\u8272\u989C\u6599\n\u767D\u8272\u9762\u5177\u88AB\u6495\u6389\u540E\uFF0C\u5C06\u5927\u5E45\u56DE\u590D\u6E05\u9192\u503C\uFF08\u751F\u547D\u503C\uFF09"
 --- !u!114 &1713540963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11891,10 +11891,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The corresponding effect of memorys is described here.
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
-  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12381,7 +12381,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 990574302}
   effectText: {fileID: 1043041539}
-  effectContent: black
+  effectContent: "\u9ED1\u8272\u989C\u6599\n\u9ED1\u8272\u9762\u5177\u88AB\u6495\u6389\u540E\uFF0C\u5C06\u5927\u5E45\u589E\u52A0\u79FB\u901F"
 --- !u!114 &1804031985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12747,7 +12747,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8FD9\u91CC\u662F\u63D0\u793A\u6846\u91CC\u7684\u5B8C\u6574\u6587\u672C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -12811,7 +12811,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1831463169
@@ -13188,7 +13188,7 @@ MonoBehaviour:
   white: 0
   emotionSource: {fileID: 1844656634}
   effectText: {fileID: 1748221044}
-  effectContent: "\u635F\u574F\u7684\u5F55\u97F3"
+  effectContent: "\u635F\u574F\u7684\u5F55\u97F3\n\u4F69\u6234\u4E0A\u7531\u8BE5\u8BB0\u5FC6\u94F8\u6210\u7684\u9762\u5177\u65F6\uFF0C\u5C06\u83B7\u5F9710s\u7684\u65E0\u654C\u6548\u679C"
 --- !u!114 &1904487213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13808,8 +13808,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7EE7\u7EED"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

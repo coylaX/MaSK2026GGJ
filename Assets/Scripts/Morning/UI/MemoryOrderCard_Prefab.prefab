@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u540D\u5B57"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
-  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -506,8 +506,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u57FA\u672C\u62A5\u916C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
-  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -720,8 +720,8 @@ MonoBehaviour:
   m_text: 'This is the requirement of order, players need to choose suitable msk.
     After players chose, it will show reviews. You can also click it to expand it '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
-  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -855,8 +855,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u65F6\u95F4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
-  m_sharedMaterial: {fileID: -7488904132310792693, guid: e66468e8d7acc4e47b58f9d46c77b8ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
+  m_sharedMaterial: {fileID: -7488904132310792693, guid: c0942704fe8c40448a4c9f5db87db0e9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
