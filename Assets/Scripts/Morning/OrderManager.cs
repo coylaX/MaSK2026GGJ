@@ -182,10 +182,14 @@ public class OrderManager : MonoBehaviour
         if (selectedMask == null) return;
         if (template.ifMemory && selectedMask.memoryTraitID == MemoryTraitID.None)
         {
-            OrderDetailPopup.Instance.Show("请重新提交订单","记忆订单必须提交包含记忆的订单");
+            OrderDetailPopup.Instance.Show("请重新提交订单","记忆订单必须提交包含记忆的面具");
             return;
         }
-            
+        if(template.ifMemory && template.memoryTraitID != selectedMask.memoryTraitID)
+        {
+            OrderDetailPopup.Instance.Show("请重新提交订单", "记忆订单必须提交包含正确记忆的面具");
+            return;
+        }   
         // --- A. 数据转换 (把面具属性转成 List<string>) ---
         List<string> tags = new List<string>();
         tags.Add(selectedMask.emotionTraitID.ToString());
