@@ -169,7 +169,7 @@ public class OrderManager : MonoBehaviour
         selectedMask = mask;
         // 显示确认弹窗
         confirmPopupPanel.SetActive(true);
-        if (confirmText != null) confirmText.text = $"确定要提交 [{mask.displayName}] 吗？";
+        if (confirmText != null) confirmText.text = $"确定要提交面具吗?{LastClickMaskInfo.Instance.orderSubmitEffectText}";
     }
 
     // ==================================================
@@ -189,7 +189,11 @@ public class OrderManager : MonoBehaviour
         {
             OrderDetailPopup.Instance.Show("请重新提交订单", "记忆订单必须提交包含正确记忆的面具");
             return;
-        }   
+        }
+
+        //清空面具说明
+        LastClickMaskInfo.Instance.effectText.text = "当前未选择面具";
+
         // --- A. 数据转换 (把面具属性转成 List<string>) ---
         List<string> tags = new List<string>();
         tags.Add(selectedMask.emotionTraitID.ToString());

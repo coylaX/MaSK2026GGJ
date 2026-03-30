@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MorningGameManager : MonoBehaviour
 {
@@ -140,7 +141,9 @@ public class MorningGameManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("触发GameManager存档功能");
         SaveManager.Save(currentSaveData);
+        SaveNotificationUI.Instance.ShowSaveSuccess();
     }
 
     private void LoadGame()
@@ -251,7 +254,86 @@ public class MorningGameManager : MonoBehaviour
         Debug.Log("作弊成功：获取所有记忆");
     }
 
-    #region 辅助功能，调节数量
+        
 
+    #region ESC菜单
+    [Header("设置菜单物体")]
+    public GameObject menuPanel; // 在 Inspector 面板中把你的菜单 UI 拖进来
+
+    private bool isMenuOpen = false;
+
+    void Update()
+    {
+        // 监听 ESC 按键
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleMenu();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            PointerEventData eventData = new PointerEventData(EventSystem.current);
+            eventData.position = Input.mousePosition;
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+            foreach (var result in results)
+            {
+                Debug.Log("鼠标点到了这个 UI: " + result.gameObject.name);
+            }
+        }
+    }
+    // 方法：切换菜单显示/隐藏
+    public void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+
+        // 设置菜单的激活状态
+        if (menuPanel != null)
+        {
+            menuPanel.SetActive(isMenuOpen);
+        }
+
+        // 进阶处理：菜单打开时暂停游戏，关闭时恢复
+        if (isMenuOpen)
+        {
+            Time.timeScale = 0f;          // 游戏暂停
+        }
+        else
+        {
+            Time.timeScale = 1f;          // 恢复游戏速度
+        }
+    }
+    // 方法：退出游戏
+    public void QuitGame()
+    {
+
+        // 在编辑器模式下运行（方便测试）
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                    // 在打包后的程序中运行
+                    Application.Quit();
+        #endif
+
+        Debug.Log("游戏已退出");
+    }
+
+    // 在你的 MenuManager 或 UI 脚本中
+    public void DeleteSaveAndQuit()
+    {
+        // 1. 先执行删除
+        try
+        {
+            SaveManager.DeleteSaveFile();
+            Debug.Log("存档删除成功，准备退出...");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"删除存档失败: {e.Message}");
+        }
+
+        // 2. 延迟一点点或者直接执行退出
+        QuitGame();
+    }
     #endregion
 }

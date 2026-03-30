@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class BreakMasks : MonoBehaviour
@@ -14,8 +15,11 @@ public class BreakMasks : MonoBehaviour
     // --- 【新增 1】 ---
     [Header("特效预制体")]
     [Tooltip("撕碎白面具回血时播放的粒子特效")]
-    public GameObject healVfxPrefab; 
+    public GameObject healVfxPrefab;
     // ------------------
+
+    [Header("拖入 LevelManager 物体")]
+    public Transform levelManagerTransform; // 在面板上把 LevelManager 拖给它
 
     private float _initialMaxSpeed; // 【新增】用于记录初始速度
 
@@ -49,8 +53,8 @@ public class BreakMasks : MonoBehaviour
             return;
         }
         //˺��ߵ�Ѫ������
-        
-        GetComponent<SleepHealth>().maxSleep -= 20;
+        //每次丢弃面具降低25点最大生命值
+        GetComponent<SleepHealth>().maxSleep -= 25;
         Debug.Log(11);
         
         switch (GetComponent<MaskRead>().currentMask.colorTraitID)
@@ -85,7 +89,22 @@ public class BreakMasks : MonoBehaviour
         BackPackLogic.I.maskInstances.Remove(GetComponent<MaskRead>().currentMask);
         MaskUI.GetComponent<MaskUI>().Refresh();
 
+        if (BackPackLogic.I.maskInstances.Count == 0) {
+            
 
+            if (levelManagerTransform == null) return;
+            Debug.Log("[BreakMask]面具全部被丢弃！即将开门");
+            RoomController[] allRooms = levelManagerTransform.GetComponentsInChildren<RoomController>();
+
+            //在这里顺便播放清理房间后开门的声音
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayDoorOpen();
+
+            foreach (RoomController room in allRooms)
+            {
+                room.ForceOpenDoors();
+            }
+        }
 
     }
     public void AddSpeed()

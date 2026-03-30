@@ -11,7 +11,7 @@ public class SettlementUI : MonoBehaviour
     public static SettlementUI Instance;
 
     [Header("渐变与延迟配置")]
-    public CanvasGroup canvasGroup; 
+    public CanvasGroup canvasGroup;
     public float fadeDuration = 1.0f;     
     public float buttonDelay = 1.5f;      
 
@@ -58,9 +58,21 @@ public class SettlementUI : MonoBehaviour
 
     private void OnEnable()
     {
-        // 死亡时触发失败结算
-        PlayerEvents.OnPlayerDeath += () => ShowSettlement(false);
+        // 正确：注册这个具名方法
+        PlayerEvents.OnPlayerDeath += HandlePlayerDeath;
     }
+
+    private void OnDisable()
+    {
+        // 正确：注销同一个具名方法
+        PlayerEvents.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    private void HandlePlayerDeath()
+    {
+        ShowSettlement(false);
+    }
+
 
     private void Start()
     {
@@ -244,6 +256,8 @@ public class SettlementUI : MonoBehaviour
         SetRecursiveActive(uiRootToActivate, true);
         SetRecursiveActive(uiRootToDeactivate, false);
 
+        resettPanel(settlementPanel);
+
         foreach (GameObject ui in specificUIsToInActivate)
         {
             if (ui != null) ui.SetActive(false);
@@ -281,4 +295,14 @@ public class SettlementUI : MonoBehaviour
             t.gameObject.SetActive(active);
         }
     }
+    //复位撤离界面
+    private void resettPanel(GameObject root)
+    {
+        Transform[] allTransforms = root.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in allTransforms)
+        {
+            t.gameObject.SetActive(true);
+        }
+    }
+
 }

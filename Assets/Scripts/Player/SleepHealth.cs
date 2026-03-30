@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class SleepHealth : MonoBehaviour
 {
     [Header("HP 配置")]
+    public float defaultMaxSleep = 100f;
     public float maxSleep = 100f;
     public float currentSleep = 100f;
     public float drainPerSecond = 2f;
@@ -164,7 +165,8 @@ public class SleepHealth : MonoBehaviour
 
     public void SetSleep(float value)
     {
-        currentSleep = Mathf.Clamp(value, 0f, maxSleep);
+        maxSleep = Mathf.Clamp(value, 0f, defaultMaxSleep);
+        currentSleep = Mathf.Clamp(value, 0f, defaultMaxSleep);
         if (currentSleep <= 0f) Die();
     }
 
@@ -188,7 +190,7 @@ public class SleepHealth : MonoBehaviour
     public void RestoreFullSleep()
     {
         ResetVisuals();
-        SetSleep(maxSleep);
+        SetSleep(defaultMaxSleep);
     }
 
     private void Die() 

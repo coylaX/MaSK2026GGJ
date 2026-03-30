@@ -123,6 +123,18 @@ public class RoomController : MonoBehaviour {
         }
     }
 
+    public void ForceOpenDoors()
+    {
+        foreach (var m in monsters)
+        {
+            if (m != null) m.gameObject.SetActive(true); // 2. 激活所有怪物
+        }
+        state = RoomState.Cleared;
+        SpawnLoot();
+        if (MiniMapManager.Instance != null) MiniMapManager.Instance.RefreshMap();
+        CheckDoors();
+    }
+
     private void SpawnLoot() {
         
 

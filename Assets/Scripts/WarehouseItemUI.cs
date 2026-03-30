@@ -14,7 +14,7 @@ public class WarehouseItemUI : MonoBehaviour
     public WarehouseUI warehouseUI;
     public BackPackView backPackUI;
 
-    public string memoryText;
+    
     void Start()
     {
         
@@ -29,31 +29,11 @@ public class WarehouseItemUI : MonoBehaviour
     }
     public void Onclick()
     {
-        //Ë¢ÐÂÃæ¾ßÃèÊö
-        switch (mask.memoryTraitID)
-        {
-            case MemoryTraitID.A:
-                memoryText = "Ëð»µµÄÂ¼Òô";
-                break; 
-            case MemoryTraitID.B:
-                memoryText = "ÏÄÈÕéÙ×ÓÆûË®µÄÎ¶µÀ";
-                break;
-            case MemoryTraitID.C:
-                memoryText = "ÓÀºãÁ°äô";
-                break;
-            case MemoryTraitID.D:
-                memoryText = "Ï×¼ÀµÄ»¶Óä";
-                break;
-            case MemoryTraitID.E:
-                memoryText = "¶ÏÇÅµÄÀ¸¸ËÌúÐâ";
-                break;
-        }
-        LastClickMaskInfo.Instance.effectText.text = $"Last mask is:{mask.emotionTraitID.ToString().ToLower()} & {memoryText} & {mask.colorTraitID.ToString().ToLower()}";
+        LastClickMaskInfo.Instance.RefreshMaskInfo(mask.emotionTraitID, mask.memoryTraitID, mask.colorTraitID);
+        
 
         if (OrderManager.Instance.maskChooseState)
-        {
-
-        
+        {   
             //  Debug.Log($"[Update] UIObj={gameObject.name} uiId={GetInstanceID()} mask={(mask == null ? "<null>" : mask.displayName)} ");
             Debug.Log(mask.displayName);
         if (mask.displayName == ""||mask==null)
